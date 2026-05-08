@@ -6,5 +6,5 @@
 print("Hello CPSC 250L!")
 
 # TODO: Replace the text below with your own information.
-print("Name: Your Name Here")
-print("GitHub username: your-github-username-here")
+print("Name: Edward Brash")
+print("GitHub username: edwardbrash")
