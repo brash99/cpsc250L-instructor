@@ -1,5 +1,3 @@
----
-
 ## Step 7: Lab 1 checkoff file
 
 # Lab 1 Checkoff
