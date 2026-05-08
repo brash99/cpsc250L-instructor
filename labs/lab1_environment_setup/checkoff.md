@@ -1,5 +1,3 @@
----
-
 ## Step 7: Lab 1 checkoff file
 
 `labs/lab01_environment_setup/checkoff.md`
