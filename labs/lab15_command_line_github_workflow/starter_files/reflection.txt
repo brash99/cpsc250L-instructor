@@ -1,0 +1,16 @@
+CPSC 250L Reflection
+
+Name:
+GitHub Username:
+
+Reflection Questions:
+
+1. What programming concept was most difficult for you this summer?
+
+2. What skill improved the most?
+
+3. What surprised you about Git or GitHub?
+
+4. What do you now understand that you did not understand four weeks ago?
+
+5. What advice would you give future CPSC 250L students?
