@@ -2,13 +2,7 @@
 
 
 class Book:
-    def __init__(self, title, author, year, price, quantity):
-        pass
-
-    def inventory_value(self):
-        """
-        Return price * quantity.
-        """
+    def __init__(self, title, author, year, genre, pages, rating):
         pass
 
     def add_stock(self, amount):

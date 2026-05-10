@@ -5,11 +5,9 @@ from book import Book
 
 def create_inventory():
     """
-    Create and return a list of Book objects.
+    Read books from csv file, create and return a list of Book objects.
     """
     books = []
-
-    # TODO: Add at least five books to the list.
 
     return books
 
@@ -21,9 +19,9 @@ def print_inventory(books):
     pass
 
 
-def total_inventory_value(books):
+def total_inventory(books):
     """
-    Return the total value of all books in inventory.
+    Return the total number of all books in inventory.
     """
     pass
 
@@ -57,7 +55,7 @@ def main():
     print_inventory(inventory)
 
     print()
-    print("Total inventory value:", total_inventory_value(inventory))
+    print("Total inventory:", total_inventory_value(inventory))
 
     print()
     print("Books by Octavia Butler")
