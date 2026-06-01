@@ -1,31 +1,30 @@
 #!/usr/bin/env python3
 """
-grade_lab01.py
+grade_lab01_v2.py
 
 Automated Lab 1 checker for CPSC 250L student forks.
 
-This script:
-  - reads a CSV file of students and GitHub repository URLs
-  - clones each student fork if needed
-  - pulls latest changes if already cloned
-  - checks for helloworld.py
-  - runs helloworld.py
-  - checks whether the repo has commits beyond the instructor starter repo
-  - checks whether the working tree is clean
-  - writes a CSV report
+Version 2 changes:
+  - If --starter-commit is supplied, commit scoring uses commits after that hash.
+  - If --starter-commit is not supplied, the script uses a practical fallback:
+      any successful git log with at least one recent commit counts as commit evidence.
+    This is appropriate for Lab 1 when you have already verified that students pushed.
+  - The report now separates automated evidence from manual/live checkoff.
 
-Expected students.csv format:
+Suggested use:
 
-name,github_username,repo_url
-Alice Smith,asmith,https://github.com/asmith/cpsc250L.git
-Bob Jones,bjones,https://github.com/bjones/cpsc250L.git
+python grade_lab01_v2.py \
+  --students students.csv \
+  --workdir student_repos \
+  --report reports/lab01_report.csv \
+  --starter-commit 02462a8
 
-Run from a grading folder:
+If you do not know the starter commit:
 
-python grade_lab01.py --students students.csv --workdir student_repos --report reports/lab01_report.csv
-
-Optional:
-python grade_lab01.py --students students.csv --starter-commit <STARTER_COMMIT_HASH>
+python grade_lab01_v2.py \
+  --students students.csv \
+  --workdir student_repos \
+  --report reports/lab01_report.csv
 """
 
 from __future__ import annotations
@@ -43,7 +42,6 @@ def run_command(
     cwd: Optional[Path] = None,
     timeout: int = 20,
 ) -> Tuple[int, str, str]:
-    """Run a shell command safely and return returncode, stdout, stderr."""
     try:
         result = subprocess.run(
             command,
@@ -60,7 +58,6 @@ def run_command(
 
 
 def clone_or_update_repo(repo_url: str, repo_dir: Path) -> Tuple[bool, str]:
-    """Clone repo if missing; otherwise fetch/pull latest main branch."""
     if not repo_dir.exists():
         code, out, err = run_command(["git", "clone", repo_url, str(repo_dir)], timeout=60)
         if code != 0:
@@ -70,10 +67,8 @@ def clone_or_update_repo(repo_url: str, repo_dir: Path) -> Tuple[bool, str]:
     if not (repo_dir / ".git").exists():
         return False, f"{repo_dir} exists but is not a git repository"
 
-    # Try to update cleanly.
     run_command(["git", "fetch", "--all"], cwd=repo_dir, timeout=60)
 
-    # Prefer main; fall back to master/current branch.
     code, out, err = run_command(["git", "checkout", "main"], cwd=repo_dir)
     if code != 0:
         run_command(["git", "checkout", "master"], cwd=repo_dir)
@@ -86,10 +81,7 @@ def clone_or_update_repo(repo_url: str, repo_dir: Path) -> Tuple[bool, str]:
 
 
 def find_helloworld(repo_dir: Path) -> Optional[Path]:
-    """Find helloworld.py, allowing for lab subfolders."""
     candidates = list(repo_dir.rglob("helloworld.py"))
-
-    # Ignore virtual environments and hidden git internals.
     filtered = [
         p for p in candidates
         if ".git" not in p.parts
@@ -101,13 +93,11 @@ def find_helloworld(repo_dir: Path) -> Optional[Path]:
     if not filtered:
         return None
 
-    # Prefer a top-level or lab01 version if multiple exist.
-    filtered.sort(key=lambda p: ("lab01" not in str(p).lower(), len(p.parts)))
+    filtered.sort(key=lambda p: ("lab1" not in str(p).lower(), len(p.parts)))
     return filtered[0]
 
 
 def count_commits_since_starter(repo_dir: Path, starter_commit: Optional[str]) -> Tuple[Optional[int], str]:
-    """Count commits since a known starter commit, if provided."""
     if not starter_commit:
         return None, "starter commit not provided"
 
@@ -125,17 +115,17 @@ def count_commits_since_starter(repo_dir: Path, starter_commit: Optional[str]) -
         return None, f"could not parse commit count: {out}"
 
 
-def get_recent_commits(repo_dir: Path, n: int = 5) -> str:
-    """Return a compact recent commit log."""
+def get_recent_commits(repo_dir: Path, n: int = 5) -> Tuple[bool, str]:
     code, out, err = run_command(
         ["git", "log", "--oneline", f"-{n}"],
         cwd=repo_dir,
     )
-    return out if code == 0 else err
+    if code != 0:
+        return False, err or out
+    return True, out
 
 
 def is_working_tree_clean(repo_dir: Path) -> Tuple[bool, str]:
-    """Check whether working tree is clean."""
     code, out, err = run_command(["git", "status", "--porcelain"], cwd=repo_dir)
     if code != 0:
         return False, err or out
@@ -147,7 +137,6 @@ def is_working_tree_clean(repo_dir: Path) -> Tuple[bool, str]:
 
 
 def run_helloworld(helloworld_path: Path) -> Tuple[bool, str]:
-    """Run helloworld.py and capture output."""
     code, out, err = run_command(
         [sys.executable, str(helloworld_path.name)],
         cwd=helloworld_path.parent,
@@ -161,7 +150,6 @@ def run_helloworld(helloworld_path: Path) -> Tuple[bool, str]:
 
 
 def grade_student(row: Dict[str, str], workdir: Path, starter_commit: Optional[str]) -> Dict[str, str]:
-    """Grade one student repo."""
     name = row["name"].strip()
     username = row["github_username"].strip()
     repo_url = row["repo_url"].strip()
@@ -174,13 +162,17 @@ def grade_student(row: Dict[str, str], workdir: Path, starter_commit: Optional[s
         "repo_url": repo_url,
         "clone_or_update": "no",
         "helloworld_exists": "no",
+        "helloworld_path": "",
         "helloworld_runs": "no",
         "helloworld_output": "",
         "commits_since_starter": "",
-        "has_student_commit": "unknown",
+        "has_commit_evidence": "no",
+        "commit_check_method": "",
         "working_tree_clean": "no",
         "recent_commits": "",
         "auto_score_out_of_8": "0",
+        "manual_live_question_out_of_2": "",
+        "total_score_out_of_10": "",
         "notes": "",
     }
 
@@ -190,10 +182,7 @@ def grade_student(row: Dict[str, str], workdir: Path, starter_commit: Optional[s
         result["notes"] = message
         return result
 
-    score = 0
-
-    # 1 point: repo cloned/updated successfully
-    score += 1
+    score = 1
 
     helloworld = find_helloworld(repo_dir)
     if helloworld is not None:
@@ -206,19 +195,30 @@ def grade_student(row: Dict[str, str], workdir: Path, starter_commit: Optional[s
         result["helloworld_output"] = output[:500]
         if runs:
             score += 2
-    else:
-        result["helloworld_path"] = ""
 
     commits_since, commit_note = count_commits_since_starter(repo_dir, starter_commit)
-    if commits_since is not None:
-        result["commits_since_starter"] = str(commits_since)
-        result["has_student_commit"] = "yes" if commits_since > 0 else "no"
-        if commits_since > 0:
-            score += 2
+    log_ok, recent_log = get_recent_commits(repo_dir)
+    result["recent_commits"] = recent_log.replace("\n", " | ")[:500]
+
+    if starter_commit:
+        result["commit_check_method"] = f"commits after starter commit {starter_commit}"
+        if commits_since is not None:
+            result["commits_since_starter"] = str(commits_since)
+            if commits_since > 0:
+                result["has_commit_evidence"] = "yes"
+                score += 2
+            else:
+                result["notes"] += "No commits found after starter commit. "
+        else:
+            result["notes"] += f"Commit check failed: {commit_note}. "
     else:
-        result["commits_since_starter"] = ""
-        result["has_student_commit"] = "unknown"
-        result["notes"] += f"Commit check: {commit_note}. "
+        result["commit_check_method"] = "fallback: git log exists"
+        if log_ok and recent_log.strip():
+            result["has_commit_evidence"] = "yes"
+            score += 2
+            result["notes"] += "Starter commit not provided; awarded commit evidence from git log fallback. "
+        else:
+            result["notes"] += "Starter commit not provided and git log could not be read. "
 
     clean, clean_note = is_working_tree_clean(repo_dir)
     result["working_tree_clean"] = "yes" if clean else "no"
@@ -227,9 +227,7 @@ def grade_student(row: Dict[str, str], workdir: Path, starter_commit: Optional[s
     else:
         result["notes"] += f"Working tree: {clean_note}. "
 
-    result["recent_commits"] = get_recent_commits(repo_dir).replace("\n", " | ")[:500]
     result["auto_score_out_of_8"] = str(score)
-
     return result
 
 
@@ -256,10 +254,13 @@ def write_report(path: Path, rows: List[Dict[str, str]]) -> None:
         "helloworld_runs",
         "helloworld_output",
         "commits_since_starter",
-        "has_student_commit",
+        "has_commit_evidence",
+        "commit_check_method",
         "working_tree_clean",
         "recent_commits",
         "auto_score_out_of_8",
+        "manual_live_question_out_of_2",
+        "total_score_out_of_10",
         "notes",
     ]
 

@@ -1,16 +1,16 @@
-name,github_username,repo_url,clone_or_update,helloworld_exists,helloworld_path,helloworld_runs,helloworld_output,commits_since_starter,has_student_commit,working_tree_clean,recent_commits,auto_score_out_of_8,notes
+name,github_username,repo_url,clone_or_update,helloworld_exists,helloworld_path,helloworld_runs,helloworld_output,commits_since_starter,has_commit_evidence,commit_check_method,working_tree_clean,recent_commits,auto_score_out_of_8,manual_live_question_out_of_2,total_score_out_of_10,notes
 Edward Brash,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
 Name: Edward Brash Test Account
-GitHub username: edwardbrash",,unknown,yes,ed22031 updates | 350d016 lab 1 updates | 5be43a0 lab 1 updates | 610935d Merge remote-tracking branch 'origin/main' | 17f4e1e lab 1 updates,6,Commit check: starter commit not provided. 
+GitHub username: edwardbrash",11,yes,commits after starter commit 02462a8,yes,ed22031 updates | 350d016 lab 1 updates | 5be43a0 lab 1 updates | 610935d Merge remote-tracking branch 'origin/main' | 17f4e1e lab 1 updates,8,2,10,
 Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
 Name: Justin Shackelford
-GitHub username: JustinShackelford23",,unknown,yes,e23acfd Complete Lab 1 environment setup | 42c8314 Complete Lab 1 environment setup | c0e0ebc Complete Lab 1 environment setup | 02462a8 add current lab designation file | 5891387 update to first day status,6,Commit check: starter commit not provided. 
-Giratinate,Giratinate,https://github.com/Giratinate/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
+GitHub username: JustinShackelford23",3,yes,commits after starter commit 02462a8,yes,e23acfd Complete Lab 1 environment setup | 42c8314 Complete Lab 1 environment setup | c0e0ebc Complete Lab 1 environment setup | 02462a8 add current lab designation file | 5891387 update to first day status,8,2,10,
+Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
 Name: Caleb Thompson
-GitHub username: Giratinate",,unknown,yes,00f5a6e Complete Lab 1 and questions answered | c4c3baa Complete Lab 1 | 02462a8 add current lab designation file | 5891387 update to first day status | 3e9190e Add lab 2,6,Commit check: starter commit not provided. 
-mercyed,mercyed,https://github.com/mercyed/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
+GitHub username: Giratinate",2,yes,commits after starter commit 02462a8,yes,00f5a6e Complete Lab 1 and questions answered | c4c3baa Complete Lab 1 | 02462a8 add current lab designation file | 5891387 update to first day status | 3e9190e Add lab 2,8,2,10,
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
 Name: alexis barraza
-GitHub username: mercyed",,unknown,yes,de06d16 lab1 | d4dc8dc lab1 | 02462a8 add current lab designation file | 5891387 update to first day status | 3e9190e Add lab 2,6,Commit check: starter commit not provided. 
-Jayden Poe,poejayden60,https://github.com/poejayden60/cpsc250L.git,no,no,,no,,,unknown,no,,0,"Cloning into 'student_repos/poejayden60'...
-remote: Repository not found.
-fatal: repository 'https://github.com/poejayden60/cpsc250L.git/' not found"
+GitHub username: mercyed",2,yes,commits after starter commit 02462a8,yes,de06d16 lab1 | d4dc8dc lab1 | 02462a8 add current lab designation file | 5891387 update to first day status | 3e9190e Add lab 2,8,2,10,
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,yes,yes,labs/lab1_environment_setup/helloworld.py,yes,"Hello CPSC 250L!
+Name: Jayden Poe
+GitHub username: poejayden60",2,yes,commits after starter commit 02462a8,yes,a06f7a7 Complete Lab1 | a4d098e Complete Lab1 | 02462a8 add current lab designation file | 5891387 update to first day status | 3e9190e Add lab 2,8,2,10,
