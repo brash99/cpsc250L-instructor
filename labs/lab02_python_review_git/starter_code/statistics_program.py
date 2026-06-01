@@ -56,7 +56,6 @@ def compute_average(values):
     average = sum / count
     return average
 
-
 def compute_minimum(values):
     """
     Compute the minimum value in a list of numbers.
