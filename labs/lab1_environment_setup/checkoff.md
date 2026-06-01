@@ -1,4 +1,4 @@
----
+
 
 ## Step 7: Lab 1 checkoff file
 
@@ -7,9 +7,9 @@
 ```markdown
 # Lab 1 Checkoff
 
-Student name: _______________________________
+Student name: Jayden Poe
 
-GitHub username: ____________________________
+GitHub username: poejayden60
 
 ## Required items
 
@@ -37,6 +37,10 @@ Ask one of the following:
 
 Notes:
 
-______________________________________________________
+- The instructor's repository is the starting point like a format and mine I am able to edit and change
+- commit is to save my work
+- push uploads it to git
+- locally in my computer
+- remotely on github servers
 
 ______________________________________________________
