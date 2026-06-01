@@ -1,25 +1,25 @@
 # Lab 2 Checkoff
 
-Student name: _______________________________
+Student name: __________Edward Brash_____________________
 
-GitHub username: ____________________________
+GitHub username: _________edwardbrash___________________
 
 ## Required Items
 
-- [ ] Student synced their fork with the instructor repository.
-- [ ] Student pulled Lab 2 files into PyCharm.
-- [ ] Program runs successfully in PyCharm.
-- [ ] Program runs successfully from the terminal.
-- [ ] Program reads data from `temperatures.txt`.
-- [ ] Program stores data in a list.
-- [ ] Program computes the number of readings.
-- [ ] Program computes the minimum temperature.
-- [ ] Program computes the maximum temperature.
-- [ ] Program computes the average temperature.
-- [ ] Program output is readable and formatted.
-- [ ] Code uses functions appropriately.
-- [ ] Git history shows at least three meaningful commits.
-- [ ] Work has been pushed to GitHub.
+- [X] Student synced their fork with the instructor repository.
+- [X] Student pulled Lab 2 files into PyCharm.
+- [X] Program runs successfully in PyCharm.
+- [X] Program runs successfully from the terminal.
+- [X] Program reads data from `temperatures.txt`.
+- [X] Program stores data in a list.
+- [X] Program computes the number of readings.
+- [X] Program computes the minimum temperature.
+- [X] Program computes the maximum temperature.
+- [X] Program computes the average temperature.
+- [X] Program output is readable and formatted.
+- [X] Code uses functions appropriately.
+- [X] Git history shows at least three meaningful commits.
+- [X] Work has been pushed to GitHub.
 
 ## Required Commit Check
 
