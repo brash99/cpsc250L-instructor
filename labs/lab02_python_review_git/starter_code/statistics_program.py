@@ -74,8 +74,13 @@ def compute_maximum(values):
     Compute the maximum value in a list of numbers.
     """
     # TODO: Replace this with a correct maximum calculation.
+    max = values[0]
+    for temperature in values:
+        if temperature > max:
+            max = temperature
+    return max
 
-    return 0.0
+#return max(values)
 
 
 def print_summary(values):
