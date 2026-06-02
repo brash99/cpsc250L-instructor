@@ -31,6 +31,14 @@ def read_temperatures(filename):
     # TODO: Open the file and read each line.
     # TODO: Convert each non-blank line to a float.
     # TODO: Append each temperature to the temperatures list.
+    with open(filename, "r") as file:
+        # 3. Loop through each line in the file
+        for line in file:
+            # 4. Convert the string to a float and add it to the list
+            if line != "\n":
+                number = float(line.strip())
+                temperatures.append(number)
+
 
     return temperatures
 
@@ -40,7 +48,12 @@ def compute_average(values):
     Compute the average of a list of numbers.
     """
     # TODO: Replace this with a correct average calculation.
-    return 0.0
+    count = len(values)
+    sum = 0.0
+    for i in range(count):
+        sum = sum + values[i]
+    average = sum / count
+    return average
 
 
 
@@ -49,7 +62,11 @@ def compute_minimum(values):
     Compute the minimum value in a list of numbers.
     """
     # TODO: Replace this with a correct minimum calculation.
-    return 0.0
+    min = values[0]
+    for temperature in values:
+        if temperature < min:
+            min = temperature
+    return min
 
 
 def compute_maximum(values):
@@ -57,7 +74,13 @@ def compute_maximum(values):
     Compute the maximum value in a list of numbers.
     """
     # TODO: Replace this with a correct maximum calculation.
-    return 0.0
+    max = values[0]
+    for temperature in values:
+        if temperature > max:
+            max = temperature
+    return max
+
+#return max(values)
 
 
 def print_summary(values):
@@ -72,9 +95,9 @@ def print_summary(values):
     # TODO: Improve this output formatting.
     print("Temperature Summary")
     print("Number of readings:", count)
-    print("Minimum temperature:", minimum)
-    print("Maximum temperature:", maximum)
-    print("Average temperature:", average)
+    print(f"Minimum temperature: {minimum: .2f}")
+    print(f"Maximum temperature: {maximum: .3f}")
+    print(f"Average temperature: {average: .4f}")
 
 
 def main():
