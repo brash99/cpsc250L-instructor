@@ -10,7 +10,6 @@ Complete the TODO sections below.
 
 from pathlib import Path
 
-
 def read_temperatures(filename):
     """
     Read temperature values from a text file.
@@ -49,12 +48,8 @@ def compute_average(values):
     Compute the average of a list of numbers.
     """
     # TODO: Replace this with a correct average calculation.
-    count = len(values)
-    sum = 0.0
-    for i in range(count):
-        sum = sum + values[i]
-    average = sum / count
-    return average
+    return 0.0
+
 
 
 def compute_minimum(values):
@@ -62,11 +57,7 @@ def compute_minimum(values):
     Compute the minimum value in a list of numbers.
     """
     # TODO: Replace this with a correct minimum calculation.
-    min = values[0]
-    for temperature in values:
-        if temperature < min:
-            min = temperature
-    return min
+    return 0.0
 
 
 def compute_maximum(values):
@@ -74,7 +65,6 @@ def compute_maximum(values):
     Compute the maximum value in a list of numbers.
     """
     # TODO: Replace this with a correct maximum calculation.
-
     return 0.0
 
 
@@ -90,9 +80,9 @@ def print_summary(values):
     # TODO: Improve this output formatting.
     print("Temperature Summary")
     print("Number of readings:", count)
-    print(f"Minimum temperature: {minimum: .2f}")
-    print(f"Maximum temperature: {maximum: .3f}")
-    print(f"Average temperature: {average: .4f}")
+    print("Minimum temperature:", minimum)
+    print("Maximum temperature:", maximum)
+    print("Average temperature:", average)
 
 
 def main():
