@@ -19,7 +19,11 @@ def find_minimum(values):
     return 0
 
 def count_above_threshold(values, threshold):
-    return 0
+    count = 0
+    for value in values:
+        if value > threshold:
+            count += 1
+    return count
 
 def print_report(values):
     average = calculate_average(values)
