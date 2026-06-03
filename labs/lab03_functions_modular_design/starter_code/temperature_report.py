@@ -23,7 +23,8 @@ def find_maximum(values):
     return max(values)
 
 def find_minimum(values):
-    return
+    # this will automatically give the lowest of temperatures
+    return min(values)
 
 def count_above_threshold(values, threshold):
     pass
