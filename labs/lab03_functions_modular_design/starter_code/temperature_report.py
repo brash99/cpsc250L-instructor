@@ -10,6 +10,7 @@ def read_temperatures(values):
     return(temperatures)
 
 def calculate_average(values):
+  #a value takes the length of the temperatures and sum is getting the some of all the temperature values and adding them and average is dividing that number by how many values there are.
     a = len(values)
     sum = 0.0
     for i in values:
@@ -18,10 +19,11 @@ def calculate_average(values):
     return(average)
 
 def find_maximum(values):
-    pass
+    #this will automatically give the highest of temperatures
+    return max(values)
 
 def find_minimum(values):
-    pass
+    return
 
 def count_above_threshold(values, threshold):
     pass
