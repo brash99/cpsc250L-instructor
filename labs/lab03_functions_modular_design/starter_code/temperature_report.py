@@ -1,8 +1,21 @@
-def read_temperatures(filename):
-    pass
+def read_temperatures(values):
+   #Opens file with a call "filename" and returns the temperature date from the txt file and skips over blanks.
+    temperatures = []
+    filename = "../data/june_temperatures.txt"
+    with open(filename, "r") as file:
+        for line in file:
+            line = line.strip()
+            if line != "":
+                temperatures.append(int(line))
+    return(temperatures)
 
 def calculate_average(values):
-    pass
+    a = len(values)
+    sum = 0.0
+    for i in values:
+        sum = sum + values[i]
+    average = sum / a
+    return(average)
 
 def find_maximum(values):
     pass
