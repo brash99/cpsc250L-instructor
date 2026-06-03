@@ -1,5 +1,5 @@
 def read_temperatures(values):
-   #Opens file with a call "filename" and returns the temperature date from the txt file and skips over blanks.
+   #Opens file with a call "filename" and returns the temperature data from the txt file and skips over blanks.
     temperatures = []
     filename = "../data/june_temperatures.txt"
     with open(filename, "r") as file:
@@ -24,10 +24,11 @@ def find_maximum(values):
     return max(values)
 
 def find_minimum(values):
-    # this will automatically give the highest of temperatures
+    # this will automatically give the lowest of temperatures
     return min(values)
 
 def count_above_threshold(values, threshold):
+    #for the temperatures that go above 80 it will count how many there are.
     count = 0
     for i in values:
         if i > threshold:
@@ -35,6 +36,7 @@ def count_above_threshold(values, threshold):
     return count
 
 def print_report(values):
+   # this prints the data and result from all previous functions and gives the final product
     print("Temperature Report")
     print("------------------")
     print(f'Average temperature: {calculate_average(values)}')
