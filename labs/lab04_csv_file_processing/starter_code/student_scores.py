@@ -3,6 +3,7 @@
 # Complete this program so that it reads quiz score data from a CSV file,
 # cleans the data, computes student averages, and prints a report.
 
+import csv
 
 def clean_score(score_text):
     """
@@ -10,7 +11,15 @@ def clean_score(score_text):
 
     If the score is missing or invalid, return None.
     """
-    pass
+    if score_text is None:
+        return None
+    score_text = score_text.strip()
+    if score_text == "":
+        return None
+    try:
+        return int(score_text)
+    except ValueError:
+        return None
 
 
 def calculate_average(scores):
@@ -19,7 +28,12 @@ def calculate_average(scores):
 
     If the list is empty, return None.
     """
-    pass
+    if scores is None:
+        return None
+    valid_scores = [score for score in scores if score is not None]
+    if not valid_scores:
+        return None
+    return sum(valid_scores) / len(valid_scores)
 
 
 def read_scores(filename):
@@ -48,7 +62,25 @@ def read_scores(filename):
         ...
     ]
     """
-    pass
+
+    with open(filename) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        records = []
+        # skip header
+        csv_header = next(csv_reader)
+        for row in csv_reader:
+            name = row[0]
+            score_texts = row[1:]
+            scores = [clean_score(score) for score in score_texts]
+            average = calculate_average(scores)
+            record = {
+                "name": name,
+                "scores": scores,
+                "average": average
+            }
+            records.append(record)
+    return records
+
 
 
 def letter_grade(average):
@@ -64,14 +96,29 @@ def letter_grade(average):
 
     If the average is None, return "N/A".
     """
-    pass
+    if average is None:
+        return "N/A"
+    elif average >= 87:
+        return "A"
+    elif average >= 77:
+        return "B"
+    elif average >= 67:
+        return "C"
+    elif average >= 57:
+        return "D"
+    else:
+        return "F"
 
 
 def print_student_report(records):
     """
     Print one line of output for each student.
     """
-    pass
+    for record in records:
+        name = record["name"]
+        average = record["average"]
+        grade = letter_grade(average)
+        print(f"{name}: Average = {average:.2f} Grade = {grade}")
 
 
 def print_class_summary(records):
@@ -84,7 +131,16 @@ def print_class_summary(records):
         highest average
         lowest average
     """
-    pass
+    averages = [record["average"] for record in records if record["average"] is not None]
+    num_students = len(records)
+    class_average = calculate_average(averages)
+    highest_average = max(averages) if averages else None
+    lowest_average = min(averages) if averages else None
+
+    print(f"Number of students: {num_students}")
+    print(f"Class average: {class_average:.2f}" if class_average is not None else "Class average: N/A")
+    print(f"Highest average: {highest_average:.2f}" if highest_average is not None else "Highest average: N/A")
+    print(f"Lowest average: {lowest_average:.2f}" if lowest_average is not None else "Lowest average: N/A")
 
 
 def main():
