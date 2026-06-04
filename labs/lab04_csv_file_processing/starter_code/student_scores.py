@@ -46,6 +46,21 @@ def read_scores(filename):
         "name": student name
         "scores": list of valid numeric quiz scores
         "average": student average
+
+    So, the returned list of dictionaries should look like:
+    [
+        {
+            "name": "Alice",
+            "scores": [85, 90, 78],
+            "average": 84.33
+        },
+        {
+            "name": "Bob",
+            "scores": [92, None, 88],
+            "average": 90.0
+        },
+        ...
+    ]
     """
 
     with open(filename) as csv_file:
