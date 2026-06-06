@@ -35,6 +35,8 @@ class TimeDuration:
         """
         pass
 
-    # Optional extension:
-    # def __add__(self, other):
-    #     pass
+    def __add__(self, other):
+        """
+        Return a new TimeDuration object that is the sum of this duration and the other duration.
+        """
+        pass
