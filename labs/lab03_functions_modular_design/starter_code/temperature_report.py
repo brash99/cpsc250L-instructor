@@ -1,5 +1,5 @@
 def read_temperatures(values):
-   #Opens file with a call "filename" and returns the temperature data from the txt file and skips over blanks.
+    #Opens file with a call "filename" and returns the temperature data from the txt file and skips over blanks.
     temperatures = []
     filename = "../data/june_temperatures.txt"
     with open(filename, "r") as file:
@@ -9,9 +9,8 @@ def read_temperatures(values):
                 temperatures.append(int(line))
     return temperatures
 
-
 def calculate_average(values):
-  #a value takes the length of the temperatures and sum is getting the some of all the temperature values and adding them and average is dividing that number by how many values there are.
+    #a value takes the length of the temperatures and sum is getting the some of all the temperature values and adding them and average is dividing that number by how many values there are.
     a = len(values)
     sum = 0.0
     for i in range(a):
@@ -36,7 +35,7 @@ def count_above_threshold(values, threshold):
     return count
 
 def print_report(values):
-   # this prints the data and result from all previous functions and gives the final product
+    # this prints the data and result from all previous functions and gives the final product
     print("Temperature Report")
     print("------------------")
     print(f'Average temperature: {calculate_average(values)}')
