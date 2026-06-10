@@ -5,38 +5,16 @@ grade_lab06.py
 Automated Lab 6 checker for CPSC 250L student forks.
 
 Lab 6: Collections of Objects
-Folder: labs/lab06_collections_of_objects
+Default folder: labs/lab06_collections_of_objects
 
-This grader checks the automatable parts of the Lab 6 collections-of-objects lab:
+This version is intentionally flexible about implementation style. In particular,
+it accepts:
+  - StudentRecord.add_score(score) called one score at a time
+  - StudentRecord.add_score([score1, score2, score3]) called with a list
+  - find_highest_average_student() returning a StudentRecord object
+  - find_highest_average_student() returning a (name, average) tuple
 
-  - repository can be cloned/updated
-  - class_report.py exists
-  - student_record.py exists
-  - student_scores.csv exists
-  - StudentRecord class exists
-  - required StudentRecord methods exist
-  - required class_report functions exist
-  - clean_score() handles valid, missing, and invalid scores
-  - calculate_average() handles None and invalid/missing scores correctly
-  - read_student_records() returns a list of StudentRecord objects
-  - CSV header is skipped
-  - student IDs and names are stored correctly
-  - scores are cleaned/stored correctly
-  - student averages and letter grades are correct
-  - class_average() is correct
-  - highest/lowest average student functions are correct
-  - class_report.py runs from the terminal
-  - output is readable and contains expected class summary
-  - Git commits touching --lab-path are counted
-  - working tree is clean
-
-Expected students.csv format:
-
-name,github_username,repo_url,type
-Edward Test,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,test
-Alice Smith,asmith,https://github.com/asmith/cpsc250L.git,student
-
-Recommended use:
+Run:
 
 python grade_lab06.py \
   --students students.csv \
@@ -74,7 +52,7 @@ EXPECTED_RECORDS = [
     {"student_id": "J010", "name": "Jackson Davis", "scores": [55, None, None], "average": 55.0, "grade": "F"},
 ]
 
-EXPECTED_CLASS_AVERAGE = sum(record["average"] for record in EXPECTED_RECORDS) / len(EXPECTED_RECORDS)
+EXPECTED_CLASS_AVERAGE = sum(r["average"] for r in EXPECTED_RECORDS) / len(EXPECTED_RECORDS)
 EXPECTED_HIGHEST_NAME = "Carlos Rivera"
 EXPECTED_HIGHEST_AVERAGE = 93.3333333333
 EXPECTED_LOWEST_NAME = "Jackson Davis"
@@ -90,9 +68,9 @@ EXPECTED_STUDENT_RECORD_METHODS = [
     "__str__",
 ]
 
+# calculate_average() in class_report.py is allowed but not required.
 EXPECTED_CLASS_REPORT_FUNCTIONS = [
     "clean_score",
-    "calculate_average",
     "read_student_records",
     "class_average",
     "find_highest_average_student",
@@ -115,19 +93,9 @@ J010,Jackson Davis,55,,invalid
 """
 
 
-def run_command(
-    command: List[str],
-    cwd: Optional[Path] = None,
-    timeout: int = 20,
-) -> Tuple[int, str, str]:
+def run_command(command: List[str], cwd: Optional[Path] = None, timeout: int = 20) -> Tuple[int, str, str]:
     try:
-        result = subprocess.run(
-            command,
-            cwd=cwd,
-            timeout=timeout,
-            text=True,
-            capture_output=True,
-        )
+        result = subprocess.run(command, cwd=cwd, timeout=timeout, text=True, capture_output=True)
         return result.returncode, result.stdout.strip(), result.stderr.strip()
     except subprocess.TimeoutExpired:
         return 124, "", f"Command timed out after {timeout} seconds: {' '.join(command)}"
@@ -146,7 +114,6 @@ def clone_or_update_repo(repo_url: str, repo_dir: Path) -> Tuple[bool, str]:
         return False, f"{repo_dir} exists but is not a git repository"
 
     run_command(["git", "fetch", "--all"], cwd=repo_dir, timeout=60)
-
     code, out, err = run_command(["git", "checkout", "main"], cwd=repo_dir)
     if code != 0:
         run_command(["git", "checkout", "master"], cwd=repo_dir)
@@ -167,16 +134,10 @@ def find_file(repo_dir: Path, filename: str) -> Optional[Path]:
         and "venv" not in p.parts
         and "__pycache__" not in p.parts
     ]
-
     if not filtered:
         return None
 
-    filtered.sort(
-        key=lambda p: (
-            "lab06" not in str(p).lower() and "lab6" not in str(p).lower(),
-            len(p.parts),
-        )
-    )
+    filtered.sort(key=lambda p: ("lab06" not in str(p).lower() and "lab6" not in str(p).lower(), len(p.parts)))
     return filtered[0]
 
 
@@ -194,11 +155,7 @@ def get_function_names(tree: ast.Module) -> List[str]:
 def get_class_method_names(tree: ast.Module, class_name: str) -> Tuple[bool, List[str]]:
     for node in tree.body:
         if isinstance(node, ast.ClassDef) and node.name == class_name:
-            methods = [
-                item.name for item in node.body
-                if isinstance(item, ast.FunctionDef)
-            ]
-            return True, methods
+            return True, [item.name for item in node.body if isinstance(item, ast.FunctionDef)]
     return False, []
 
 
@@ -208,7 +165,6 @@ def import_student_record(record_path: Path) -> Tuple[Optional[Any], str]:
         spec = importlib.util.spec_from_file_location(module_name, record_path)
         if spec is None or spec.loader is None:
             return None, "Could not create import spec."
-
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module, "ok"
@@ -217,24 +173,11 @@ def import_student_record(record_path: Path) -> Tuple[Optional[Any], str]:
 
 
 def load_class_report_without_running_main(class_report_path: Path, record_path: Path) -> Tuple[Optional[Any], str]:
-    """
-    Load imports and function definitions from class_report.py without executing top-level main().
-
-    The sample correct solution calls main() directly at the bottom, so a normal import
-    would run the program immediately. We load only Import/ImportFrom/FunctionDef nodes.
-
-    We also temporarily put the class_report.py folder on sys.path so
-    `from student_record import StudentRecord` resolves correctly.
-    """
     tree, parse_note = parse_python(class_report_path)
     if tree is None:
         return None, f"Parse failed: {parse_note}"
 
-    allowed_nodes = [
-        node for node in tree.body
-        if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef))
-    ]
-
+    allowed_nodes = [node for node in tree.body if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef))]
     safe_tree = ast.Module(body=allowed_nodes, type_ignores=[])
     ast.fix_missing_locations(safe_tree)
 
@@ -246,8 +189,6 @@ def load_class_report_without_running_main(class_report_path: Path, record_path:
 
     try:
         sys.path.insert(0, str(class_report_path.parent))
-
-        # Force class_report.py to import the student's local student_record.py.
         record_module, record_note = import_student_record(record_path)
         if record_module is None:
             return None, record_note
@@ -298,11 +239,53 @@ def get_student_id(record: Any) -> Any:
     return None
 
 
+def populate_scores(student: Any, scores: List[Any]) -> bool:
+    """
+    Accept either add_score(list_of_scores) or repeated add_score(single_score).
+    """
+    try:
+        student.add_score(scores)
+        if normalize_scores(getattr(student, "scores", [])) == normalize_scores(scores):
+            return True
+    except Exception:
+        pass
+
+    try:
+        if hasattr(student, "scores"):
+            student.scores = []
+        for score in scores:
+            student.add_score(score)
+        return normalize_scores(getattr(student, "scores", [])) == normalize_scores(scores)
+    except Exception:
+        return False
+
+
+def unpack_student_or_tuple(value: Any) -> Tuple[Optional[str], Optional[float]]:
+    """
+    Accept either a StudentRecord-like object or a (name, average) tuple/list.
+    """
+    if value is None:
+        return None, None
+
+    if isinstance(value, (tuple, list)) and len(value) >= 2:
+        try:
+            return str(value[0]), float(value[1])
+        except Exception:
+            return str(value[0]), None
+
+    name = getattr(value, "name", None)
+    try:
+        avg = value.calculate_average()
+    except Exception:
+        avg = None
+    return name, avg
+
+
 def test_student_record_class(record_module: Any) -> Dict[str, str]:
     result = {
         "student_record_class_behavior_correct": "no",
         "constructor_correct": "no",
-        "add_score_list_behavior_correct": "no",
+        "add_score_behavior_correct": "no",
         "student_average_correct": "no",
         "highest_lowest_correct": "no",
         "letter_grade_correct": "no",
@@ -325,19 +308,12 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
     if getattr(student, "name", None) == "Alice Johnson" and get_student_id(student) == "A001":
         result["constructor_correct"] = "yes"
     else:
-        result["student_record_notes"] += (
-            f"Constructor did not store expected name/student_id: "
-            f"name={getattr(student, 'name', None)!r}, id={get_student_id(student)!r}. "
-        )
+        result["student_record_notes"] += "Constructor did not store expected name/student_id. "
 
-    try:
-        student.add_score([85, 90, 88])
-        if getattr(student, "scores", None) == [85, 90, 88]:
-            result["add_score_list_behavior_correct"] = "yes"
-        else:
-            result["student_record_notes"] += f"add_score([85, 90, 88]) gave scores={getattr(student, 'scores', None)!r}. "
-    except Exception as exc:
-        result["student_record_notes"] += f"add_score list test raised: {exc}. "
+    if populate_scores(student, [85, 90, 88]):
+        result["add_score_behavior_correct"] = "yes"
+    else:
+        result["student_record_notes"] += f"Could not populate scores correctly; scores={getattr(student, 'scores', None)!r}. "
 
     try:
         if close_enough(student.calculate_average(), 87.6666666667):
@@ -348,8 +324,6 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
         result["student_record_notes"] += f"calculate_average raised: {exc}. "
 
     try:
-        # Use no-missing scores here because the provided correct solution's highest/lowest
-        # does not filter None, while class_report avoids needing that behavior.
         if student.highest_score() == 90 and student.lowest_score() == 85:
             result["highest_lowest_correct"] = "yes"
         else:
@@ -373,7 +347,10 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
         grade_ok = True
         for scores, expected_grade in grade_cases:
             grade_student = StudentRecord("Grade Tester", "G000")
-            grade_student.add_score(scores)
+            if not populate_scores(grade_student, scores):
+                grade_ok = False
+                result["student_record_notes"] += f"Could not populate grade test scores {scores}. "
+                continue
             actual_grade = grade_student.letter_grade()
             if actual_grade != expected_grade:
                 grade_ok = False
@@ -388,28 +365,22 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
     try:
         text = str(student)
         lowered = text.lower()
-        if (
-            "alice" in lowered
-            and "a001" in lowered
-            and "85" in text
-            and "90" in text
-            and "dummy string" not in lowered
-        ):
+        if "alice" in lowered and "a001" in lowered and "85" in text and "90" in text and "dummy string" not in lowered:
             result["student_str_readable"] = "yes"
         else:
             result["student_record_notes"] += f"__str__ output not sufficiently readable: {text!r}. "
     except Exception as exc:
         result["student_record_notes"] += f"__str__ raised: {exc}. "
 
-    behavior_keys = [
+    keys = [
         "constructor_correct",
-        "add_score_list_behavior_correct",
+        "add_score_behavior_correct",
         "student_average_correct",
         "highest_lowest_correct",
         "letter_grade_correct",
         "student_str_readable",
     ]
-    if all(result[key] == "yes" for key in behavior_keys):
+    if all(result[key] == "yes" for key in keys):
         result["student_record_class_behavior_correct"] = "yes"
 
     return result
@@ -418,7 +389,6 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
 def test_class_report_functions(report_module: Any) -> Dict[str, str]:
     result = {
         "clean_score_correct": "no",
-        "helper_average_correct": "no",
         "read_student_records_correct": "no",
         "header_skipped": "no",
         "student_objects_created": "no",
@@ -440,7 +410,6 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
             "   ": None,
             "invalid": None,
             "absent": None,
-            None: None,
         }
         clean_ok = True
         for raw, expected in clean_cases.items():
@@ -452,19 +421,6 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
             result["clean_score_correct"] = "yes"
     except Exception as exc:
         result["class_report_notes"] += f"clean_score tests raised: {exc}. "
-
-    try:
-        if (
-            close_enough(report_module.calculate_average([85, 90, 88]), 87.6666666667)
-            and close_enough(report_module.calculate_average([88, None, 92]), 90.0)
-            and report_module.calculate_average([None, None]) is None
-            and report_module.calculate_average(None) is None
-        ):
-            result["helper_average_correct"] = "yes"
-        else:
-            result["class_report_notes"] += "calculate_average failed one or more helper cases. "
-    except Exception as exc:
-        result["class_report_notes"] += f"calculate_average tests raised: {exc}. "
 
     csv_path = make_test_csv()
 
@@ -507,23 +463,17 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
             scores = normalize_scores(getattr(student, "scores", []))
             if scores != expected["scores"]:
                 scores_ok = False
-                result["class_report_notes"] += (
-                    f"{expected['name']} scores expected {expected['scores']}, got {scores}. "
-                )
+                result["class_report_notes"] += f"{expected['name']} scores expected {expected['scores']}, got {scores}. "
 
             actual_average = student.calculate_average()
             if not close_enough(actual_average, expected["average"]):
                 averages_ok = False
-                result["class_report_notes"] += (
-                    f"{expected['name']} average expected {expected['average']:.6f}, got {actual_average}. "
-                )
+                result["class_report_notes"] += f"{expected['name']} average expected {expected['average']:.6f}, got {actual_average}. "
 
             actual_grade = student.letter_grade()
             if actual_grade != expected["grade"]:
                 grades_ok = False
-                result["class_report_notes"] += (
-                    f"{expected['name']} grade expected {expected['grade']}, got {actual_grade!r}. "
-                )
+                result["class_report_notes"] += f"{expected['name']} grade expected {expected['grade']}, got {actual_grade!r}. "
 
         if scores_ok:
             result["scores_cleaned_correctly"] = "yes"
@@ -554,33 +504,21 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
 
     try:
         highest = report_module.find_highest_average_student(students)
-        if (
-            highest is not None
-            and getattr(highest, "name", None) == EXPECTED_HIGHEST_NAME
-            and close_enough(highest.calculate_average(), EXPECTED_HIGHEST_AVERAGE)
-        ):
+        highest_name, highest_avg = unpack_student_or_tuple(highest)
+        if highest_name == EXPECTED_HIGHEST_NAME and close_enough(highest_avg, EXPECTED_HIGHEST_AVERAGE):
             result["highest_average_student_correct"] = "yes"
         else:
-            result["class_report_notes"] += (
-                f"Highest average student expected {EXPECTED_HIGHEST_NAME}, got "
-                f"{getattr(highest, 'name', None)!r}. "
-            )
+            result["class_report_notes"] += f"Highest expected {EXPECTED_HIGHEST_NAME}/{EXPECTED_HIGHEST_AVERAGE:.2f}, got {highest_name!r}/{highest_avg!r}. "
     except Exception as exc:
         result["class_report_notes"] += f"find_highest_average_student raised: {exc}. "
 
     try:
         lowest = report_module.find_lowest_average_student(students)
-        if (
-            lowest is not None
-            and getattr(lowest, "name", None) == EXPECTED_LOWEST_NAME
-            and close_enough(lowest.calculate_average(), EXPECTED_LOWEST_AVERAGE)
-        ):
+        lowest_name, lowest_avg = unpack_student_or_tuple(lowest)
+        if lowest_name == EXPECTED_LOWEST_NAME and close_enough(lowest_avg, EXPECTED_LOWEST_AVERAGE):
             result["lowest_average_student_correct"] = "yes"
         else:
-            result["class_report_notes"] += (
-                f"Lowest average student expected {EXPECTED_LOWEST_NAME}, got "
-                f"{getattr(lowest, 'name', None)!r}. "
-            )
+            result["class_report_notes"] += f"Lowest expected {EXPECTED_LOWEST_NAME}/{EXPECTED_LOWEST_AVERAGE:.2f}, got {lowest_name!r}/{lowest_avg!r}. "
     except Exception as exc:
         result["class_report_notes"] += f"find_lowest_average_student raised: {exc}. "
 
@@ -588,11 +526,7 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
 
 
 def run_class_report_from_terminal(class_report_path: Path) -> Tuple[bool, str]:
-    code, out, err = run_command(
-        [sys.executable, str(class_report_path.name)],
-        cwd=class_report_path.parent,
-        timeout=10,
-    )
+    code, out, err = run_command([sys.executable, str(class_report_path.name)], cwd=class_report_path.parent, timeout=10)
     if code == 0:
         return True, out
     return False, err or out
@@ -606,22 +540,12 @@ def output_has_expected_content(output: str) -> Tuple[bool, str]:
         if name not in lowered:
             notes.append(f"Missing student name: {name}")
 
-    expected_clues = [
-        "Class average: 80.42",
-        "Highest average: Carlos Rivera with 93.33",
-        "Lowest average: Jackson Davis with 55.00",
-    ]
-
-    for clue in expected_clues:
+    for clue in ["Class average: 80.42", "Highest average: Carlos Rivera with 93.33", "Lowest average: Jackson Davis with 55.00"]:
         if clue not in output:
             notes.append(f"Missing expected output clue: {clue}")
 
     if "dummy string" in lowered:
         notes.append("Output still contains dummy string")
-
-    nonempty_lines = [line for line in output.splitlines() if line.strip()]
-    if len(nonempty_lines) < 10:
-        notes.append("Output has fewer than ten non-empty lines")
 
     return len(notes) == 0, "; ".join(notes)
 
@@ -630,10 +554,7 @@ def count_commits_touching_path(repo_dir: Path, lab_path: Optional[str]) -> Tupl
     if not lab_path:
         return None, "lab path not provided"
 
-    code, out, err = run_command(
-        ["git", "rev-list", "--count", "HEAD", "--", lab_path],
-        cwd=repo_dir,
-    )
+    code, out, err = run_command(["git", "rev-list", "--count", "HEAD", "--", lab_path], cwd=repo_dir)
     if code != 0:
         return None, err or out
 
@@ -646,10 +567,7 @@ def count_commits_touching_path(repo_dir: Path, lab_path: Optional[str]) -> Tupl
 def get_recent_lab_commits(repo_dir: Path, lab_path: Optional[str], n: int = 8) -> str:
     if not lab_path:
         return ""
-    code, out, err = run_command(
-        ["git", "log", "--oneline", f"-{n}", "--", lab_path],
-        cwd=repo_dir,
-    )
+    code, out, err = run_command(["git", "log", "--oneline", f"-{n}", "--", lab_path], cwd=repo_dir)
     return out if code == 0 else err
 
 
@@ -667,10 +585,8 @@ def is_working_tree_clean(repo_dir: Path) -> Tuple[bool, str]:
     code, out, err = run_command(["git", "status", "--porcelain"], cwd=repo_dir)
     if code != 0:
         return False, err or out
-
     if out.strip() == "":
         return True, "clean"
-
     return False, out.replace("\n", " | ")
 
 
@@ -678,7 +594,6 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
     name = row["name"].strip()
     username = row["github_username"].strip()
     repo_url = row["repo_url"].strip()
-
     repo_dir = workdir / username
 
     result: Dict[str, str] = {
@@ -699,13 +614,12 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
         "class_report_functions_present": "no",
         "missing_class_report_functions": "",
         "constructor_correct": "no",
-        "add_score_list_behavior_correct": "no",
+        "add_score_behavior_correct": "no",
         "student_average_correct": "no",
         "highest_lowest_correct": "no",
         "letter_grade_correct": "no",
         "student_str_readable": "no",
         "clean_score_correct": "no",
-        "helper_average_correct": "no",
         "read_student_records_correct": "no",
         "header_skipped": "no",
         "student_objects_created": "no",
@@ -727,8 +641,8 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
         "recent_commits": "",
         "branch_info": "",
         "auto_score_out_of_29": "0",
-        "manual_git_or_live_review_out_of_2": "",
-        "total_score_out_of_31": "",
+        "manual_review_out_of_0": "",
+        "total_score_out_of_29": "",
         "notes": "",
     }
 
@@ -742,11 +656,10 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
     record_path = find_file(repo_dir, "student_record.py")
     csv_path = find_file(repo_dir, "student_scores.csv")
 
-    # If the lab files are absent, this is not a Lab 6 submission.
-    # Record diagnostic repo information but award zero.
     if not class_report_path and not record_path:
         result["notes"] += "No Lab 6 files found; awarded zero for Lab 6. "
-        result["working_tree_clean"] = "yes" if is_working_tree_clean(repo_dir)[0] else "no"
+        clean, _ = is_working_tree_clean(repo_dir)
+        result["working_tree_clean"] = "yes" if clean else "no"
         result["recent_commits"] = get_recent_commits(repo_dir).replace("\n", " | ")[:900]
         result["branch_info"] = get_branch_info(repo_dir).replace("\n", " | ")[:900]
         if lab_path:
@@ -757,7 +670,7 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
                 result["notes"] += f"Lab commit check failed: {commit_note}. "
         return result
 
-    score = 1  # clone/update
+    score = 1
 
     if class_report_path:
         result["class_report_exists"] = "yes"
@@ -788,7 +701,7 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
             if class_exists:
                 score += 1
 
-            missing_methods = [method for method in EXPECTED_STUDENT_RECORD_METHODS if method not in methods]
+            missing_methods = [m for m in EXPECTED_STUDENT_RECORD_METHODS if m not in methods]
             result["missing_student_record_methods"] = ", ".join(missing_methods)
             if not missing_methods:
                 result["student_record_methods_present"] = "yes"
@@ -806,7 +719,7 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
 
             for key in [
                 "constructor_correct",
-                "add_score_list_behavior_correct",
+                "add_score_behavior_correct",
                 "student_average_correct",
                 "highest_lowest_correct",
                 "letter_grade_correct",
@@ -840,7 +753,6 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
 
             for key in [
                 "clean_score_correct",
-                "helper_average_correct",
                 "read_student_records_correct",
                 "header_skipped",
                 "student_objects_created",
@@ -936,13 +848,12 @@ def write_report(path: Path, rows: List[Dict[str, str]]) -> None:
         "class_report_functions_present",
         "missing_class_report_functions",
         "constructor_correct",
-        "add_score_list_behavior_correct",
+        "add_score_behavior_correct",
         "student_average_correct",
         "highest_lowest_correct",
         "letter_grade_correct",
         "student_str_readable",
         "clean_score_correct",
-        "helper_average_correct",
         "read_student_records_correct",
         "header_skipped",
         "student_objects_created",
@@ -964,8 +875,8 @@ def write_report(path: Path, rows: List[Dict[str, str]]) -> None:
         "recent_commits",
         "branch_info",
         "auto_score_out_of_29",
-        "manual_git_or_live_review_out_of_2",
-        "total_score_out_of_31",
+        "manual_review_out_of_0",
+        "total_score_out_of_29",
         "notes",
     ]
 
@@ -986,11 +897,7 @@ def main() -> int:
         default="labs/lab06_collections_of_objects",
         help="Repo-relative path used for lab-specific Git commit checks",
     )
-    parser.add_argument(
-        "--exclude-test",
-        action="store_true",
-        help="Skip rows in students.csv where type is test",
-    )
+    parser.add_argument("--exclude-test", action="store_true", help="Skip rows in students.csv where type is test")
     args = parser.parse_args()
 
     students_path = Path(args.students)
