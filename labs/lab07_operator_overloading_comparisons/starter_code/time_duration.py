@@ -31,15 +31,19 @@ class TimeDuration:
         """
         Return True if two TimeDuration objects represent the same duration.
         """
-        if TimeDuration.total_seconds(self) == other.total_seconds():
+        if self.total_seconds() == other.total_seconds():
             return True
+        else:
+            return False
 
     def __lt__(self, other):
         """
         Return True if this duration is shorter than the other duration.
         """
-        if TimeDuration.total_seconds(self) < other.total_seconds():
+        if self.total_seconds() < other.total_seconds():
             return True
+        else:
+            return False
 
     def __add__(self, other):
         """
