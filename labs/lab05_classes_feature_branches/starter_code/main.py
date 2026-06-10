@@ -27,6 +27,13 @@ def main():
     print(ben)
     print()
     print(carlos)
+    print()
 
+    for student in [alice, ben, carlos]:
+        print(f"{student.name}: "
+              f"    Average: {student.calculate_average():.2f} "
+              f"    High: {student.highest_score():.2f} "
+              f"    Low: {student.lowest_score():.2f} "
+              f"    Grade: {student.letter_grade()}")
 
 main()
