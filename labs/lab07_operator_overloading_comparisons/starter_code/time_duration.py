@@ -24,7 +24,7 @@ class TimeDuration:
         Return a readable string such as:
             1h 05m 09s
         """
-        return (f' {self.hours}h {self.minutes}m {self.seconds}s')
+        return (f' {self.hours}h {self.minutes:02d}m {self.seconds:02d}s')
 
 
     def __eq__(self, other):
