@@ -1,0 +1,27 @@
+name,github_username,repo_url,type,clone_or_update,time_duration_exists,time_duration_path,race_results_exists,race_results_path,time_duration_class_exists,time_duration_methods_present,missing_time_duration_methods,constructor_stores_attributes,total_seconds_correct,str_format_correct,equality_correct,less_than_correct,sorting_works,add_returns_time_duration,add_normalizes_correctly,add_chain_sum_correct,comparisons_use_total_duration,original_objects_unchanged_by_add,race_results_runs_from_terminal,race_results_output_readable,race_results_output,lab_path_checked,commits_touching_lab,meaningful_lab_commit_evidence,recent_lab_commits,working_tree_clean,recent_commits,branch_info,auto_score_out_of_20,manual_review_out_of_0,total_score_out_of_20,notes
+Edward Brash,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,test,yes,yes,labs/lab07_operator_overloading_comparisons/starter_code/time_duration.py,yes,labs/lab07_operator_overloading_comparisons/starter_code/race_results.py,yes,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Original race times:
+0h 42m 15s
+0h 39m 58s
+0h 44m 03s
+0h 41m 20s
+0h 39m 58s
+
+Sorted race times:
+0h 39m 58s
+0h 39m 58s
+0h 41m 20s
+0h 42m 15s
+0h 44m 03s
+
+Fastest time: 0h 39m 58s
+Slowest time: 0h 44m 03s
+
+Equality test:
+0h 39m 58s == 0h 39m 58s ? True
+
+Addition test:
+Total time for all runners: 3h 27m 34s",labs/lab07_operator_overloading_comparisons,3,yes,247abde Lab 7 updates | 90d68bc Lab 7 | 16e5365 Add Week 2 object-oriented programming labs,yes,247abde Lab 7 updates | 7ba3958 Lab 7 | 02c272e complete program | 7d0cde5 complete program | fc3f33f complete program | 90d68bc Lab 7 | c532163 Lab 6 | 9fc44d7 updates | 28c2627 switch upstream to instructor repo | ec963b6 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main |   remotes/origin/student_fix,20,,,Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. 
+Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,2dac00b Finished calculations | d7ab4d2 Calculations are finished with adjustments with instructions | 64dcc4d Prints student records successfully with scores | 320d631 Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5 | e1281b4 update current lab | 8ac6067 update current lab | c6afd04 updates | 6c317fe Merge branch 'main' of github.com:brash99/cpsc250L,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
+Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,367d3bd finished print_class_report function. | 7bac42d Began print_class_report function. Can currently print out all students and give the class average. | 6232d43 Completed the read_student_records file. Program can now confidently create StudentRecord objects | d270d99 Completed the test type for student_record.py | 5ee3b5a Added self statements to the __init__ function. | 8ee388d Completed the calculate_average function and the rest of the program. | 171d039 Added a lower limit to the add_score method. | 96298ae Added an upper limit to the add_score method. | dedaa85 Completed student_record.py constructor. | d080efd Merge branch 'brash99:main' into main,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,f5462b0 progress so far | f496866 progress so far | a090154 progress so far | c4ac18c Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5 | e1281b4 update current lab | 8ac6067 update current lab | c6afd04 updates | 6c317fe Merge branch 'main' of github.com:brash99/cpsc250L,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,7501f86 Merge remote-tracking branch 'origin/main' | 8ecadf6 Completed Assignment | 3b7bb65 complete program | 62a5238 Read file and calculate average | b0c8f4e lab 1 updates | 7847f74 lab 1 updates | eeb3496 lab 1 updates | 2a4b766 Created working max temp calc | d8146a1 Created working max temp calc | 609522b Created working output formatting,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
