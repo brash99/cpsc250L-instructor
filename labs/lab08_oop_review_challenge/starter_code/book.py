@@ -38,7 +38,7 @@ class Book:
             f"rating: {self.rating}/5, stock: {self.quantity}"
         )
 
-
+#
 
     def __lt__(self, other):
         """
