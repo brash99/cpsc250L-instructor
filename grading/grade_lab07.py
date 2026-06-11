@@ -119,6 +119,76 @@ def find_file(repo_dir: Path, filename: str) -> Optional[Path]:
     return filtered[0]
 
 
+
+
+def find_lab7_file_pair(repo_dir: Path, lab_path: Optional[str] = None) -> Tuple[Optional[Path], Optional[Path], str]:
+    """Find the TimeDuration/race_results pair to grade.
+
+    Some student repos can contain more than one copy of time_duration.py, for
+    example an old starter/template copy plus the real submitted copy.  The
+    earlier grader selected files independently with rglob(), which could pair a
+    stale template time_duration.py with the correct race_results.py and produce
+    an artificially low score.
+
+    Selection priority:
+      1. directories under --lab-path containing both required files
+      2. any directory whose path contains lab07/lab7 and contains both files
+      3. any directory containing both files
+      4. fallback to the old individual find_file behavior
+    """
+    excluded_parts = {".git", ".venv", "venv", "__pycache__"}
+
+    def usable(path: Path) -> bool:
+        return not any(part in excluded_parts for part in path.parts)
+
+    time_files = [p for p in repo_dir.rglob("time_duration.py") if usable(p)]
+    race_files = [p for p in repo_dir.rglob("race_results.py") if usable(p)]
+
+    by_dir = {}
+    for p in time_files:
+        by_dir.setdefault(p.parent, {})["time"] = p
+    for p in race_files:
+        by_dir.setdefault(p.parent, {})["race"] = p
+
+    paired_dirs = [d for d, files in by_dir.items() if "time" in files and "race" in files]
+
+    def rel_str(path: Path) -> str:
+        try:
+            return str(path.relative_to(repo_dir))
+        except ValueError:
+            return str(path)
+
+    def score_dir(path: Path) -> Tuple[int, int, str]:
+        rel = rel_str(path).lower()
+        supplied = lab_path.lower().rstrip("/") if lab_path else ""
+
+        # Lower tuple is better.
+        if supplied and (rel == supplied or rel.startswith(supplied + "/")):
+            primary = 0
+        elif "lab07" in rel or "lab7" in rel:
+            primary = 1
+        else:
+            primary = 2
+
+        # Avoid obvious template/starter/archive folders when another paired
+        # folder exists, but do not make this an absolute exclusion because some
+        # labs may legitimately call the working folder starter_code.
+        penalty = 0
+        for token in ["template", "templates", "starter", "starter_code", "old", "archive", "solution"]:
+            if token in rel:
+                penalty += 1
+
+        return (primary, penalty, rel)
+
+    if paired_dirs:
+        paired_dirs.sort(key=score_dir)
+        chosen = paired_dirs[0]
+        return by_dir[chosen]["time"], by_dir[chosen]["race"], f"paired files selected from {rel_str(chosen)}"
+
+    time_path = find_file(repo_dir, "time_duration.py")
+    race_path = find_file(repo_dir, "race_results.py")
+    return time_path, race_path, "fallback independent file search used"
+
 def infer_lab_path_from_found_files(repo_dir: Path, *paths: Optional[Path]) -> Optional[str]:
     """Infer the lab folder from discovered Lab 7 files.
 
@@ -538,10 +608,10 @@ def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -
         result["notes"] = message
         return result
 
-    time_duration_path = find_file(repo_dir, "time_duration.py")
-    race_results_path = find_file(repo_dir, "race_results.py")
+    time_duration_path, race_results_path, file_selection_note = find_lab7_file_pair(repo_dir, lab_path)
 
     effective_lab_path = infer_lab_path_from_found_files(repo_dir, time_duration_path, race_results_path) or lab_path
+    result["notes"] += file_selection_note + ". "
     result["lab_path_checked"] = effective_lab_path or ""
 
     if lab_path and effective_lab_path and lab_path != effective_lab_path:

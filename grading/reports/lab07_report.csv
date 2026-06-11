@@ -20,8 +20,80 @@ Equality test:
 0h 39m 58s == 0h 39m 58s ? True
 
 Addition test:
-Total time for all runners: 3h 27m 34s",labs/lab07_operator_overloading_comparisons,3,yes,247abde Lab 7 updates | 90d68bc Lab 7 | 16e5365 Add Week 2 object-oriented programming labs,yes,247abde Lab 7 updates | 7ba3958 Lab 7 | 02c272e complete program | 7d0cde5 complete program | fc3f33f complete program | 90d68bc Lab 7 | c532163 Lab 6 | 9fc44d7 updates | 28c2627 switch upstream to instructor repo | ec963b6 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main |   remotes/origin/student_fix,20,,,Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. 
-Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,2dac00b Finished calculations | d7ab4d2 Calculations are finished with adjustments with instructions | 64dcc4d Prints student records successfully with scores | 320d631 Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5 | e1281b4 update current lab | 8ac6067 update current lab | c6afd04 updates | 6c317fe Merge branch 'main' of github.com:brash99/cpsc250L,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
-Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,367d3bd finished print_class_report function. | 7bac42d Began print_class_report function. Can currently print out all students and give the class average. | 6232d43 Completed the read_student_records file. Program can now confidently create StudentRecord objects | d270d99 Completed the test type for student_record.py | 5ee3b5a Added self statements to the __init__ function. | 8ee388d Completed the calculate_average function and the rest of the program. | 171d039 Added a lower limit to the add_score method. | 96298ae Added an upper limit to the add_score method. | dedaa85 Completed student_record.py constructor. | d080efd Merge branch 'brash99:main' into main,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
-Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,f5462b0 progress so far | f496866 progress so far | a090154 progress so far | c4ac18c Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5 | e1281b4 update current lab | 8ac6067 update current lab | c6afd04 updates | 6c317fe Merge branch 'main' of github.com:brash99/cpsc250L,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
-Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,no,,no,,no,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab07_collections_of_objects,0,no,,yes,7501f86 Merge remote-tracking branch 'origin/main' | 8ecadf6 Completed Assignment | 3b7bb65 complete program | 62a5238 Read file and calculate average | b0c8f4e lab 1 updates | 7847f74 lab 1 updates | eeb3496 lab 1 updates | 2a4b766 Created working max temp calc | d8146a1 Created working max temp calc | 609522b Created working output formatting,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 7 files found; awarded zero for Lab 7. 
+Total time for all runners: 3h 27m 34s",labs/lab07_operator_overloading_comparisons,3,yes,247abde Lab 7 updates | 90d68bc Lab 7 | 16e5365 Add Week 2 object-oriented programming labs,yes,247abde Lab 7 updates | 7ba3958 Lab 7 | 02c272e complete program | 7d0cde5 complete program | fc3f33f complete program | 90d68bc Lab 7 | c532163 Lab 6 | 9fc44d7 updates | 28c2627 switch upstream to instructor repo | ec963b6 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main |   remotes/origin/student_fix,20,,,paired files selected from labs/lab07_operator_overloading_comparisons/starter_code. Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. 
+Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab07_operator_overloading_comparisons/starter_code/time_duration.py,yes,labs/lab07_operator_overloading_comparisons/starter_code/race_results.py,yes,yes,,yes,yes,no,yes,no,no,yes,no,no,no,yes,yes,no,"Original race times:
+0h 42m 15s
+0h 39m 58s
+0h 44m 3s
+0h 41m 20s
+0h 39m 58s
+
+Sorted race times:
+0h 44m 3s
+0h 42m 15s
+0h 41m 20s
+0h 39m 58s
+0h 39m 58s
+
+Fastest time: 0h 44m 3s
+Slowest time: 0h 39m 58s
+
+Equality test:
+0h 39m 58s == 0h 39m 58s ? True",labs/lab07_operator_overloading_comparisons,2,yes,2c02787 Returned fastest and slowest with sorted | 2857863 Add Lab 07 Template,yes,2c02787 Returned fastest and slowest with sorted | 10667c0 Merge branch 'brash99:main' into main | 2857863 Add Lab 07 Template | 2dac00b Finished calculations | d7ab4d2 Calculations are finished with adjustments with instructions | 64dcc4d Prints student records successfully with scores | 320d631 Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5 | e1281b4 update current lab,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,13,,,"paired files selected from labs/lab07_operator_overloading_comparisons/starter_code. Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. str(1,5,9) expected '1h 05m 09s', got '1h 5m 9s'. str(3,0,4) expected '3h 00m 04s', got '3h 0m 4s'. Less-than expected True for 0h 39m 58s < 0h 41m 20s, got False. Less-than expected False for 0h 41m 20s < 0h 39m 58s, got True. Sorting expected seconds [2398, 2398, 2480, 2535, 2643], got [2643, 2535, 2480, 2398, 2398]. __add__ did not normalize 1h20m50s + 0h45m30s correctly; got 1h 65m 80s with attributes 1/65/80. Chained addition expected 3h 27m 34s, got 0h 205m 154s. Comparisons do not appear to use total duration in seconds. Output check: Missing expected output clue: 0h 44m 03s; Missing expected output clue: Fastest time: 0h 39m 58s; Missing expected output clue: Slowest time: 0h 44m 03s; Missing expected output clue: Addition test:; Missing expected output clue: Total time for all runners: 3h 27m 34s. "
+Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab07_operator_overloading_comparisons/starter_code/time_duration.py,yes,labs/lab07_operator_overloading_comparisons/starter_code/race_results.py,yes,yes,,yes,yes,yes,yes,yes,yes,yes,no,no,yes,yes,yes,no,"Original race times:
+0h 42m 15s
+0h 39m 58s
+0h 44m 03s
+0h 41m 20s
+0h 39m 58s
+
+Sorted race times:
+0h 39m 58s
+0h 39m 58s
+0h 41m 20s
+0h 42m 15s
+0h 44m 03s
+
+Fastest time: 0h 39m 58s
+Slowest time: 0h 44m 03s
+
+Equality test:
+0h 39m 58s == 0h 39m 58s ? True",labs/lab07_operator_overloading_comparisons,5,yes,e4b4b52 Simplified total_seconds function. | 785c852 Corrected comparison functions. | c49ca68 Completed comparison functions. | d5b5592 Finished init function for time_duration.py | 2857863 Add Lab 07 Template,yes,e4b4b52 Simplified total_seconds function. | 785c852 Corrected comparison functions. | c49ca68 Completed comparison functions. | d5b5592 Finished init function for time_duration.py | 0cf6ae6 Merge branch 'brash99:main' into main | 2857863 Add Lab 07 Template | 367d3bd finished print_class_report function. | 7bac42d Began print_class_report function. Can currently print out all students and give the class average. | 6232d43 Completed the read_student_records file. Program can now confidently create StudentRecord objects | d270d99 Completed the test type for student_record.py,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,17,,,"paired files selected from labs/lab07_operator_overloading_comparisons/starter_code. Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. __add__ did not normalize 1h20m50s + 0h45m30s correctly; got 1h 65m 80s with attributes 1/65/80. Chained addition expected 3h 27m 34s, got 0h 205m 154s. Output check: Missing expected output clue: Addition test:; Missing expected output clue: Total time for all runners: 3h 27m 34s. "
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab07_operator_overloading_comparisons/starter_code/time_duration.py,yes,labs/lab07_operator_overloading_comparisons/starter_code/race_results.py,yes,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,"Original race times:
+0h 42m 15s
+0h 39m 58s
+0h 44m 03s
+0h 41m 20s
+0h 39m 58s
+
+Sorted race times:
+0h 39m 58s
+0h 39m 58s
+0h 41m 20s
+0h 42m 15s
+0h 44m 03s
+
+Fastest time: 0h 39m 58s
+Slowest time: 0h 44m 03s
+
+Equality test:
+0h 39m 58s == 0h 39m 58s ? True",labs/lab07_operator_overloading_comparisons,3,yes,cc76511 progress so far | 71cfafd progress so far | 2857863 Add Lab 07 Template,yes,cc76511 progress so far | 71cfafd progress so far | 6d7194a Merge branch 'brash99:main' into main | 2857863 Add Lab 07 Template | f5462b0 progress so far | f496866 progress so far | a090154 progress so far | c4ac18c Merge branch 'brash99:main' into main | 486483f Update lab 5 | 20f19ba Update lab 5,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,19,,,paired files selected from labs/lab07_operator_overloading_comparisons/starter_code. Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. Output check: Missing expected output clue: Addition test:; Missing expected output clue: Total time for all runners: 3h 27m 34s. 
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab07_operator_overloading_comparisons/starter_code/time_duration.py,yes,labs/lab07_operator_overloading_comparisons/starter_code/race_results.py,yes,yes,,yes,yes,no,yes,yes,yes,no,no,no,yes,no,yes,no,"Original race times:
+ 0h 42m 15s
+ 0h 39m 58s
+ 0h 44m 03s
+ 0h 41m 20s
+ 0h 39m 58s
+
+Sorted race times:
+ 0h 39m 58s
+ 0h 39m 58s
+ 0h 41m 20s
+ 0h 42m 15s
+ 0h 44m 03s
+
+Fastest time:  0h 39m 58s
+Slowest time:  0h 44m 03s
+
+Equality test:
+ 0h 39m 58s ==  0h 39m 58s ? True",labs/lab07_operator_overloading_comparisons,4,yes,07eb003 Completed Assignment | 2203c26 Completed Assignment | 6252f9a Completed Assignment | 2857863 Add Lab 07 Template,yes,07eb003 Completed Assignment | 2203c26 Completed Assignment | 6252f9a Completed Assignment | 793822d Merge remote-tracking branch 'upstream/main' | 2857863 Add Lab 07 Template | 7501f86 Merge remote-tracking branch 'origin/main' | 8ecadf6 Completed Assignment | 3b7bb65 complete program | 62a5238 Read file and calculate average | b0c8f4e lab 1 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,14,,,"paired files selected from labs/lab07_operator_overloading_comparisons/starter_code. Using inferred lab path labs/lab07_operator_overloading_comparisons for Git evidence instead of supplied --lab-path labs/lab07_collections_of_objects. str(1,5,9) expected '1h 05m 09s', got ' 1h 05m 09s'. str(0,39,58) expected '0h 39m 58s', got ' 0h 39m 58s'. str(3,0,4) expected '3h 00m 04s', got ' 3h 00m 04s'. __add__ normalization tests raised: maximum recursion depth exceeded. Chained addition test raised: maximum recursion depth exceeded. Output check: Missing expected output clue: Fastest time: 0h 39m 58s; Missing expected output clue: Slowest time: 0h 44m 03s; Missing expected output clue: 0h 39m 58s == 0h 39m 58s ? True; Missing expected output clue: Addition test:; Missing expected output clue: Total time for all runners: 3h 27m 34s. "

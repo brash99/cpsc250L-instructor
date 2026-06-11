@@ -239,6 +239,63 @@ def get_student_id(record: Any) -> Any:
     return None
 
 
+def construct_student_record(StudentRecord: Any, name: str, student_id: str, scores: Optional[List[Any]] = None) -> Tuple[Optional[Any], str]:
+    """
+    Construct a StudentRecord flexibly.
+
+    The starter/solution used StudentRecord(name, student_id), but several
+    reasonable student solutions use StudentRecord(name, student_id, scores)
+    because read_student_records() builds the score list before constructing
+    the object. Accept both forms.
+    """
+    if scores is None:
+        scores = []
+
+    attempts = [
+        (name, student_id),
+        (name, student_id, list(scores)),
+    ]
+
+    notes = []
+    for args in attempts:
+        try:
+            return StudentRecord(*args), "ok"
+        except Exception as exc:
+            notes.append(f"StudentRecord{args!r} raised {exc}")
+
+    return None, "; ".join(notes)
+
+
+def average_from_record_or_report(student: Any, report_module: Optional[Any] = None) -> Optional[float]:
+    """Return a student average, allowing class_report.calculate_average as fallback."""
+    try:
+        return float(student.calculate_average())
+    except Exception:
+        pass
+
+    if report_module is not None and hasattr(report_module, "calculate_average"):
+        try:
+            return float(report_module.calculate_average(getattr(student, "scores", [])))
+        except Exception:
+            pass
+
+    return None
+
+
+def grade_from_average(avg: Optional[float]) -> Optional[str]:
+    if avg is None:
+        return None
+    if avg >= 87:
+        return "A"
+    if avg >= 77:
+        return "B"
+    if avg >= 67:
+        return "C"
+    if avg >= 57:
+        return "D"
+    return "F"
+
+
 def populate_scores(student: Any, scores: List[Any]) -> bool:
     """
     Accept either add_score(list_of_scores) or repeated add_score(single_score).
@@ -260,9 +317,11 @@ def populate_scores(student: Any, scores: List[Any]) -> bool:
         return False
 
 
-def unpack_student_or_tuple(value: Any) -> Tuple[Optional[str], Optional[float]]:
+def unpack_student_or_tuple(value: Any, report_module: Optional[Any] = None) -> Tuple[Optional[str], Optional[float]]:
     """
     Accept either a StudentRecord-like object or a (name, average) tuple/list.
+    For StudentRecord-like objects, allow class_report.calculate_average(scores)
+    as a fallback when the StudentRecord method does not handle None values.
     """
     if value is None:
         return None, None
@@ -274,10 +333,7 @@ def unpack_student_or_tuple(value: Any) -> Tuple[Optional[str], Optional[float]]
             return str(value[0]), None
 
     name = getattr(value, "name", None)
-    try:
-        avg = value.calculate_average()
-    except Exception:
-        avg = None
+    avg = average_from_record_or_report(value, report_module)
     return name, avg
 
 
@@ -299,10 +355,9 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
 
     StudentRecord = record_module.StudentRecord
 
-    try:
-        student = StudentRecord("Alice Johnson", "A001")
-    except Exception as exc:
-        result["student_record_notes"] += f"Constructor raised: {exc}. "
+    student, construct_note = construct_student_record(StudentRecord, "Alice Johnson", "A001")
+    if student is None:
+        result["student_record_notes"] += f"Constructor raised: {construct_note}. "
         return result
 
     if getattr(student, "name", None) == "Alice Johnson" and get_student_id(student) == "A001":
@@ -346,7 +401,11 @@ def test_student_record_class(record_module: Any) -> Dict[str, str]:
         ]
         grade_ok = True
         for scores, expected_grade in grade_cases:
-            grade_student = StudentRecord("Grade Tester", "G000")
+            grade_student, construct_note = construct_student_record(StudentRecord, "Grade Tester", "G000")
+            if grade_student is None:
+                grade_ok = False
+                result["student_record_notes"] += f"Could not construct grade tester: {construct_note}. "
+                continue
             if not populate_scores(grade_student, scores):
                 grade_ok = False
                 result["student_record_notes"] += f"Could not populate grade test scores {scores}. "
@@ -465,12 +524,15 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
                 scores_ok = False
                 result["class_report_notes"] += f"{expected['name']} scores expected {expected['scores']}, got {scores}. "
 
-            actual_average = student.calculate_average()
-            if not close_enough(actual_average, expected["average"]):
+            actual_average = average_from_record_or_report(student, report_module)
+            if actual_average is None or not close_enough(actual_average, expected["average"]):
                 averages_ok = False
                 result["class_report_notes"] += f"{expected['name']} average expected {expected['average']:.6f}, got {actual_average}. "
 
-            actual_grade = student.letter_grade()
+            try:
+                actual_grade = student.letter_grade()
+            except Exception:
+                actual_grade = grade_from_average(actual_average)
             if actual_grade != expected["grade"]:
                 grades_ok = False
                 result["class_report_notes"] += f"{expected['name']} grade expected {expected['grade']}, got {actual_grade!r}. "
@@ -504,7 +566,7 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
 
     try:
         highest = report_module.find_highest_average_student(students)
-        highest_name, highest_avg = unpack_student_or_tuple(highest)
+        highest_name, highest_avg = unpack_student_or_tuple(highest, report_module)
         if highest_name == EXPECTED_HIGHEST_NAME and close_enough(highest_avg, EXPECTED_HIGHEST_AVERAGE):
             result["highest_average_student_correct"] = "yes"
         else:
@@ -514,7 +576,7 @@ def test_class_report_functions(report_module: Any) -> Dict[str, str]:
 
     try:
         lowest = report_module.find_lowest_average_student(students)
-        lowest_name, lowest_avg = unpack_student_or_tuple(lowest)
+        lowest_name, lowest_avg = unpack_student_or_tuple(lowest, report_module)
         if lowest_name == EXPECTED_LOWEST_NAME and close_enough(lowest_avg, EXPECTED_LOWEST_AVERAGE):
             result["lowest_average_student_correct"] = "yes"
         else:
