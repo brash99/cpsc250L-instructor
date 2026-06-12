@@ -1,0 +1,240 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{setspace}
+
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{CPSC 250}
+\lhead{Test 2}
+\rfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{CPSC 250 -- Python for Data Manipulation}}\\
+\vspace{0.2cm}
+{\Large \textbf{Test 2}}\\
+\vspace{0.5cm}
+Name:\rule{3in}{0.4pt}
+\end{center}
+
+\vspace{0.25cm}
+
+\textbf{Topics Covered:}
+Functions, Parameter Passing, Classes and Objects, Constructors,
+Collections of Objects, and Operator Overloading
+
+\vspace{0.25cm}
+
+\textbf{Total Points: 70}
+
+\hrule
+
+\vspace{0.3cm}
+
+\section*{Part I -- Multiple Choice (10 points)}
+
+Circle the best answer. Each question is worth 2 points.
+
+\begin{enumerate}
+
+\item What does the keyword \code{self} refer to inside a class?
+
+\begin{enumerate}[label=\Alph*.]
+\item The class itself
+\item The current object
+\item A constructor
+\item A list of objects
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\item What is the purpose of the \code{__init__()} method?
+
+\begin{enumerate}[label=\Alph*.]
+\item Print an object
+\item Compare two objects
+\item Initialize an object when it is created
+\item Delete an object
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\item What is the purpose of the \code{__str__()} method?
+
+\begin{enumerate}[label=\Alph*.]
+\item Create an object
+\item Return a string representation of an object
+\item Compare two objects
+\item Modify an object
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\item If a class defines an \code{__eq__()} method, which operator uses it?
+
+\begin{enumerate}[label=\Alph*.]
+\item \code{+}
+\item \code{*}
+\item \code{==}
+\item \code{=}
+\end{enumerate}
+
+\end{enumerate}
+
+\newpage
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+
+\item Which statement creates a new object named \code{book}?
+
+\begin{enumerate}[label=\Alph*.]
+\item \code{book = Book}
+\item \code{Book = book()}
+\item \code{book = Book()}
+\item \code{create Book()}
+\end{enumerate}
+
+\end{enumerate}
+
+\newpage
+
+\section*{Part II -- Find the Error (15 points)}
+
+Each code segment contains one or more errors. Identify and correct them.
+
+\vspace{0.3cm}
+
+\textbf{6.}
+
+\begin{verbatim}
+class Student:
+    def __init__(name):
+        self.name = name
+\end{verbatim}
+
+\vspace{1.5in}
+
+\textbf{7.}
+
+\begin{verbatim}
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+s = Student
+print(s.name)
+\end{verbatim}
+
+\vspace{1.5in}
+
+\textbf{8.}
+
+\begin{verbatim}
+students = []
+
+students.append(Student)
+
+print(students[0].name)
+\end{verbatim}
+
+\vspace{1.5in}
+
+\newpage
+
+\section*{Part III -- Code Writing (20 points)}
+
+\textbf{9.} Write a class called \code{Book} with the following:
+
+\begin{itemize}
+\item \code{title}
+\item \code{author}
+\item constructor, \code{__init__()}
+\item \code{__str__()} method
+\end{itemize}
+
+\vspace{5in}
+
+\newpage
+
+\textbf{10.} Given the \code{Book} class from Question 9, write code that:
+
+\begin{itemize}
+\item Creates three \code{Book} objects
+\item Stores them in a list called \code{library}
+\item Uses a loop to print all books
+\end{itemize}
+
+\vspace{6in}
+
+\newpage
+
+\section*{Part IV -- Code Commentary (15 points)}
+
+Write comments describing what each section of code does.
+
+\vspace{0.3cm}
+
+\begin{verbatim}
+# _______________________________________
+
+class Student:
+
+# _______________________________________
+
+    def __init__(self, name):
+        self.name = name
+
+# _______________________________________
+
+students = []
+
+# _______________________________________
+
+students.append(Student("Alice"))
+
+# _______________________________________
+
+for s in students:
+    print(s)
+\end{verbatim}
+
+\vspace{2in}
+
+\newpage
+
+\section*{Part V -- Short Answer (10 points)}
+
+\textbf{11.} Explain the difference between a class and an object.
+
+\vspace{2.5in}
+
+\textbf{12.} Explain why a list of objects is often more useful than creating many separate variables such as
+
+\begin{verbatim}
+student1
+student2
+student3
+\end{verbatim}
+
+Give at least one advantage.
+
+\vspace{2.5in}
+
+\hrule
+
+\vspace{0.2cm}
+
+\begin{center}
+\textbf{End of Test}
+\end{center}
+
+\end{document}
