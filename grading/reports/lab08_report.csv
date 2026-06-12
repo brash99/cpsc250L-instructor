@@ -50,7 +50,8 @@ aed182b Lab 8 updates
 7ba3958 Lab 7
 7d4f424 add booklist csv file
 3c74bc1 Update Lab 8
-16e5365 Add Week 2 object-oriented programming labs",no,"aba2352 Lab 8 updates
+16e5365 Add Week 2 object-oriented programming labs",no,"ece9334 Lab 8 updates
+aba2352 Lab 8 updates
 6e08479 Lab 8 updates
 aed182b Lab 8 updates
 247abde Lab 7 updates
@@ -58,11 +59,10 @@ aed182b Lab 8 updates
 02c272e complete program
 7d0cde5 complete program
 fc3f33f complete program
-90d68bc Lab 7
-c532163 Lab 6","* main
+90d68bc Lab 7","* main
   remotes/origin/HEAD -> origin/main
   remotes/origin/main
-  remotes/origin/student_fix",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Using inferred lab path labs/lab08_oop_review_challenge for Git evidence instead of supplied --lab-path labs/lab08_collections_of_objects. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+  remotes/origin/student_fix",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
 --------------
 Kindred by Octavia Butler (1979) - Science Fiction, 264 pages, rating: 4.8 Stock: 0
@@ -122,7 +122,7 @@ d0bed20 Finished with calculations and ready for checking
 d7ab4d2 Calculations are finished with adjustments with instructions
 64dcc4d Prints student records successfully with scores","* main
   remotes/origin/HEAD -> origin/main
-  remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Using inferred lab path labs/lab08_oop_review_challenge for Git evidence instead of supplied --lab-path labs/lab08_collections_of_objects. Stock methods did not add/sell copies as expected. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+  remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Stock methods did not add/sell copies as expected. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,n/a,no,no,no,no,no,no,no,no,yes,yes,"Full Inventory
 --------------
 Kindred by Octavia Butler (1979) - Science Fiction, 264 pages, rating: 4.8/5, stock: 0
@@ -186,16 +186,57 @@ f3b0cc1 Initialized the __init__ function in book.py.
 bdf81fe Merge branch 'brash99:main' into main
 8c831fa Add Lab 8","* main
   remotes/origin/HEAD -> origin/main
-  remotes/origin/main",10,,10,paired files selected from labs/lab08_oop_review_challenge/starter_code. Using inferred lab path labs/lab08_oop_review_challenge for Git evidence instead of supplied --lab-path labs/lab08_collections_of_objects. create_inventory raised: create_inventory() missing 1 required positional argument: 'filename'. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
-Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,no,no,,yes,,no,no,no,no,n/a,no,no,no,no,no,no,no,no,no,no,"Traceback (most recent call last):
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/mercyed/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 3, in <module>
-    from book import Book
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/mercyed/labs/lab08_oop_review_challenge/starter_code/book.py"", line 37
-    def __lt__(self, other):
-    ^
-IndentationError: expected an indented block after function definition on line 34",labs/lab08_oop_review_challenge,3,yes,"3c9d917 progress so far
+  remotes/origin/main",10,,10,paired files selected from labs/lab08_oop_review_challenge/starter_code. create_inventory raised: create_inventory() missing 1 required positional argument: 'filename'. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
+--------------
+Kindred by Octavia Butler (1979) - Science Fiction, 264 pages, rating: 4.8/5, stock: 0
+Parable of the Sower by Octavia Butler (1993) - Science Fiction, 345 pages, rating: 4.7/5, stock: 0
+Parable of the Talents by Octavia Butler (1998) - Science Fiction, 407 pages, rating: 4.6/5, stock: 0
+Dawn by Octavia Butler (1987) - Science Fiction, 248 pages, rating: 4.5/5, stock: 0
+Adulthood Rites by Octavia Butler (1988) - Science Fiction, 288 pages, rating: 4.4/5, stock: 0
+Imago by Octavia Butler (1989) - Science Fiction, 320 pages, rating: 4.4/5, stock: 0
+Wild Seed by Octavia Butler (1980) - Fantasy, 320 pages, rating: 4.4/5, stock: 0
+Mind of My Mind by Octavia Butler (1977) - Science Fiction, 240 pages, rating: 4.2/5, stock: 0
+Clay's Ark by Octavia Butler (1984) - Science Fiction, 256 pages, rating: 4.1/5, stock: 0
+Patternmaster by Octavia Butler (1976) - Science Fiction, 280 pages, rating: 4.0/5, stock: 0
+Foundation by Isaac Asimov (1951) - Science Fiction, 255 pages, rating: 4.6/5, stock: 0
+Foundation and Empire by Isaac Asimov (1952) - Science Fiction, 247 pages, rating: 4.5/5, stock: 0
+Second Foundation by Isaac Asimov (1953) - Science Fiction, 240 pages, rating: 4.5/5, stock: 0
+Prelude to Foundation by Isaac Asimov (1988) - Science Fiction, 403 pages, rating: 4.3/5, stock: 0
+Forward the Foundation by Isaac Asimov (1993) - Science Fiction, 428 pages, rating: 4.3/5, stock: 0
+I Robot by Isaac Asimov (1950) - Science Fiction, 224 pages, rating: 4.5/5, stock: 0
+The Caves of Steel by Isaac Asimov (1953) - Science Fiction, 270 pages, rating: 4.4/5, stock: 0
+The Naked Sun by Isaac Asimov (1957) - Science Fiction, 288 pages, rating: 4.3/5, stock: 0
+The Robots of Dawn by Isaac Asimov (1983) - Science Fiction, 435 pages, rating: 4.4/5, stock: 0
+Robots and Empire by Isaac Asimov (1985) - Science Fiction, 448 pages, rating: 4.2/5, stock: 0
+Dune by Frank Herbert (1965) - Science Fiction, 412 pages, rating: 4.9/5, stock: 0
+Dune Messiah by Frank Herbert (1969) - Science Fiction, 256 pages, rating: 4.2/5, stock: 0
+Children of Dune by Frank Herbert (1976) - Science Fiction, 444 pages, rating: 4.5/5, stock: 0
+God Emperor of Dune by Frank Herbert (1981) - Science Fiction, 454 pages, rating: 4.3/5, stock: 0
+Heretics of Dune by Frank Herbert (1984) - Science Fiction, 480 pages, rating: 4.1/5, stock: 0
+Chapterhouse Dune by Frank Herbert (1985) - Science Fiction, 496 pages, rating: 4.1/5, stock: 0
+The Left Hand of Darkness by Ursula K. Le Guin (1969) - Science Fiction, 304 pages, rating: 4.5/5, stock: 0
+The Dispossessed by Ursula K. Le Guin (1974) - Science Fiction, 387 pages, rating: 4.6/5, stock: 0
+A Wizard of Earthsea by Ursula K. Le Guin (1968) - Fantasy, 205 pages, rating: 4.4/5, stock: 0
+The Tombs of Atuan by Ursula K. Le Guin (1971) - Fantasy, 180 pages, rating: 4.2/5, stock: 0
+The Farthest Shore by Ursula K. Le Guin (1972) - Fantasy, 240 pages, rating: 4.3/5, stock: 0
+Tehanu by Ursula K. Le Guin (1990) - Fantasy, 288 pages, rating: 4.1/5, stock: 0
+Neuromancer by William Gibson (1984) - Cyberpunk, 271 pages, rating: 4.3/5, stock: 0
+Count Zero by William Gibson (1986) - Cyberpunk, 246 pages, rating: 4.1/5, stock: 0
+Mona Lisa Overdrive by William Gibson (1988) - Cyberpunk, 320 pages, rating: 4.0/5, stock: 0
+Pattern Recognition by William Gibson (2003) - Cyberpunk, 356 pages, rating: 4.0/5, stock: 0
+Snow Crash by Neal Stephenson (1992) - Cyberpunk, 480 pages, rating: 4.4/5, stock: 0
+Cryptonomicon by Neal Stephenson (1999) - Cyberpunk, 918 pages, rating: 4.5/5, stock: 0
+Anathem by Neal Stephenson (2008) - Science Fiction, 937 pages, rating: 4.3/5, stock: 0
+Seveneves by Neal Stephenson (2015) - Science Fiction, 880 pages, rating: 4.2/5, stock: 0
+1984 by George Orwell (1949) - Dystopian, 328 pages, rating: 4.7/5, stock: 0
+Animal Farm by George Orwell (1945) - Dystopian, 112 pages, rating: 4.6/5, stock: 0
+Brave New World by Aldous Huxley (1932) - Dystopian, 311 pages, rating: 4.3/5, stock: 0
+Fahrenheit 451 by Ray Bradbury (",labs/lab08_oop_review_challenge,4,yes,"ddc5f54 progress so far
+3c9d917 progress so far
 ab7da79 progress so far
-8c831fa Add Lab 8",no,"3c9d917 progress so far
+8c831fa Add Lab 8",no,"ddc5f54 progress so far
+3c9d917 progress so far
 ab7da79 progress so far
 821a26d Merge branch 'brash99:main' into main
 8c831fa Add Lab 8
@@ -203,25 +244,66 @@ cc76511 progress so far
 71cfafd progress so far
 6d7194a Merge branch 'brash99:main' into main
 2857863 Add Lab 07 Template
-f5462b0 progress so far
-f496866 progress so far","* main
+f5462b0 progress so far","* main
   remotes/origin/HEAD -> origin/main
-  remotes/origin/main",3,,3,"paired files selected from labs/lab08_oop_review_challenge/starter_code. Using inferred lab path labs/lab08_oop_review_challenge for Git evidence instead of supplied --lab-path labs/lab08_collections_of_objects. book.py parse failed: expected an indented block after function definition on line 34 (<unknown>, line 37). Import book.py failed: expected an indented block after function definition on line 34 (book.py, line 37). Import book.py failed: expected an indented block after function definition on line 34 (book.py, line 37). Main program did not run: Traceback (most recent call last):
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/mercyed/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 3, in <module>
-    from book import Book
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/mercyed/labs/lab08_oop_review_challenge/starter_code/book.py"", line 37
-    def __lt__(self, other):
-    ^
-IndentationError: expected an indented block after function definition on line 34. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
-Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,no,,no,,no,,no,no,,no,,no,no,no,no,n/a,no,no,no,no,no,no,no,no,no,no,,labs/lab08_collections_of_objects,0,no,,yes,"07eb003 Completed Assignment
-2203c26 Completed Assignment
-6252f9a Completed Assignment
-793822d Merge remote-tracking branch 'upstream/main'
-2857863 Add Lab 07 Template
-7501f86 Merge remote-tracking branch 'origin/main'
-8ecadf6 Completed Assignment
-3b7bb65 complete program
-62a5238 Read file and calculate average
-b0c8f4e lab 1 updates","* main
+  remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
+--------------
+Kindred by Octavia Butler (1979) - Science Fiction, 264 pages, rating: 4.8/5, stock: 0
+Parable of the Sower by Octavia Butler (1993) - Science Fiction, 345 pages, rating: 4.7/5, stock: 0
+Parable of the Talents by Octavia Butler (1998) - Science Fiction, 407 pages, rating: 4.6/5, stock: 0
+Dawn by Octavia Butler (1987) - Science Fiction, 248 pages, rating: 4.5/5, stock: 0
+Adulthood Rites by Octavia Butler (1988) - Science Fiction, 288 pages, rating: 4.4/5, stock: 0
+Imago by Octavia Butler (1989) - Science Fiction, 320 pages, rating: 4.4/5, stock: 0
+Wild Seed by Octavia Butler (1980) - Fantasy, 320 pages, rating: 4.4/5, stock: 0
+Mind of My Mind by Octavia Butler (1977) - Science Fiction, 240 pages, rating: 4.2/5, stock: 0
+Clay's Ark by Octavia Butler (1984) - Science Fiction, 256 pages, rating: 4.1/5, stock: 0
+Patternmaster by Octavia Butler (1976) - Science Fiction, 280 pages, rating: 4.0/5, stock: 0
+Foundation by Isaac Asimov (1951) - Science Fiction, 255 pages, rating: 4.6/5, stock: 0
+Foundation and Empire by Isaac Asimov (1952) - Science Fiction, 247 pages, rating: 4.5/5, stock: 0
+Second Foundation by Isaac Asimov (1953) - Science Fiction, 240 pages, rating: 4.5/5, stock: 0
+Prelude to Foundation by Isaac Asimov (1988) - Science Fiction, 403 pages, rating: 4.3/5, stock: 0
+Forward the Foundation by Isaac Asimov (1993) - Science Fiction, 428 pages, rating: 4.3/5, stock: 0
+I Robot by Isaac Asimov (1950) - Science Fiction, 224 pages, rating: 4.5/5, stock: 0
+The Caves of Steel by Isaac Asimov (1953) - Science Fiction, 270 pages, rating: 4.4/5, stock: 0
+The Naked Sun by Isaac Asimov (1957) - Science Fiction, 288 pages, rating: 4.3/5, stock: 0
+The Robots of Dawn by Isaac Asimov (1983) - Science Fiction, 435 pages, rating: 4.4/5, stock: 0
+Robots and Empire by Isaac Asimov (1985) - Science Fiction, 448 pages, rating: 4.2/5, stock: 0
+Dune by Frank Herbert (1965) - Science Fiction, 412 pages, rating: 4.9/5, stock: 0
+Dune Messiah by Frank Herbert (1969) - Science Fiction, 256 pages, rating: 4.2/5, stock: 0
+Children of Dune by Frank Herbert (1976) - Science Fiction, 444 pages, rating: 4.5/5, stock: 0
+God Emperor of Dune by Frank Herbert (1981) - Science Fiction, 454 pages, rating: 4.3/5, stock: 0
+Heretics of Dune by Frank Herbert (1984) - Science Fiction, 480 pages, rating: 4.1/5, stock: 0
+Chapterhouse Dune by Frank Herbert (1985) - Science Fiction, 496 pages, rating: 4.1/5, stock: 0
+The Left Hand of Darkness by Ursula K. Le Guin (1969) - Science Fiction, 304 pages, rating: 4.5/5, stock: 0
+The Dispossessed by Ursula K. Le Guin (1974) - Science Fiction, 387 pages, rating: 4.6/5, stock: 0
+A Wizard of Earthsea by Ursula K. Le Guin (1968) - Fantasy, 205 pages, rating: 4.4/5, stock: 0
+The Tombs of Atuan by Ursula K. Le Guin (1971) - Fantasy, 180 pages, rating: 4.2/5, stock: 0
+The Farthest Shore by Ursula K. Le Guin (1972) - Fantasy, 240 pages, rating: 4.3/5, stock: 0
+Tehanu by Ursula K. Le Guin (1990) - Fantasy, 288 pages, rating: 4.1/5, stock: 0
+Neuromancer by William Gibson (1984) - Cyberpunk, 271 pages, rating: 4.3/5, stock: 0
+Count Zero by William Gibson (1986) - Cyberpunk, 246 pages, rating: 4.1/5, stock: 0
+Mona Lisa Overdrive by William Gibson (1988) - Cyberpunk, 320 pages, rating: 4.0/5, stock: 0
+Pattern Recognition by William Gibson (2003) - Cyberpunk, 356 pages, rating: 4.0/5, stock: 0
+Snow Crash by Neal Stephenson (1992) - Cyberpunk, 480 pages, rating: 4.4/5, stock: 0
+Cryptonomicon by Neal Stephenson (1999) - Cyberpunk, 918 pages, rating: 4.5/5, stock: 0
+Anathem by Neal Stephenson (2008) - Science Fiction, 937 pages, rating: 4.3/5, stock: 0
+Seveneves by Neal Stephenson (2015) - Science Fiction, 880 pages, rating: 4.2/5, stock: 0
+1984 by George Orwell (1949) - Dystopian, 328 pages, rating: 4.7/5, stock: 0
+Animal Farm by George Orwell (1945) - Dystopian, 112 pages, rating: 4.6/5, stock: 0
+Brave New World by Aldous Huxley (1932) - Dystopian, 311 pages, rating: 4.3/5, stock: 0
+Fahrenheit 451 by Ray Bradbury (",labs/lab08_oop_review_challenge,4,yes,"a256010 Completed Assignment
+d7b010a Completed Assignment
+c334edd Completed Assignment
+8c831fa Add Lab 8",no,"a256010 Completed Assignment
+d7b010a Completed Assignment
+c334edd Completed Assignment
+becb20e lab 1 updates
+2d0a72a Created working max temp calc
+555a1a6 Created working output formatting
+b7ebae6 Created working max temp calc
+828b6af Created working min temp calc
+bb9db0c Created working output formatting
+db59ab4 Created working max temp calc","* main
   remotes/origin/HEAD -> origin/main
-  remotes/origin/main",0,,0,fallback independent file search used. Missing book.py or bookstore_inventory.py. 
+  remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
