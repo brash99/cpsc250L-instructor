@@ -2,6 +2,16 @@ from plant import Plant, Flower, Vegetable
 
 
 def main():
+
+    # Information:
+    # Default plant height = 20 cm
+    # Default flower height = 30 cm, color = "Green"
+    # Default vegetable height = 10 cm, harvest days = 90
+    #
+    # Plant care instructions = "Water regularly and provide adequate sunlight."
+    # Flower care instructions = "Water regularly, provide full sun, and deadhead spent blooms."
+    # Vegetable care instructions = "Water regularly, provide full sun, and fertilize every two weeks."
+
     plants = [
         Plant("Fern", 35),
         Flower("Rose", 45, "red"),
@@ -20,6 +30,5 @@ def main():
         print(plant)
         print("Care:", plant.care_instructions())
         print()
-
 
 main()
