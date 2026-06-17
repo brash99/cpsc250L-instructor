@@ -14,8 +14,113 @@ Vegetable: Tomato, Height: 80 cm, Harvest in: 70 days
 Care: Water regularly, provide full sun, and fertilize every two weeks.
 
 Vegetable: Lettuce, Height: 20 cm, Harvest in: 45 days
-Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_inheritance_polymorphism,3,yes,551d919 Lab 9 updates | fc3f33f complete program | 1d651b3 Add Week 9-14 labs,yes,551d919 Lab 9 updates | 79298b0 Lab 2 fixes | ece9334 Lab 8 updates | aba2352 Lab 8 updates | 6e08479 Lab 8 updates | aed182b Lab 8 updates | 247abde Lab 7 updates | 7ba3958 Lab 7 | 02c272e complete program | 7d0cde5 complete program,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main |   remotes/origin/student_fix,23,,,
-Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,no,,no,,no,no,no,no,no,no,,,,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab09_inheritance_polymorphism,0,no,,yes,9de83cf Did total_inventory calculation | d0bed20 Finished with calculations and ready for checking | 2fc0ead Merge branch 'brash99:main' into main | 8c831fa Add Lab 8 | 2c02787 Returned fastest and slowest with sorted | 10667c0 Merge branch 'brash99:main' into main | 2857863 Add Lab 07 Template | 2dac00b Finished calculations | d7ab4d2 Calculations are finished with adjustments with instructions | 64dcc4d Prints student records successfully with scores,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 9 files found; awarded zero for Lab 9. 
-Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,no,,no,,no,no,no,no,no,no,,,,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab09_inheritance_polymorphism,0,no,,yes,"80fe559 Fixed total_inventory error. | cb963e4 Fixed newline error. | cab2fd0 Made final touches. | 12c5a3f Created the various print by x functions. | c3e83c2 completed book.py and finished create_inventory function for bookstore_inventory.py | e90dce9 completed the add_stock, sell_copies, and __str__ functions in book.py. | f3b0cc1 Initialized the __init__ function in book.py. | 30d8311 Fixed ChatGPT's error. | bdf81fe Merge branch 'brash99:main' into main | 8c831fa Add Lab 8",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 9 files found; awarded zero for Lab 9. 
-Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,no,,no,,no,no,no,no,no,no,,,,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab09_inheritance_polymorphism,0,no,,yes,ddc5f54 progress so far | 3c9d917 progress so far | ab7da79 progress so far | 821a26d Merge branch 'brash99:main' into main | 8c831fa Add Lab 8 | cc76511 progress so far | 71cfafd progress so far | 6d7194a Merge branch 'brash99:main' into main | 2857863 Add Lab 07 Template | f5462b0 progress so far,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 9 files found; awarded zero for Lab 9. 
-Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,no,,no,,no,no,no,no,no,no,,,,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab09_inheritance_polymorphism,0,no,,yes,a256010 Completed Assignment | d7b010a Completed Assignment | c334edd Completed Assignment | becb20e lab 1 updates | 2d0a72a Created working max temp calc | 555a1a6 Created working output formatting | b7ebae6 Created working max temp calc | 828b6af Created working min temp calc | bb9db0c Created working output formatting | db59ab4 Created working max temp calc,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,No Lab 9 files found; awarded zero for Lab 9. 
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Plant: Spanish Moss, Height: 20 cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10 cm, Harvest in: 90 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_garden_inventory,0,no,,yes,29975a8 complete program | 551d919 Lab 9 updates | 79298b0 Lab 2 fixes | ece9334 Lab 8 updates | aba2352 Lab 8 updates | 6e08479 Lab 8 updates | aed182b Lab 8 updates | 247abde Lab 7 updates | 7ba3958 Lab 7 | 02c272e complete program,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main |   remotes/origin/student_fix,22,,,"Expected at least 2 commits touching labs/lab09_garden_inventory, got 0. "
+Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Name: Fern, Height: 35 cm, Type: Plant
+Care: Water regularly and provide adequate sunlight.
+
+Name: Rose, Height: 45 cm, Color: red, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Marigold, Height: 25 cm, Color: orange, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Tomato, Height: 80 cm, Harvest Days: 70, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Lettuce, Height: 20 cm, Harvest Days: 45, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Spanish Moss, Height: 20 cm, Type: Plant
+Care: Water regularly and provide adequate sunlight.
+
+Name: Petunias, Height: 30 cm, Color: Green, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Carrots, Height: 10 cm, Harvest Days: 90, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_garden_inventory,0,no,,yes,"9624014 Print is complete with Name, Height, Color/Harvest days, and type of thing | 54a4973 Class Plant, Flower, and Vegetable finished | beff870 Class Plant, Flower, and Vegetable finished | b3dab3a Merge branch 'brash99:main' into main | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates | 9de83cf Did total_inventory calculation | d0bed20 Finished with calculations and ready for checking | 2fc0ead Merge branch 'brash99:main' into main",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,21,,,"One or more constructors did not store expected attributes. Expected at least 2 commits touching labs/lab09_garden_inventory, got 0. "
+Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Name: Fern; Height 35cm
+Care: Water regularly and provide adequate sunlight.
+
+Name: Rose; Height: 45cm; Color: red
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Marigold; Height: 25cm; Color: orange
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Tomato; Height: 80cm; Growing time: 70 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Lettuce; Height: 20cm; Growing time: 45 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Spanish Moss; Height 20cm
+Care: Water regularly and provide adequate sunlight.
+
+Name: Petunias; Height: 30cm; Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Carrots; Height: 10cm; Growing time: 90 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_garden_inventory,0,no,,yes,26a73e7 Removed redundant code using polymorphism in plant.py. | 1a6168e Slightly altered str methods to be more legible in plant.py. | 341d97c Completed plant.py. | fed0dd3 Merge branch 'brash99:main' into main | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates | 80fe559 Fixed total_inventory error. | cb963e4 Fixed newline error. | cab2fd0 Made final touches.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,22,,,"Expected at least 2 commits touching labs/lab09_garden_inventory, got 0. "
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Plant: Fern, Height: 35cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Rose, Height: 45 cm, Color: red
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Flower: Marigold, Height: 25 cm, Color: orange
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Tomato, Height: 80cm, Harvest Days: 70
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Vegetable: Lettuce, Height: 20cm, Harvest Days: 45
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Plant: Spanish Moss, Height: 20cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10cm, Harvest Days: 90
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_garden_inventory,0,no,,yes,b93d883 progress so far | a4f5d82 Merge branch 'brash99:main' into main | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates | ddc5f54 progress so far | 3c9d917 progress so far | ab7da79 progress so far | 821a26d Merge branch 'brash99:main' into main | 8c831fa Add Lab 8,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,21,,,"One or more constructors did not store expected attributes. Expected at least 2 commits touching labs/lab09_garden_inventory, got 0. "
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Plant: Fern, Height: 35 cm
+Care: Water regularly and provide adequate sunlight
+
+Flower: Rose, Height: 45 cm, Color: red
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Flower: Marigold, Height: 25 cm, Color: orange
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Vegetable: Tomato, Height: 80cm, Harvest Days: 70
+Care: Water regularly and provide full sun, and fertilize every two weeks
+
+Vegetable: Lettuce, Height: 20cm, Harvest Days: 45
+Care: Water regularly and provide full sun, and fertilize every two weeks
+
+Plant: Spanish Moss, Height: 20 cm
+Care: Water regularly and provide adequate sunlight
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10cm, Harvest Days: 90
+Care: Water regularly and provide full sun, and fertilize every two weeks",labs/lab09_garden_inventory,0,no,,yes,8f67139 updates | 19b991a Completed Assignment | c73bf75 Completed Assignment | 580d861 Completed Assignment | 6518a4b Completed Assignment | 37a397b Created working max temp calc | 1ba8e7d Created working max temp calc | 5d85fed Created working output formatting | 4d610fc Created working min temp calc | 02de13a Completed Assignment,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,22,,,"Expected at least 2 commits touching labs/lab09_garden_inventory, got 0. "

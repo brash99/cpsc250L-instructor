@@ -1,6 +1,6 @@
 import time
 
-def fib_recursive(n)
+def fib_recursive(n):
     # TODO: write this function
     pass
 
