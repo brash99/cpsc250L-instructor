@@ -3,13 +3,19 @@
 
 class Book:
     def __init__(self, title, author, year, genre, pages, rating):
-        pass
+        self.title = title
+        self.author = author
+        self.year = year
+        self.genre = genre
+        self.pages = pages
+        self.rating = rating
+        self.quantity = 0
 
     def add_stock(self, amount):
         """
         Increase quantity by amount.
         """
-        pass
+        self.quantity += amount
 
     def sell_copies(self, amount):
         """
@@ -18,13 +24,25 @@ class Book:
         Return True if the sale succeeds.
         Return False otherwise.
         """
-        pass
+
+        if amount <= self.quantity:
+            self.quantity -= amount
+            return True
+
+        return False
 
     def __str__(self):
-        pass
+        return (
+            f"{self.title} by {self.author} ({self.year}) - "
+            f"{self.genre}, {self.pages} pages, "
+            f"rating: {self.rating}/5, stock: {self.quantity}"
+        )
+
+
 
     def __lt__(self, other):
         """
         Compare books alphabetically by title.
         """
-        pass
+        return self.title < other.title
+
