@@ -16,19 +16,21 @@ def bisection_root(function, left, right, tolerance):
 
 def main():
     import random
-    values = random.sample(range(0, 10000), 1000)
+    values = random.sample(range(0, 1000), 500)
     values.sort()
+
+    # Find the 500th value in the list
+    search_value = values[499]
 
     print("Search Tests")
     print("------------")
-    print("Linear search for 21:", linear_search(values, 341))
-    print("Binary search for 21:", binary_search(values, 341))
+    print("Linear search for ", search_value," --> (index,comps) = ", linear_search(values, search_value))
+    print("Binary search for ", search_value," --> (index,comps) = ", binary_search(values, search_value))
 
     print()
     print("Root Finding")
     print("------------")
     root = bisection_root(f, 1, 2, 0.0001)
     print("Approximate root of x^2 - 2:", root)
-
 
 main()
