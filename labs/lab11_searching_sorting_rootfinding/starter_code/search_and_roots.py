@@ -15,12 +15,14 @@ def bisection_root(function, left, right, tolerance):
 
 
 def main():
-    values = [3, 7, 11, 15, 18, 21, 24, 30, 35, 42]
+    import random
+    values = random.sample(range(0, 10000), 1000)
+    values.sort()
 
     print("Search Tests")
     print("------------")
-    print("Linear search for 21:", linear_search(values, 21))
-    print("Binary search for 21:", binary_search(values, 21))
+    print("Linear search for 21:", linear_search(values, 341))
+    print("Binary search for 21:", binary_search(values, 341))
 
     print()
     print("Root Finding")
