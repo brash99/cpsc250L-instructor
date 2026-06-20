@@ -16,14 +16,13 @@ def predict(x, slope, intercept):
 
 
 def main():
+
     filename = "../data/study_scores.csv"
 
     # TODO: read data into Pandas dataframe
     # TODO: Make a plot of Exam score vs. Study hours
     # TODO: Fit the data using a linear regression fit
-    # TODO: Add this fit to the plot, along with the fit parameters
-
-    pass
-
+    # TODO: Get the predicted fit values
+    # TODO: Add this prediction to the plot, along with the fit parameters
 
 main()
