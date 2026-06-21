@@ -50,17 +50,18 @@ aed182b Lab 8 updates
 7ba3958 Lab 7
 7d4f424 add booklist csv file
 3c74bc1 Update Lab 8
-16e5365 Add Week 2 object-oriented programming labs",no,"eea6e8a Lab 11 updates
+16e5365 Add Week 2 object-oriented programming labs",no,"7d8d451 updates
+49251a5 Lab 11,12,13,14 updates
+eea6e8a Lab 11 updates
 af09b04 complete program
 29975a8 complete program
 551d919 Lab 9 updates
 79298b0 Lab 2 fixes
 ece9334 Lab 8 updates
 aba2352 Lab 8 updates
-6e08479 Lab 8 updates
-aed182b Lab 8 updates
-247abde Lab 7 updates","* main
+6e08479 Lab 8 updates","* main
   remotes/origin/HEAD -> origin/main
+  remotes/origin/lab15-cli-workflow
   remotes/origin/main
   remotes/origin/student_fix",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
@@ -111,16 +112,16 @@ Brave New World by Aldous Huxley (1932) - Dystopian, 311 pages, rating: 4.3 Stoc
 Fahrenheit 451 by Ray Bradbury (1953) - Dystopian, 194 pages, rating: 4.5 Stock: 0
 The Martian Chronicles by Ray Bradbury (1950) - Science Fiction, 256 pages, ra",labs/lab08_oop_review_challenge,3,yes,"9de83cf Did total_inventory calculation
 d0bed20 Finished with calculations and ready for checking
-8c831fa Add Lab 8",no,"36142aa Output table and finished
+8c831fa Add Lab 8",no,"8de026c Calculations finished
+81d4206 Merge branch 'brash99:main' into main
+6f3d8cf updates
+7467b90 updates
+36142aa Output table and finished
 36eabc6 Added timing code
 26c77c1 Added iterative Fibonacci
 2597633 Added recursive Fibonacci
 424d40c Added recursive Fibonacci
-ed22368 Added recursive Fibonacci
-f776c38 Merge branch 'brash99:main' into main
-6effa43 updates
-4286cac updates
-06befd7 updates","* main
+ed22368 Added recursive Fibonacci","* main
   remotes/origin/HEAD -> origin/main
   remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Stock methods did not add/sell copies as expected. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,n/a,no,no,no,no,no,no,no,no,yes,yes,"Full Inventory
@@ -175,16 +176,16 @@ cab2fd0 Made final touches.
 c3e83c2 completed book.py and finished create_inventory function for bookstore_inventory.py
 e90dce9 completed the add_stock, sell_copies, and __str__ functions in book.py.
 f3b0cc1 Initialized the __init__ function in book.py.
-30d8311 Fixed ChatGPT's error.",no,"a3417b8 Made the plot.
+30d8311 Fixed ChatGPT's error.",no,"4e2ccc9 Completed the bisection_root function.
+3600ae7 Completed the bisection_root function.
+a1ded3b Completed the binary_search function.
+1a8f616 Completed the linear_search function.
+40a8c2d Merge branch 'brash99:main' into main
+6f3d8cf updates
+7467b90 updates
+a3417b8 Made the plot.
 1f27add Made the time_function.
-1be3e51 Added the recursive and iterative fibonacci functions.
-89ccd6c Merge branch 'brash99:main' into main
-6effa43 updates
-4286cac updates
-06befd7 updates
-26a73e7 Removed redundant code using polymorphism in plant.py.
-1a6168e Slightly altered str methods to be more legible in plant.py.
-341d97c Completed plant.py.","* main
+1be3e51 Added the recursive and iterative fibonacci functions.","* main
   remotes/origin/HEAD -> origin/main
   remotes/origin/main",10,,10,paired files selected from labs/lab08_oop_review_challenge/starter_code. create_inventory raised: create_inventory() missing 1 required positional argument: 'filename'. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
@@ -235,46 +236,79 @@ Brave New World by Aldous Huxley (1932) - Dystopian, 311 pages, rating: 4.3/5, s
 Fahrenheit 451 by Ray Bradbury (",labs/lab08_oop_review_challenge,4,yes,"ddc5f54 progress so far
 3c9d917 progress so far
 ab7da79 progress so far
-8c831fa Add Lab 8",no,"d83b0e6 progress so far
+8c831fa Add Lab 8",no,"da3d058 progress so far
+5067a26 progress so far
+22ebc34 progress so far
+f6f9576 progress so far
+3990fd5 Merge branch 'brash99:main' into main
+6f3d8cf updates
+7467b90 updates
+d83b0e6 progress so far
 4f3f961 progress so far
-a77eaee Merge branch 'brash99:main' into main
-6effa43 updates
-4286cac updates
-06befd7 updates
-b93d883 progress so far
-a4f5d82 Merge branch 'brash99:main' into main
-fe7e3ac Update lab 9
-02e7665 Update lab 9","* main
+a77eaee Merge branch 'brash99:main' into main","* main
   remotes/origin/HEAD -> origin/main
   remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
-Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,no,no,no,n/a,yes,no,no,no,no,no,no,yes,no,no,"Traceback (most recent call last):
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/poejayden60/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 77, in <module>
-    main()
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/poejayden60/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 58, in main
-    print(""Total inventory:"", total_inventory_value(inventory))
-                              ^^^^^^^^^^^^^^^^^^^^^
-NameError: name 'total_inventory_value' is not defined. Did you mean: 'total_inventory'?",labs/lab08_oop_review_challenge,11,yes,"820ad37 Merge remote-tracking branch 'origin/main'
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab08_oop_review_challenge/starter_code/book.py,yes,labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py,yes,labs/lab08_oop_review_challenge/starter_code/booklist.csv,yes,yes,,yes,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Full Inventory
+--------------
+Kindred by Octavia Butler (1979) - Science Fiction, 264 pages, rating: 4.8/5, stock: 0
+Parable of the Sower by Octavia Butler (1993) - Science Fiction, 345 pages, rating: 4.7/5, stock: 0
+Parable of the Talents by Octavia Butler (1998) - Science Fiction, 407 pages, rating: 4.6/5, stock: 0
+Dawn by Octavia Butler (1987) - Science Fiction, 248 pages, rating: 4.5/5, stock: 0
+Adulthood Rites by Octavia Butler (1988) - Science Fiction, 288 pages, rating: 4.4/5, stock: 0
+Imago by Octavia Butler (1989) - Science Fiction, 320 pages, rating: 4.4/5, stock: 0
+Wild Seed by Octavia Butler (1980) - Fantasy, 320 pages, rating: 4.4/5, stock: 0
+Mind of My Mind by Octavia Butler (1977) - Science Fiction, 240 pages, rating: 4.2/5, stock: 0
+Clay's Ark by Octavia Butler (1984) - Science Fiction, 256 pages, rating: 4.1/5, stock: 0
+Patternmaster by Octavia Butler (1976) - Science Fiction, 280 pages, rating: 4.0/5, stock: 0
+Foundation by Isaac Asimov (1951) - Science Fiction, 255 pages, rating: 4.6/5, stock: 0
+Foundation and Empire by Isaac Asimov (1952) - Science Fiction, 247 pages, rating: 4.5/5, stock: 0
+Second Foundation by Isaac Asimov (1953) - Science Fiction, 240 pages, rating: 4.5/5, stock: 0
+Prelude to Foundation by Isaac Asimov (1988) - Science Fiction, 403 pages, rating: 4.3/5, stock: 0
+Forward the Foundation by Isaac Asimov (1993) - Science Fiction, 428 pages, rating: 4.3/5, stock: 0
+I Robot by Isaac Asimov (1950) - Science Fiction, 224 pages, rating: 4.5/5, stock: 0
+The Caves of Steel by Isaac Asimov (1953) - Science Fiction, 270 pages, rating: 4.4/5, stock: 0
+The Naked Sun by Isaac Asimov (1957) - Science Fiction, 288 pages, rating: 4.3/5, stock: 0
+The Robots of Dawn by Isaac Asimov (1983) - Science Fiction, 435 pages, rating: 4.4/5, stock: 0
+Robots and Empire by Isaac Asimov (1985) - Science Fiction, 448 pages, rating: 4.2/5, stock: 0
+Dune by Frank Herbert (1965) - Science Fiction, 412 pages, rating: 4.9/5, stock: 0
+Dune Messiah by Frank Herbert (1969) - Science Fiction, 256 pages, rating: 4.2/5, stock: 0
+Children of Dune by Frank Herbert (1976) - Science Fiction, 444 pages, rating: 4.5/5, stock: 0
+God Emperor of Dune by Frank Herbert (1981) - Science Fiction, 454 pages, rating: 4.3/5, stock: 0
+Heretics of Dune by Frank Herbert (1984) - Science Fiction, 480 pages, rating: 4.1/5, stock: 0
+Chapterhouse Dune by Frank Herbert (1985) - Science Fiction, 496 pages, rating: 4.1/5, stock: 0
+The Left Hand of Darkness by Ursula K. Le Guin (1969) - Science Fiction, 304 pages, rating: 4.5/5, stock: 0
+The Dispossessed by Ursula K. Le Guin (1974) - Science Fiction, 387 pages, rating: 4.6/5, stock: 0
+A Wizard of Earthsea by Ursula K. Le Guin (1968) - Fantasy, 205 pages, rating: 4.4/5, stock: 0
+The Tombs of Atuan by Ursula K. Le Guin (1971) - Fantasy, 180 pages, rating: 4.2/5, stock: 0
+The Farthest Shore by Ursula K. Le Guin (1972) - Fantasy, 240 pages, rating: 4.3/5, stock: 0
+Tehanu by Ursula K. Le Guin (1990) - Fantasy, 288 pages, rating: 4.1/5, stock: 0
+Neuromancer by William Gibson (1984) - Cyberpunk, 271 pages, rating: 4.3/5, stock: 0
+Count Zero by William Gibson (1986) - Cyberpunk, 246 pages, rating: 4.1/5, stock: 0
+Mona Lisa Overdrive by William Gibson (1988) - Cyberpunk, 320 pages, rating: 4.0/5, stock: 0
+Pattern Recognition by William Gibson (2003) - Cyberpunk, 356 pages, rating: 4.0/5, stock: 0
+Snow Crash by Neal Stephenson (1992) - Cyberpunk, 480 pages, rating: 4.4/5, stock: 0
+Cryptonomicon by Neal Stephenson (1999) - Cyberpunk, 918 pages, rating: 4.5/5, stock: 0
+Anathem by Neal Stephenson (2008) - Science Fiction, 937 pages, rating: 4.3/5, stock: 0
+Seveneves by Neal Stephenson (2015) - Science Fiction, 880 pages, rating: 4.2/5, stock: 0
+1984 by George Orwell (1949) - Dystopian, 328 pages, rating: 4.7/5, stock: 0
+Animal Farm by George Orwell (1945) - Dystopian, 112 pages, rating: 4.6/5, stock: 0
+Brave New World by Aldous Huxley (1932) - Dystopian, 311 pages, rating: 4.3/5, stock: 0
+Fahrenheit 451 by Ray Bradbury (",labs/lab08_oop_review_challenge,13,yes,"511e47d Further lab8 updates
+03a83a9 Recover Jayden's submitted Lab 8 work
+820ad37 Merge remote-tracking branch 'origin/main'
 8214fcf Completed Assignment
 2bfaf28 Completed Assignment
 95d7086 Completed Assignment
 97b00c9 Completed Assignment
-7a3ca3f Completed Assignment
-0fdce50 Completed Assignment
-c73bf75 Completed Assignment",no,"f9ea23d updates
+7a3ca3f Completed Assignment",no,"7a1a47e Merge remote-tracking branch 'upstream/main'
+511e47d Further lab8 updates
+03a83a9 Recover Jayden's submitted Lab 8 work
+cf62679 Recover Jayden's submitted Lab 7 work
+b89c194 Recover Jayden's submitted Lab 3 work
+6f3d8cf updates
+7467b90 updates
+f9ea23d updates
 820ad37 Merge remote-tracking branch 'origin/main'
-bbb4243 Completed Assignment
-8214fcf Completed Assignment
-2bfaf28 Completed Assignment
-95d7086 Completed Assignment
-f778d8a lab 1 updates
-de55aae Created working max temp calc
-0a9636b Created working output formatting
-05659e0 Created working max temp calc","* main
+bbb4243 Completed Assignment","* main
   remotes/origin/HEAD -> origin/main
-  remotes/origin/main",8,,8,"paired files selected from labs/lab08_oop_review_challenge/starter_code. Book object did not expose expected title/author/genre attributes. Book __str__ raised: __str__ returned non-string (type NoneType). Book __lt__ did not sort alphabetically by title. Expected 201 books, got 0. First few inventory items are not Book objects. Could not inspect first record: list index out of range. Total inventory expected 0, got None. find_by_author failed: ok. find_low_stock failed: ok. Main program did not run: Traceback (most recent call last):
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/poejayden60/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 77, in <module>
-    main()
-  File ""/Users/brash/cpsc250L-instructor/grading/student_repos/poejayden60/labs/lab08_oop_review_challenge/starter_code/bookstore_inventory.py"", line 58, in main
-    print(""Total inventory:"", total_inventory_value(inventory))
-                              ^^^^^^^^^^^^^^^^^^^^^
-NameError:. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
+  remotes/origin/main",20,,20,paired files selected from labs/lab08_oop_review_challenge/starter_code. Working tree not clean: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 

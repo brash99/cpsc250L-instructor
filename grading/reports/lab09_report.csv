@@ -1,0 +1,126 @@
+name,github_username,repo_url,type,clone_or_update,plant_exists,plant_path,garden_inventory_exists,garden_inventory_path,plant_class_exists,flower_class_exists,vegetable_class_exists,plant_methods_present,flower_methods_present,vegetable_methods_present,missing_plant_methods,missing_flower_methods,missing_vegetable_methods,flower_inherits_plant,vegetable_inherits_plant,constructors_store_attributes,plant_care_instructions_readable,flower_care_instructions_readable,vegetable_care_instructions_readable,plant_str_readable,flower_str_readable,vegetable_str_readable,polymorphic_list_behavior,garden_inventory_runs_from_terminal,garden_inventory_output_readable,garden_inventory_output,lab_path_checked,commits_touching_lab,meaningful_lab_commit_evidence,recent_lab_commits,working_tree_clean,recent_commits,branch_info,auto_score_out_of_23,manual_review_out_of_0,total_score_out_of_23,notes
+Edward Brash,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,test,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Plant: Fern, Height: 35 cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Rose, Height: 45 cm, Color: red
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Flower: Marigold, Height: 25 cm, Color: orange
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Tomato, Height: 80 cm, Harvest in: 70 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Vegetable: Lettuce, Height: 20 cm, Harvest in: 45 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Plant: Spanish Moss, Height: 20 cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10 cm, Harvest in: 90 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_inheritance_polymorphism,4,yes,29975a8 complete program | 551d919 Lab 9 updates | fc3f33f complete program | 1d651b3 Add Week 9-14 labs,no,"7d8d451 updates | 49251a5 Lab 11,12,13,14 updates | eea6e8a Lab 11 updates | af09b04 complete program | 29975a8 complete program | 551d919 Lab 9 updates | 79298b0 Lab 2 fixes | ece9334 Lab 8 updates | aba2352 Lab 8 updates | 6e08479 Lab 8 updates",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab15-cli-workflow |   remotes/origin/main |   remotes/origin/student_fix,22,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Name: Fern, Height: 35 cm, Type: Plant
+Care: Water regularly and provide adequate sunlight.
+
+Name: Rose, Height: 45 cm, Color: red, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Marigold, Height: 25 cm, Color: orange, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Tomato, Height: 80 cm, Harvest Days: 70, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Lettuce, Height: 20 cm, Harvest Days: 45, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Spanish Moss, Height: 20 cm, Type: Plant
+Care: Water regularly and provide adequate sunlight.
+
+Name: Petunias, Height: 30 cm, Color: Green, Type: Flower
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Carrots, Height: 10 cm, Harvest Days: 90, Type: Vegetable
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_inheritance_polymorphism,7,yes,"424d40c Added recursive Fibonacci | 9624014 Print is complete with Name, Height, Color/Harvest days, and type of thing | 54a4973 Class Plant, Flower, and Vegetable finished | beff870 Class Plant, Flower, and Vegetable finished | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates",no,8de026c Calculations finished | 81d4206 Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | 36142aa Output table and finished | 36eabc6 Added timing code | 26c77c1 Added iterative Fibonacci | 2597633 Added recursive Fibonacci | 424d40c Added recursive Fibonacci | ed22368 Added recursive Fibonacci,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,21,,,One or more constructors did not store expected attributes. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Name: Fern; Height 35cm
+Care: Water regularly and provide adequate sunlight.
+
+Name: Rose; Height: 45cm; Color: red
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Marigold; Height: 25cm; Color: orange
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Tomato; Height: 80cm; Growing time: 70 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Lettuce; Height: 20cm; Growing time: 45 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Name: Spanish Moss; Height 20cm
+Care: Water regularly and provide adequate sunlight.
+
+Name: Petunias; Height: 30cm; Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Name: Carrots; Height: 10cm; Growing time: 90 days
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_inheritance_polymorphism,6,yes,26a73e7 Removed redundant code using polymorphism in plant.py. | 1a6168e Slightly altered str methods to be more legible in plant.py. | 341d97c Completed plant.py. | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates,no,4e2ccc9 Completed the bisection_root function. | 3600ae7 Completed the bisection_root function. | a1ded3b Completed the binary_search function. | 1a8f616 Completed the linear_search function. | 40a8c2d Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | a3417b8 Made the plot. | 1f27add Made the time_function. | 1be3e51 Added the recursive and iterative fibonacci functions.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,22,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Plant: Fern, Height: 35cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Rose, Height: 45 cm, Color: red
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Flower: Marigold, Height: 25 cm, Color: orange
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Tomato, Height: 80cm, Harvest Days: 70
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Vegetable: Lettuce, Height: 20cm, Harvest Days: 45
+Care: Water regularly, provide full sun, and fertilize every two weeks.
+
+Plant: Spanish Moss, Height: 20cm
+Care: Water regularly and provide adequate sunlight.
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sun, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10cm, Harvest Days: 90
+Care: Water regularly, provide full sun, and fertilize every two weeks.",labs/lab09_inheritance_polymorphism,4,yes,b93d883 progress so far | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates,no,da3d058 progress so far | 5067a26 progress so far | 22ebc34 progress so far | f6f9576 progress so far | 3990fd5 Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | d83b0e6 progress so far | 4f3f961 progress so far | a77eaee Merge branch 'brash99:main' into main,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,21,,,One or more constructors did not store expected attributes. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab09_inheritance_polymorphism/starter_code/plant.py,yes,labs/lab09_inheritance_polymorphism/starter_code/garden_inventory.py,yes,yes,yes,yes,yes,yes,,,,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Garden Inventory
+----------------
+Plant: Fern, Height: 35 cm
+Care: Water regularly and provide adequate sunlight
+
+Flower: Rose, Height: 45 cm, Color: red
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Flower: Marigold, Height: 25 cm, Color: orange
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Vegetable: Tomato, Height: 80cm, Harvest Days: 70
+Care: Water regularly and provide full sun, and fertilize every two weeks
+
+Vegetable: Lettuce, Height: 20cm, Harvest Days: 45
+Care: Water regularly and provide full sun, and fertilize every two weeks
+
+Plant: Spanish Moss, Height: 20 cm
+Care: Water regularly and provide adequate sunlight
+
+Flower: Petunias, Height: 30 cm, Color: Green
+Care: Water regularly, provide full sunlight, and deadhead spent blooms.
+
+Vegetable: Carrots, Height: 10cm, Harvest Days: 90
+Care: Water regularly and provide full sun, and fertilize every two weeks",labs/lab09_inheritance_polymorphism,4,yes,8e166d4 Completed Assignment | fe7e3ac Update lab 9 | 02e7665 Update lab 9 | ff51f03 updates,no,7a1a47e Merge remote-tracking branch 'upstream/main' | 511e47d Further lab8 updates | 03a83a9 Recover Jayden's submitted Lab 8 work | cf62679 Recover Jayden's submitted Lab 7 work | b89c194 Recover Jayden's submitted Lab 3 work | 6f3d8cf updates | 7467b90 updates | f9ea23d updates | 820ad37 Merge remote-tracking branch 'origin/main' | bbb4243 Completed Assignment,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,22,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
