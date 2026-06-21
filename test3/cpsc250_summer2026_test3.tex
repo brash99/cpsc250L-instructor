@@ -1,0 +1,322 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, fancyhdr, listings, enumitem}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{fancyvrb}
+\usepackage{titlesec}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    tabsize=4
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CPSC 250}
+\rhead{Test 3}
+\rfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{CPSC 250 - Programming for Data Manipulation}}\\
+\vspace{0.15cm}
+{\Large \textbf{Test 3}}\\
+\vspace{0.35cm}
+Name:\rule{3in}{0.4pt}
+\end{center}
+
+\textbf{Instructions:} Answer all questions on this test paper. You may not use any devices. Write clearly and show your work where needed.
+
+\textbf{Topics Covered:} Derived classes, constructors and \code{super()}, inheritance, polymorphism, lists of mixed object types, recursion, binary search, and algorithm efficiency.
+
+\textbf{Total Points: 80}
+
+\hrule
+
+\section*{Part 1 - Multiple Choice (10 points)}
+
+Circle the best answer. Each question is worth 2 points.
+
+\begin{enumerate}[label=\arabic*.]
+    \item What is the main purpose of inheritance in object-oriented programming?
+    \begin{enumerate}[label=\alph*)]
+        \item To make every variable private
+        \item To allow one class to reuse and extend another class
+        \item To prevent methods from being overridden
+        \item To make recursive functions faster
+    \end{enumerate}
+
+    \item In a derived class constructor, why do we usually call \code{super().__init__(...)}?
+    \begin{enumerate}[label=\alph*)]
+        \item To initialize the base-class portion of the object
+        \item To delete the base-class variables
+        \item To force Python to use polymorphism
+        \item To make the object printable
+    \end{enumerate}
+
+    \item Which statement best describes polymorphism?
+    \begin{enumerate}[label=\alph*)]
+        \item Many classes can respond to the same method call in their own way
+        \item A class can only have one constructor
+        \item A function can only return one type of value
+        \item A list can only store objects of one class
+    \end{enumerate}
+
+    \newpage
+
+    \item Consider the following code.
+
+\begin{verbatim}
+class Animal:
+    def speak(self):
+        return "..."
+
+class Cat(Animal):
+    def speak(self):
+        return "meow"
+
+a = Cat()
+print(a.speak())
+\end{verbatim}
+
+What is printed?
+    \begin{enumerate}[label=\alph*)]
+        \item \code{...}
+        \item \code{meow}
+        \item \code{Cat}
+        \item An error occurs because \code{speak()} is defined twice
+    \end{enumerate}
+
+    \item Why is recursive Fibonacci much slower than an iterative Fibonacci algorithm?
+    \begin{enumerate}[label=\alph*)]
+        \item It uses a loop incorrectly
+        \item It repeatedly recomputes the same smaller Fibonacci values
+        \item It cannot have a base case
+        \item It always searches a sorted list
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+\section*{Part 2 - Find the Errors (15 points)}
+
+Each question contains errors related to this week's topics. Identify the errors and briefly explain how to fix them.
+
+\textbf{6. Derived class constructor}
+
+\begin{verbatim}
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+class Student(Person):
+    def __init__(self, name, student_id):
+        self.student_id = student_id
+
+    def print_info(self):
+        print(self.name, self.student_id)
+
+s = Student("Alice", "A123")
+s.print_info()
+\end{verbatim}
+
+\vspace{2.3in}
+
+\textbf{7. Method overriding and object creation}
+
+\begin{verbatim}
+class Instrument:
+    def play(self):
+        return "sound"
+
+class Guitar(Instrument):
+    def play():
+        return "strum"
+
+g = Guitar
+print(g.play())
+\end{verbatim}
+
+\vspace{2.2in}
+
+\newpage
+
+\textbf{8. Recursive binary search}
+
+The function below is supposed to return \code{True} if \code{target} is in the sorted list and \code{False} otherwise.
+
+\begin{verbatim}
+def binary_search(values, target, low, high):
+    mid = (low + high) // 2
+
+    if values[mid] == target:
+        return True
+
+    elif target < values[mid]:
+        return binary_search(values, target, low, mid)
+
+    else:
+        return binary_search(values, target, mid, high)
+\end{verbatim}
+
+\vspace{3.0in}
+
+\newpage
+
+\section*{Part 3 - Code Tracing and Algorithm Reasoning (20 points)}
+
+\textbf{9. Polymorphism tracing (10 points)}
+
+What is printed by the following program?
+
+\begin{verbatim}
+class Item:
+    def __init__(self, name):
+        self.name = name
+
+    def label(self):
+        return "Item: " + self.name
+
+class Food(Item):
+    def __init__(self, name, calories):
+        super().__init__(name)
+        self.calories = calories
+
+    def label(self):
+        return "Food: " + self.name + " (" + str(self.calories) + ")"
+
+class Tool(Item):
+    def label(self):
+        return "Tool: " + self.name
+
+things = [
+    Item("box"),
+    Food("apple", 95),
+    Tool("hammer")
+]
+
+for thing in things:
+    print(thing.label())
+\end{verbatim}
+
+\vspace{2.5in}
+
+\newpage
+
+\textbf{10. Recursive function tracing (10 points)}
+
+Consider the following function.
+
+\begin{verbatim}
+def mystery(n):
+    if n <= 1:
+        return 1
+    else:
+        return n + mystery(n - 2)
+\end{verbatim}
+
+\begin{enumerate}[label=\alph*)]
+    \item What is the value of \code{mystery(6)}? Show the sequence of calls or partial sums.
+    \item What is the base case?
+    \item Does this function behave more like Fibonacci recursion or simple countdown recursion? Briefly explain.
+\end{enumerate}
+
+\vspace{3.5in}
+
+\newpage
+
+\section*{Part 4 - Code Writing (25 points)}
+
+Answer each question clearly. Use correct syntax and indentation.
+
+\textbf{11. Inheritance and \code{super()} (12 points)}
+
+Write a base class called \code{MediaItem} with attributes \code{title} and \code{year}. Then write a derived class called \code{Song} that adds an attribute \code{artist}.
+
+Your classes should include:
+
+\begin{itemize}
+    \item constructors for both classes,
+    \item a call to \code{super().__init__()} inside the \code{Song} constructor,
+    \item a \code{__str__()} method for \code{Song} that returns a string such as:
+\end{itemize}
+
+\begin{verbatim}
+"Fast Car by Tracy Chapman (1988)"
+\end{verbatim}
+
+\vspace{5.1in}
+
+\newpage
+
+\textbf{12. Mixed list and polymorphism (8 points)}
+
+Using the classes below, write code that creates a list containing two \code{Plant} objects and two \code{Flower} objects. Then use a loop to call \code{print_info()} for every object in the list.
+
+\begin{verbatim}
+class Plant:
+    def __init__(self, name, cost):
+        self.name = name
+        self.cost = cost
+
+    def print_info(self):
+        print("Plant:", self.name, self.cost)
+
+class Flower(Plant):
+    def __init__(self, name, cost, color):
+        super().__init__(name, cost)
+        self.color = color
+
+    def print_info(self):
+        print("Flower:", self.name, self.cost, self.color)
+\end{verbatim}
+
+\vspace{3.1in}
+
+\newpage
+
+\textbf{13. Iterative Fibonacci (5 points)}
+
+Write a function called \code{fib_iter(n)} that returns the nth Fibonacci number using a loop, not recursion. Assume:
+
+\begin{verbatim}
+fib_iter(0) returns 0
+fib_iter(1) returns 1
+\end{verbatim}
+
+\vspace{4.2in}
+
+\newpage
+
+\section*{Part 5 - Short Answer (10 points)}
+
+\textbf{14. Recursion and end conditions (5 points)}
+
+Explain why every recursive function needs an end condition. What happens if the end condition is missing or never reached?
+
+\vspace{2.3in}
+
+\textbf{15. Binary search efficiency (5 points)}
+
+Binary search only works correctly under certain conditions. What condition must be true about the data, and why is binary search more efficient than checking every value one at a time?
+
+\vspace{2.3in}
+
+\hrule
+\begin{center}
+\textbf{End of Test}
+\end{center}
+
+\end{document}

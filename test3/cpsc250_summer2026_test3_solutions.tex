@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, fancyhdr, listings, enumitem}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{fancyvrb}
+\usepackage{titlesec}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    tabsize=4
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CPSC 250}
+\rhead{Test 3 Solutions}
+\rfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{CPSC 250 - Programming for Data Manipulation}}\\
+\vspace{0.15cm}
+{\Large \textbf{Test 3 - Solution Set}}\\
+\vspace{0.35cm}
+\end{center}
+
+\textbf{Topics Covered:} Derived classes, constructors and \code{super()}, inheritance, polymorphism, lists of mixed object types, recursion, binary search, and algorithm efficiency.
+
+\textbf{Total Points: 80}
+
+\hrule
+
+\section*{Part 1 - Multiple Choice (10 points)}
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{b)} To allow one class to reuse and extend another class.
+    \item \textbf{a)} To initialize the base-class portion of the object.
+    \item \textbf{a)} Many classes can respond to the same method call in their own way.
+    \item \textbf{b)} \code{meow}
+    \item \textbf{b)} It repeatedly recomputes the same smaller Fibonacci values.
+\end{enumerate}
+
+\newpage
+
+\section*{Part 2 - Find the Errors (15 points)}
+
+\textbf{6. Derived class constructor}
+
+The \code{Student} constructor does not call the \code{Person} constructor, so \code{self.name} is never created. It should call \code{super().__init__(name)}.
+
+\begin{verbatim}
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+class Student(Person):
+    def __init__(self, name, student_id):
+        super().__init__(name)
+        self.student_id = student_id
+
+    def print_info(self):
+        print(self.name, self.student_id)
+
+s = Student("Alice", "A123")
+s.print_info()
+\end{verbatim}
+
+\textbf{7. Method overriding and object creation}
+
+There are two errors. First, the overridden \code{play()} method in \code{Guitar} is missing \code{self}. Second, \code{g = Guitar} stores the class itself, not a new object. It should be \code{g = Guitar()}.
+
+\begin{verbatim}
+class Instrument:
+    def play(self):
+        return "sound"
+
+class Guitar(Instrument):
+    def play(self):
+        return "strum"
+
+g = Guitar()
+print(g.play())
+\end{verbatim}
+
+This prints:
+
+\begin{verbatim}
+strum
+\end{verbatim}
+
+\newpage
+
+\textbf{8. Recursive binary search}
+
+The function is missing a base case for the situation where the search range is empty. Also, the recursive calls do not remove \code{mid} from the next search range, so the function can get stuck checking the same middle index forever.
+
+One correct version is:
+
+\begin{verbatim}
+def binary_search(values, target, low, high):
+    if low > high:
+        return False
+
+    mid = (low + high) // 2
+
+    if values[mid] == target:
+        return True
+
+    elif target < values[mid]:
+        return binary_search(values, target, low, mid - 1)
+
+    else:
+        return binary_search(values, target, mid + 1, high)
+\end{verbatim}
+
+\section*{Part 3 - Code Tracing and Algorithm Reasoning (20 points)}
+
+\textbf{9. Polymorphism tracing}
+
+The loop calls \code{label()} on each object. Python uses the version of \code{label()} belonging to the actual object type.
+
+\begin{verbatim}
+Item: box
+Food: apple (95)
+Tool: hammer
+\end{verbatim}
+
+\textbf{10. Recursive function tracing}
+
+\begin{enumerate}[label=\alph*)]
+    \item \code{mystery(6)} returns \code{13}.
+
+\begin{verbatim}
+mystery(6) = 6 + mystery(4)
+           = 6 + 4 + mystery(2)
+           = 6 + 4 + 2 + mystery(0)
+           = 6 + 4 + 2 + 1
+           = 13
+\end{verbatim}
+
+    \item The base case is \code{if n <= 1: return 1}.
+    \item This behaves more like simple countdown recursion than Fibonacci recursion because each call makes only one smaller recursive call. Fibonacci recursion branches into two recursive calls and repeats much more work.
+\end{enumerate}
+
+\newpage
+
+\section*{Part 4 - Code Writing (25 points)}
+
+\textbf{11. Inheritance and \code{super()}}
+
+One possible solution:
+
+\begin{verbatim}
+class MediaItem:
+    def __init__(self, title, year):
+        self.title = title
+        self.year = year
+
+class Song(MediaItem):
+    def __init__(self, title, year, artist):
+        super().__init__(title, year)
+        self.artist = artist
+
+    def __str__(self):
+        return self.title + " by " + self.artist + " (" + str(self.year) + ")"
+\end{verbatim}
+
+An f-string solution is also fine:
+
+\begin{verbatim}
+    def __str__(self):
+        return f"{self.title} by {self.artist} ({self.year})"
+\end{verbatim}
+
+\textbf{12. Mixed list and polymorphism}
+
+One possible solution:
+
+\begin{verbatim}
+items = []
+
+items.append(Plant("hosta", 12.99))
+items.append(Plant("fern", 9.50))
+items.append(Flower("rose", 18.00, "red"))
+items.append(Flower("tulip", 7.25, "yellow"))
+
+for item in items:
+    item.print_info()
+\end{verbatim}
+
+This works because both \code{Plant} and \code{Flower} objects have a \code{print_info()} method. Python chooses the correct version at runtime.
+
+\newpage
+
+\textbf{13. Iterative Fibonacci}
+
+One possible solution:
+
+\begin{verbatim}
+def fib_iter(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+
+    previous = 0
+    current = 1
+
+    for i in range(2, n + 1):
+        next_value = previous + current
+        previous = current
+        current = next_value
+
+    return current
+\end{verbatim}
+
+A shorter solution is also acceptable:
+
+\begin{verbatim}
+def fib_iter(n):
+    a = 0
+    b = 1
+
+    for i in range(n):
+        a, b = b, a + b
+
+    return a
+\end{verbatim}
+
+\section*{Part 5 - Short Answer (10 points)}
+
+\textbf{14. Recursion and end conditions}
+
+Every recursive function needs an end condition, or base case, so that the recursive calls eventually stop. Without a reachable end condition, the function keeps calling itself until Python reaches its recursion limit and raises an error. Conceptually, recursion needs at least one simple case that can be answered directly and one or more recursive cases that move closer to that simple case.
+
+\textbf{15. Binary search efficiency}
+
+Binary search requires the data to be sorted. It works by checking the middle value and then eliminating half of the remaining values each time. This is more efficient than linear search because it does not need to check every item one at a time. A linear search may require about \code{n} checks, while binary search requires about \code{log2(n)} checks.
+
+\hrule
+\begin{center}
+\textbf{End of Solution Set}
+\end{center}
+
+\end{document}
