@@ -1,662 +1,368 @@
 #!/usr/bin/env python3
 """
-grade_lab10.py
+Lab 10 autograder: fibonacci_timing.py
 
-Automated Lab 10 checker for CPSC 250L student forks.
+Designed for the CPSC 250L-style repo workflow.  It can grade either one lab
+folder or a directory containing multiple student repositories.
 
-Lab 10: Recursion and Timing
-Default folder: labs/lab10_recursion_and_timing
-Expected file: fibonacci_timing.py
+Default expected file:
+    labs/lab10_fibonacci_timing/fibonacci_timing.py
 
-Recommended use:
+Examples:
+    python grade_lab10.py --lab-path /path/to/student/repo/labs/lab10_fibonacci_timing
+    python grade_lab10.py --submissions-root ./student_repos --lab-relative-path labs/lab10_fibonacci_timing
+    python grade_lab10.py --submissions-root ./student_repos --output lab10_report.csv
 
-python grade_lab10.py \
-  --students students.csv \
-  --workdir student_repos \
-  --report reports/lab10_report.csv \
-  --lab-path labs/lab10_recursion_and_timing
+Total: 24 points
 """
 
 from __future__ import annotations
 
 import argparse
 import ast
+import contextlib
 import csv
+import importlib.util
+import io
 import math
-import subprocess
-import sys
-import time
+import os
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple
+import signal
+import sys
+import tempfile
+import time
+import types
+from typing import Any, Callable
 
-
-EXPECTED_FILE = "fibonacci_timing.py"
-EXPECTED_FUNCTIONS = ["fib_recursive", "fib_iterative", "time_function", "main"]
 TOTAL_POINTS = 24
+DEFAULT_LAB_RELATIVE_PATH = "labs/lab10_fibonacci_timing"
+TARGET_FILENAME = "fibonacci_timing.py"
 
 
-def run_command(
-    command: List[str],
-    cwd: Optional[Path] = None,
-    timeout: int = 20,
-) -> Tuple[int, str, str]:
+class TimeoutError(Exception):
+    pass
+
+
+def _timeout_handler(signum, frame):  # pragma: no cover
+    raise TimeoutError("operation timed out")
+
+
+@contextlib.contextmanager
+def time_limit(seconds: int):
+    """Unix-only alarm timeout, fine for the macOS/Linux grading environment."""
+    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(seconds)
     try:
-        result = subprocess.run(
-            command,
-            cwd=cwd,
-            timeout=timeout,
-            text=True,
-            capture_output=True,
-        )
-        return result.returncode, result.stdout.strip(), result.stderr.strip()
-    except subprocess.TimeoutExpired:
-        return 124, "", f"Command timed out after {timeout} seconds: {' '.join(command)}"
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, old_handler)
+
+
+def find_submission_files(args: argparse.Namespace) -> list[tuple[str, Path]]:
+    """Return (student_name, fibonacci_timing.py path) pairs."""
+    if args.lab_path:
+        lab_path = Path(args.lab_path).expanduser().resolve()
+        target = lab_path / TARGET_FILENAME if lab_path.is_dir() else lab_path
+        return [(lab_path.parent.name if lab_path.is_dir() else lab_path.stem, target)]
+
+    root = Path(args.submissions_root).expanduser().resolve()
+    pairs: list[tuple[str, Path]] = []
+    for child in sorted(root.iterdir()):
+        if not child.is_dir():
+            continue
+        target = child / args.lab_relative_path / TARGET_FILENAME
+        pairs.append((child.name, target))
+    return pairs
+
+
+def load_defs_only(path: Path) -> tuple[types.ModuleType | None, ast.Module | None, str | None]:
+    """
+    Parse a student file and execute only imports, assignments, class defs, and
+    function defs. This avoids an unguarded main() call, which is especially
+    important because a naive recursive fib(40) can take a long time.
+    """
+    try:
+        source = path.read_text(encoding="utf-8")
     except Exception as exc:
-        return 1, "", f"Command failed: {exc}"
+        return None, None, f"Could not read file: {exc}"
 
+    try:
+        tree = ast.parse(source, filename=str(path))
+    except SyntaxError as exc:
+        return None, None, f"SyntaxError: line {exc.lineno}: {exc.msg}"
+    except Exception as exc:
+        return None, None, f"Could not parse file: {exc}"
 
-def clone_or_update_repo(repo_url: str, repo_dir: Path) -> Tuple[bool, str]:
-    if not repo_dir.exists():
-        code, out, err = run_command(["git", "clone", repo_url, str(repo_dir)], timeout=60)
-        if code != 0:
-            return False, err or out
-        return True, "cloned"
-
-    if not (repo_dir / ".git").exists():
-        return False, f"{repo_dir} exists but is not a git repository"
-
-    run_command(["git", "fetch", "--all"], cwd=repo_dir, timeout=60)
-
-    code, out, err = run_command(["git", "checkout", "main"], cwd=repo_dir)
-    if code != 0:
-        run_command(["git", "checkout", "master"], cwd=repo_dir)
-
-    code, out, err = run_command(["git", "pull"], cwd=repo_dir, timeout=60)
-    if code != 0:
-        return False, err or out
-
-    return True, "updated"
-
-
-def find_file(repo_dir: Path, filename: str) -> Optional[Path]:
-    candidates = list(repo_dir.rglob(filename))
-    filtered = [
-        p for p in candidates
-        if ".git" not in p.parts
-        and ".venv" not in p.parts
-        and "venv" not in p.parts
-        and "__pycache__" not in p.parts
-    ]
-
-    if not filtered:
-        return None
-
-    filtered.sort(
-        key=lambda p: (
-            "lab10" not in str(p).lower() and "lab_10" not in str(p).lower(),
-            len(p.parts),
-        )
+    allowed = (
+        ast.Import,
+        ast.ImportFrom,
+        ast.FunctionDef,
+        ast.AsyncFunctionDef,
+        ast.ClassDef,
+        ast.Assign,
+        ast.AnnAssign,
+        ast.AugAssign,
     )
-    return filtered[0]
+    safe_body = [node for node in tree.body if isinstance(node, allowed)]
+    safe_tree = ast.Module(body=safe_body, type_ignores=[])
+    ast.fix_missing_locations(safe_tree)
 
+    module = types.ModuleType("student_fibonacci_timing")
+    module.__dict__["__file__"] = str(path)
+    module.__dict__["__name__"] = "student_fibonacci_timing"
 
-def parse_python(py_path: Path) -> Tuple[Optional[ast.Module], str]:
+    # Force a non-GUI backend before any student pyplot import is executed.
+    os.environ.setdefault("MPLBACKEND", "Agg")
+
     try:
-        return ast.parse(py_path.read_text(encoding="utf-8")), "ok"
+        with time_limit(4):
+            exec(compile(safe_tree, str(path), "exec"), module.__dict__)
     except Exception as exc:
-        return None, str(exc)
+        return None, tree, f"Runtime error while loading definitions: {type(exc).__name__}: {exc}"
+
+    return module, tree, None
 
 
-def function_names(tree: ast.Module) -> List[str]:
-    return [node.name for node in tree.body if isinstance(node, ast.FunctionDef)]
+def function_names_called(fn_node: ast.FunctionDef) -> set[str]:
+    names: set[str] = set()
+    for node in ast.walk(fn_node):
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Name):
+                names.add(node.func.id)
+            elif isinstance(node.func, ast.Attribute):
+                names.add(node.func.attr)
+    return names
 
 
-def get_function_node(tree: ast.Module, name: str) -> Optional[ast.FunctionDef]:
+def get_function_node(tree: ast.Module | None, name: str) -> ast.FunctionDef | None:
+    if tree is None:
+        return None
     for node in tree.body:
         if isinstance(node, ast.FunctionDef) and node.name == name:
             return node
     return None
 
 
-def contains_call_to(node: ast.AST, name: str) -> bool:
-    for child in ast.walk(node):
-        if isinstance(child, ast.Call):
-            func = child.func
-            if isinstance(func, ast.Name) and func.id == name:
-                return True
-            if isinstance(func, ast.Attribute) and func.attr == name:
-                return True
-    return False
-
-
-def contains_name(node: ast.AST, name: str) -> bool:
-    return any(isinstance(child, ast.Name) and child.id == name for child in ast.walk(node))
-
-
-def contains_attribute(node: ast.AST, attr: str) -> bool:
-    return any(isinstance(child, ast.Attribute) and child.attr == attr for child in ast.walk(node))
-
-
-def contains_numeric_constant(node: ast.AST, value: int) -> bool:
-    return any(isinstance(child, ast.Constant) and child.value == value for child in ast.walk(node))
-
-
-def is_placeholder_function(node: ast.FunctionDef) -> bool:
-    meaningful = [stmt for stmt in node.body if not isinstance(stmt, ast.Expr) or not isinstance(getattr(stmt, "value", None), ast.Constant) or not isinstance(stmt.value.value, str)]
-    if not meaningful:
-        return True
-    if len(meaningful) == 1:
-        stmt = meaningful[0]
-        if isinstance(stmt, ast.Pass):
-            return True
-        if isinstance(stmt, ast.Return) and isinstance(stmt.value, ast.Constant) and stmt.value.value in (None, 0):
-            return True
-    return False
-
-
-def safe_load_functions(py_path: Path) -> Tuple[Optional[Dict[str, Any]], str]:
-    """Execute only imports, assignments, and function definitions; skip top-level main() calls."""
+def safe_call(func: Callable[..., Any], *args: Any, seconds: int = 2) -> tuple[bool, Any, str]:
     try:
-        source = py_path.read_text(encoding="utf-8")
-        tree = ast.parse(source)
-
-        safe_body: List[ast.stmt] = []
-        for node in tree.body:
-            if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.Assign, ast.AnnAssign)):
-                safe_body.append(node)
-            elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
-                # Skip top-level calls such as main().
-                continue
-            elif isinstance(node, ast.If):
-                # Skip if __name__ == "__main__" blocks while loading functions.
-                continue
-
-        module = ast.Module(body=safe_body, type_ignores=[])
-        ast.fix_missing_locations(module)
-
-        namespace: Dict[str, Any] = {"__name__": "lab10_grader_import"}
-        exec(compile(module, str(py_path), "exec"), namespace)
-        return namespace, "ok"
+        with time_limit(seconds):
+            result = func(*args)
+        return True, result, ""
     except Exception as exc:
-        return None, f"Could not load functions safely: {exc}"
+        return False, None, f"{type(exc).__name__}: {exc}"
 
 
-def call_with_timeout(function: Callable[..., Any], args: Tuple[Any, ...], timeout_seconds: float = 2.0) -> Tuple[bool, Any, str]:
-    # For these small Fibonacci cases, direct calls are sufficient and avoid multiprocessing/import complications.
-    start = time.perf_counter()
-    try:
-        value = function(*args)
-        elapsed = time.perf_counter() - start
-        if elapsed > timeout_seconds:
-            return False, value, f"Call exceeded {timeout_seconds:.1f} seconds"
-        return True, value, "ok"
-    except RecursionError as exc:
-        return False, None, f"RecursionError: {exc}"
-    except Exception as exc:
-        return False, None, f"Exception: {exc}"
+def check_fib_function(func: Callable[[int], int], test_values: list[tuple[int, int]], seconds: int) -> tuple[int, list[str]]:
+    passed = 0
+    messages: list[str] = []
+    for n, expected in test_values:
+        ok, result, err = safe_call(func, n, seconds=seconds)
+        if ok and result == expected:
+            passed += 1
+        else:
+            messages.append(f"n={n}: expected {expected}, got {result!r}{' (' + err + ')' if err else ''}")
+    return passed, messages
 
 
-def expected_fib(n: int) -> int:
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-
-def test_function_behavior(namespace: Dict[str, Any]) -> Dict[str, str]:
-    result = {
-        "fib_recursive_base_cases_correct": "no",
-        "fib_recursive_values_correct": "no",
-        "fib_iterative_base_cases_correct": "no",
-        "fib_iterative_values_correct": "no",
-        "time_function_returns_number": "no",
-        "time_function_calls_argument_function": "no",
-        "time_function_measures_elapsed_time": "no",
-        "behavior_notes": "",
-    }
-
-    fib_recursive = namespace.get("fib_recursive")
-    fib_iterative = namespace.get("fib_iterative")
-    time_function = namespace.get("time_function")
-
-    if callable(fib_recursive):
-        try:
-            base_ok = all(fib_recursive(n) == expected_fib(n) for n in [0, 1, 2])
-            result["fib_recursive_base_cases_correct"] = "yes" if base_ok else "no"
-            if not base_ok:
-                result["behavior_notes"] += "fib_recursive base cases are incorrect. "
-        except Exception as exc:
-            result["behavior_notes"] += f"fib_recursive base case test raised: {exc}. "
-
-        try:
-            values_ok = True
-            for n in [3, 5, 7, 10, 12]:
-                ok, value, note = call_with_timeout(fib_recursive, (n,), timeout_seconds=2.0)
-                if not ok or value != expected_fib(n):
-                    values_ok = False
-                    result["behavior_notes"] += f"fib_recursive({n}) returned {value!r}; expected {expected_fib(n)} ({note}). "
-                    break
-            result["fib_recursive_values_correct"] = "yes" if values_ok else "no"
-        except Exception as exc:
-            result["behavior_notes"] += f"fib_recursive value test raised: {exc}. "
-    else:
-        result["behavior_notes"] += "fib_recursive is not callable. "
-
-    if callable(fib_iterative):
-        try:
-            base_ok = all(fib_iterative(n) == expected_fib(n) for n in [0, 1, 2])
-            result["fib_iterative_base_cases_correct"] = "yes" if base_ok else "no"
-            if not base_ok:
-                result["behavior_notes"] += "fib_iterative base cases are incorrect. "
-        except Exception as exc:
-            result["behavior_notes"] += f"fib_iterative base case test raised: {exc}. "
-
-        try:
-            values_ok = True
-            for n in [3, 5, 10, 20, 30]:
-                ok, value, note = call_with_timeout(fib_iterative, (n,), timeout_seconds=1.0)
-                if not ok or value != expected_fib(n):
-                    values_ok = False
-                    result["behavior_notes"] += f"fib_iterative({n}) returned {value!r}; expected {expected_fib(n)} ({note}). "
-                    break
-            result["fib_iterative_values_correct"] = "yes" if values_ok else "no"
-        except Exception as exc:
-            result["behavior_notes"] += f"fib_iterative value test raised: {exc}. "
-    else:
-        result["behavior_notes"] += "fib_iterative is not callable. "
-
-    if callable(time_function):
-        calls = {"count": 0}
-
-        def sample_function(n: int) -> int:
-            calls["count"] += 1
-            time.sleep(0.002)
-            return n * 2
-
-        try:
-            elapsed = time_function(sample_function, 21)
-            if isinstance(elapsed, (int, float)) and not isinstance(elapsed, bool) and math.isfinite(float(elapsed)) and float(elapsed) >= 0:
-                result["time_function_returns_number"] = "yes"
-            else:
-                result["behavior_notes"] += f"time_function returned non-numeric or invalid elapsed value: {elapsed!r}. "
-
-            if calls["count"] >= 1:
-                result["time_function_calls_argument_function"] = "yes"
-            else:
-                result["behavior_notes"] += "time_function did not call the function argument. "
-
-            if isinstance(elapsed, (int, float)) and float(elapsed) > 0:
-                result["time_function_measures_elapsed_time"] = "yes"
-            else:
-                result["behavior_notes"] += "time_function did not appear to measure positive elapsed time. "
-        except Exception as exc:
-            result["behavior_notes"] += f"time_function test raised: {exc}. "
-    else:
-        result["behavior_notes"] += "time_function is not callable. "
-
-    return result
-
-
-def run_program(py_path: Path) -> Tuple[bool, str]:
-    code, out, err = run_command(
-        [sys.executable, str(py_path.name)],
-        cwd=py_path.parent,
-        timeout=25,
-    )
-    if code == 0:
-        return True, out
-    return False, err or out
-
-
-def output_has_expected_content(output: str) -> Tuple[bool, str]:
-    notes = []
-    lowered = output.lower()
-
-    if "fibonacci timing" not in lowered:
-        notes.append("Missing title 'Fibonacci Timing'")
-    if "recursive" not in lowered:
-        notes.append("Missing recursive timing label")
-    if "iterative" not in lowered:
-        notes.append("Missing iterative timing label")
-    if "seconds" not in lowered:
-        notes.append("Missing seconds in timing output")
-    for n in [5, 10, 20, 25, 30, 35, 40]:
-        if str(n) not in output:
-            notes.append(f"Missing n value: {n}")
-    if "none" in lowered or "todo" in lowered or "pass" in lowered:
-        notes.append("Output contains placeholder-like text")
-
-    return len(notes) == 0, "; ".join(notes)
-
-
-def count_commits_touching_path(repo_dir: Path, lab_path: Optional[str]) -> Tuple[Optional[int], str]:
-    if not lab_path:
-        return None, "lab path not provided"
-
-    code, out, err = run_command(
-        ["git", "rev-list", "--count", "HEAD", "--", lab_path],
-        cwd=repo_dir,
-    )
-
-    if code != 0:
-        return None, err or out
-
-    try:
-        return int(out), "ok"
-    except ValueError:
-        return None, f"could not parse commit count: {out}"
-
-
-def get_recent_lab_commits(repo_dir: Path, lab_path: Optional[str], n: int = 8) -> str:
-    if not lab_path:
-        return ""
-
-    code, out, err = run_command(
-        ["git", "log", "--oneline", f"-{n}", "--", lab_path],
-        cwd=repo_dir,
-    )
-
-    return out if code == 0 else err
-
-
-def get_recent_commits(repo_dir: Path, n: int = 10) -> str:
-    code, out, err = run_command(["git", "log", "--oneline", f"-{n}"], cwd=repo_dir)
-    return out if code == 0 else err
-
-
-def get_branch_info(repo_dir: Path) -> str:
-    code, out, err = run_command(["git", "branch", "-a"], cwd=repo_dir)
-    return out if code == 0 else err
-
-
-def is_working_tree_clean(repo_dir: Path) -> Tuple[bool, str]:
-    code, out, err = run_command(["git", "status", "--porcelain"], cwd=repo_dir)
-
-    if code != 0:
-        return False, err or out
-
-    if out.strip() == "":
-        return True, "clean"
-
-    return False, out.replace("\n", " | ")
-
-
-def empty_result(row: Dict[str, str], lab_path: Optional[str]) -> Dict[str, str]:
-    return {
-        "name": row["name"].strip(),
-        "github_username": row["github_username"].strip(),
-        "repo_url": row["repo_url"].strip(),
-        "type": row.get("type", "student").strip() or "student",
-        "clone_or_update": "no",
-        "fibonacci_timing_exists": "no",
-        "fibonacci_timing_path": "",
-        "parses": "no",
-        "fib_recursive_exists": "no",
-        "fib_iterative_exists": "no",
-        "time_function_exists": "no",
-        "main_exists": "no",
-        "fib_recursive_not_placeholder": "no",
-        "fib_iterative_not_placeholder": "no",
-        "time_function_not_placeholder": "no",
-        "fib_recursive_base_cases_correct": "no",
-        "fib_recursive_values_correct": "no",
-        "fib_iterative_base_cases_correct": "no",
-        "fib_iterative_values_correct": "no",
-        "time_function_returns_number": "no",
-        "time_function_calls_argument_function": "no",
-        "time_function_measures_elapsed_time": "no",
-        "main_uses_required_values": "no",
-        "main_calls_time_function": "no",
-        "plot_code_present": "no",
-        "plot_labels_present": "no",
-        "log_y_axis_present": "no",
-        "program_runs_from_terminal": "no",
-        "program_output_readable": "no",
-        "program_output": "",
-        "lab_path_checked": lab_path or "",
-        "commits_touching_lab": "",
-        "meaningful_lab_commit_evidence": "no",
-        "recent_lab_commits": "",
-        "working_tree_clean": "no",
-        "recent_commits": "",
-        "branch_info": "",
-        f"auto_score_out_of_{TOTAL_POINTS}": "0",
-        "manual_review_out_of_0": "",
-        f"total_score_out_of_{TOTAL_POINTS}": "",
+def grade_one(student: str, path: Path) -> dict[str, Any]:
+    row: dict[str, Any] = {
+        "student": student,
+        "file": str(path),
+        "score": 0,
+        "max_score": TOTAL_POINTS,
+        "file_load_points": 0,
+        "fib_recursive_points": 0,
+        "fib_iterative_points": 0,
+        "time_function_points": 0,
+        "output_points": 0,
+        "plot_points": 0,
         "notes": "",
     }
+    notes: list[str] = []
 
+    if not path.exists():
+        row["notes"] = "Missing fibonacci_timing.py"
+        return row
 
-def grade_student(row: Dict[str, str], workdir: Path, lab_path: Optional[str]) -> Dict[str, str]:
-    username = row["github_username"].strip()
-    repo_url = row["repo_url"].strip()
-    repo_dir = workdir / username
-    result = empty_result(row, lab_path)
+    module, tree, load_error = load_defs_only(path)
+    if load_error:
+        notes.append(load_error)
+        row["notes"] = "; ".join(notes)
+        return row
 
-    ok, message = clone_or_update_repo(repo_url, repo_dir)
-    result["clone_or_update"] = "yes" if ok else "no"
-    if not ok:
-        result["notes"] = message
-        return result
+    assert module is not None
+    row["file_load_points"] = 2
 
-    fib_path = find_file(repo_dir, EXPECTED_FILE)
-
-    if not fib_path:
-        result["notes"] += "fibonacci_timing.py not found; awarded zero for Lab 10. "
-        clean, clean_note = is_working_tree_clean(repo_dir)
-        result["working_tree_clean"] = "yes" if clean else "no"
-        result["recent_commits"] = get_recent_commits(repo_dir).replace("\n", " | ")[:900]
-        result["branch_info"] = get_branch_info(repo_dir).replace("\n", " | ")[:900]
-        if lab_path:
-            commits, commit_note = count_commits_touching_path(repo_dir, lab_path)
-            result["commits_touching_lab"] = "" if commits is None else str(commits)
-            result["recent_lab_commits"] = get_recent_lab_commits(repo_dir, lab_path).replace("\n", " | ")[:900]
-            if commits is None:
-                result["notes"] += f"Lab commit check failed: {commit_note}. "
-        return result
-
-    score = 1  # clone/update
-
-    result["fibonacci_timing_exists"] = "yes"
-    result["fibonacci_timing_path"] = str(fib_path.relative_to(repo_dir))
-    score += 1
-
-    tree, parse_note = parse_python(fib_path)
-    if tree is None:
-        result["notes"] += f"Could not parse fibonacci_timing.py: {parse_note}. "
-    else:
-        result["parses"] = "yes"
-        score += 1
-
-        names = function_names(tree)
-        for fn_name in EXPECTED_FUNCTIONS:
-            col = f"{fn_name}_exists" if fn_name != "main" else "main_exists"
-            if fn_name in names:
-                result[col] = "yes"
-                score += 1
-            else:
-                result["notes"] += f"{fn_name} function not found. "
-
-        for fn_name in ["fib_recursive", "fib_iterative", "time_function"]:
-            fn_node = get_function_node(tree, fn_name)
-            if fn_node is not None and not is_placeholder_function(fn_node):
-                result[f"{fn_name}_not_placeholder"] = "yes"
-            elif fn_node is not None:
-                result["notes"] += f"{fn_name} still looks like placeholder code. "
-
-        fib_recursive_node = get_function_node(tree, "fib_recursive")
-        if fib_recursive_node is not None and contains_call_to(fib_recursive_node, "fib_recursive"):
-            result["fib_recursive_uses_recursion"] = "yes"
-            score += 1
-        elif fib_recursive_node is not None:
-            result["notes"] += "fib_recursive does not appear to call itself recursively. "
-
-        fib_iterative_node = get_function_node(tree, "fib_iterative")
-        if fib_iterative_node is not None and any(isinstance(node, (ast.For, ast.While)) for node in ast.walk(fib_iterative_node)):
-            result["fib_iterative_uses_loop"] = "yes"
-            score += 1
-        elif fib_iterative_node is not None:
-            result["notes"] += "fib_iterative does not appear to use a loop. "
-
-        main_node = get_function_node(tree, "main")
-        if main_node is not None:
-            required_values = [5, 10, 20, 25, 30, 35, 40]
-            if all(contains_numeric_constant(main_node, n) for n in required_values):
-                result["main_uses_required_values"] = "yes"
-                score += 1
-            else:
-                result["notes"] += "main does not appear to use the required n values. "
-
-            if contains_call_to(main_node, "time_function"):
-                result["main_calls_time_function"] = "yes"
-                score += 1
-            else:
-                result["notes"] += "main does not appear to call time_function. "
-
-            if any(contains_attribute(main_node, attr) or contains_call_to(main_node, attr) for attr in ["plot", "semilogy", "scatter"]):
-                result["plot_code_present"] = "yes"
-            else:
-                result["notes"] += "Plotting code not found in main. "
-
-            labels_ok = any(contains_attribute(main_node, attr) or contains_call_to(main_node, attr) for attr in ["xlabel", "ylabel", "title", "legend"])
-            # Require at least evidence of labeling/legend; detailed plot aesthetics are manually reviewable if needed.
-            label_count = sum(1 for attr in ["xlabel", "ylabel", "title", "legend"] if contains_attribute(main_node, attr) or contains_call_to(main_node, attr))
-            if labels_ok and label_count >= 3:
-                result["plot_labels_present"] = "yes"
-                score += 1
-            else:
-                result["notes"] += "Plot labels/title/legend are incomplete or missing. "
-
-            if contains_attribute(main_node, "yscale") or contains_call_to(main_node, "semilogy"):
-                result["log_y_axis_present"] = "yes"
-                score += 1
-            else:
-                result["notes"] += "Logarithmic y-axis code not found. "
-
-        namespace, load_note = safe_load_functions(fib_path)
-        if namespace is not None:
-            behavior = test_function_behavior(namespace)
-            for key, value in behavior.items():
-                if key in result:
-                    result[key] = value
-            result["notes"] += behavior.get("behavior_notes", "")
-
-            for key in [
-                "fib_recursive_base_cases_correct",
-                "fib_recursive_values_correct",
-                "fib_iterative_base_cases_correct",
-                "fib_iterative_values_correct",
-                "time_function_returns_number",
-                "time_function_calls_argument_function",
-                "time_function_measures_elapsed_time",
-            ]:
-                if result[key] == "yes":
-                    score += 1
+    # --- fib_recursive: 5 pts ---
+    fib_rec = getattr(module, "fib_recursive", None)
+    rec_node = get_function_node(tree, "fib_recursive")
+    if callable(fib_rec):
+        base_tests = [(0, 0), (1, 1)]
+        value_tests = [(2, 1), (5, 5), (10, 55)]
+        base_passed, base_msgs = check_fib_function(fib_rec, base_tests, seconds=1)
+        value_passed, value_msgs = check_fib_function(fib_rec, value_tests, seconds=2)
+        row["fib_recursive_points"] += base_passed  # 2 pts
+        row["fib_recursive_points"] += min(2, math.floor(value_passed * 2 / len(value_tests)))  # 0-2 pts
+        if rec_node and "fib_recursive" in function_names_called(rec_node):
+            row["fib_recursive_points"] += 1
         else:
-            result["notes"] += load_note + " "
-
-    run_ok, output = run_program(fib_path)
-    result["program_runs_from_terminal"] = "yes" if run_ok else "no"
-    result["program_output"] = output[:1200]
-    if run_ok:
-        score += 1
-        readable, output_note = output_has_expected_content(output)
-        if readable:
-            result["program_output_readable"] = "yes"
-            score += 1
-        else:
-            result["notes"] += f"Output check: {output_note}. "
+            notes.append("fib_recursive does not appear to call itself")
+        if base_msgs or value_msgs:
+            notes.append("fib_recursive issues: " + ", ".join(base_msgs + value_msgs[:2]))
     else:
-        result["notes"] += "fibonacci_timing.py did not run successfully from terminal. "
+        notes.append("fib_recursive missing or not callable")
 
-    if lab_path:
-        commits, commit_note = count_commits_touching_path(repo_dir, lab_path)
-        result["commits_touching_lab"] = "" if commits is None else str(commits)
-        result["recent_lab_commits"] = get_recent_lab_commits(repo_dir, lab_path).replace("\n", " | ")[:900]
-        if commits is not None:
-            if commits >= 2:
-                result["meaningful_lab_commit_evidence"] = "yes"
-                score += 1
+    # --- fib_iterative: 5 pts ---
+    fib_it = getattr(module, "fib_iterative", None)
+    if callable(fib_it):
+        base_tests = [(0, 0), (1, 1)]
+        value_tests = [(2, 1), (5, 5), (10, 55), (20, 6765), (40, 102334155)]
+        base_passed, base_msgs = check_fib_function(fib_it, base_tests, seconds=1)
+        value_passed, value_msgs = check_fib_function(fib_it, value_tests, seconds=1)
+        row["fib_iterative_points"] += base_passed  # 2 pts
+        row["fib_iterative_points"] += min(2, math.floor(value_passed * 2 / len(value_tests)))  # 0-2 pts
+        start = time.perf_counter()
+        ok, result, err = safe_call(fib_it, 500, seconds=1)
+        elapsed = time.perf_counter() - start
+        if ok and isinstance(result, int) and elapsed < 0.25:
+            row["fib_iterative_points"] += 1
+        else:
+            notes.append("fib_iterative is not efficient for n=500")
+        if base_msgs or value_msgs:
+            notes.append("fib_iterative issues: " + ", ".join(base_msgs + value_msgs[:2]))
+    else:
+        notes.append("fib_iterative missing or not callable")
+
+    # --- time_function: 4 pts ---
+    time_function = getattr(module, "time_function", None)
+    if callable(time_function):
+        calls: list[int] = []
+
+        def dummy(n: int) -> int:
+            calls.append(n)
+            time.sleep(0.01)
+            return 12345
+
+        ok, elapsed, err = safe_call(time_function, dummy, 7, seconds=2)
+        if ok and calls == [7]:
+            row["time_function_points"] += 1
+        else:
+            notes.append("time_function did not call the supplied function exactly once with n")
+        if ok and isinstance(elapsed, (int, float)):
+            row["time_function_points"] += 1
+            if elapsed > 0:
+                row["time_function_points"] += 1
+            if 0.005 <= elapsed <= 0.5:
+                row["time_function_points"] += 1
+        else:
+            notes.append(f"time_function did not return a numeric elapsed time{': ' + err if err else ''}")
+    else:
+        notes.append("time_function missing or not callable")
+
+    # --- main output: 2 pts ---
+    main_fn = getattr(module, "main", None)
+    if callable(main_fn):
+        # Monkeypatch expensive pieces so main can be tested safely.
+        time_calls: list[tuple[str, int]] = []
+
+        def fake_time_function(function: Callable[[int], int], n: int) -> float:
+            time_calls.append((getattr(function, "__name__", "unknown"), n))
+            return 0.001 * max(1, n)
+
+        original_time_function = module.__dict__.get("time_function")
+        module.__dict__["time_function"] = fake_time_function
+        try:
+            import matplotlib
+            matplotlib.use("Agg", force=True)
+            import matplotlib.pyplot as plt
+            plt.close("all")
+            original_show = plt.show
+            plt.show = lambda *a, **k: None
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                ok, _, err = safe_call(main_fn, seconds=3)
+            output = buf.getvalue()
+            values_seen = sorted({n for _, n in time_calls})
+            if "Fibonacci" in output and "recursive" in output.lower() and "iterative" in output.lower():
+                row["output_points"] += 1
             else:
-                result["notes"] += f"Expected at least 2 commits touching {lab_path}, got {commits}. "
-        else:
-            result["notes"] += f"Lab commit check failed: {commit_note}. "
+                notes.append("main output is missing expected heading/columns")
+            if values_seen == [5, 10, 20, 25, 30, 35, 40]:
+                row["output_points"] += 1
+            else:
+                notes.append(f"main did not time the expected n values; saw {values_seen}")
+
+            # --- plot: 6 pts ---
+            figs = [plt.figure(num) for num in plt.get_fignums()]
+            axes = [ax for fig in figs for ax in fig.axes]
+            if axes:
+                ax = axes[0]
+                if len(ax.lines) >= 2:
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot has fewer than two data series")
+                if ax.get_xlabel().strip():
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot missing x-axis label")
+                if ax.get_ylabel().strip():
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot missing y-axis label")
+                if ax.get_title().strip():
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot missing title")
+                has_legend = ax.get_legend() is not None
+                is_log = ax.get_yscale() == "log"
+                if has_legend:
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot missing legend")
+                if is_log:
+                    row["plot_points"] += 1
+                else:
+                    notes.append("plot y-axis is not logarithmic")
+            else:
+                notes.append("main did not create a matplotlib plot")
+            plt.show = original_show
+        except Exception as exc:
+            notes.append(f"main/plot test failed: {type(exc).__name__}: {exc}")
+        finally:
+            if original_time_function is not None:
+                module.__dict__["time_function"] = original_time_function
     else:
-        result["notes"] += "No --lab-path supplied; lab-specific commit credit not awarded. "
+        notes.append("main missing or not callable")
 
-    clean, clean_note = is_working_tree_clean(repo_dir)
-    result["working_tree_clean"] = "yes" if clean else "no"
-    if clean:
-        score += 1
-    else:
-        result["notes"] += f"Working tree: {clean_note}. "
-
-    result["recent_commits"] = get_recent_commits(repo_dir).replace("\n", " | ")[:900]
-    result["branch_info"] = get_branch_info(repo_dir).replace("\n", " | ")[:900]
-    result[f"auto_score_out_of_{TOTAL_POINTS}"] = str(score)
-    return result
-
-
-def read_students(path: Path) -> List[Dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        required = {"name", "github_username", "repo_url"}
-        missing = required - set(reader.fieldnames or [])
-        if missing:
-            raise ValueError(f"students.csv is missing required columns: {', '.join(sorted(missing))}")
-        return list(reader)
+    categories = [
+        "file_load_points",
+        "fib_recursive_points",
+        "fib_iterative_points",
+        "time_function_points",
+        "output_points",
+        "plot_points",
+    ]
+    row["score"] = sum(int(row[key]) for key in categories)
+    row["notes"] = "; ".join(notes)
+    return row
 
 
-def write_report(path: Path, rows: List[Dict[str, str]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-
+def write_report(rows: list[dict[str, Any]], output_path: Path) -> None:
     fieldnames = [
-        "name",
-        "github_username",
-        "repo_url",
-        "type",
-        "clone_or_update",
-        "fibonacci_timing_exists",
-        "fibonacci_timing_path",
-        "parses",
-        "fib_recursive_exists",
-        "fib_iterative_exists",
-        "time_function_exists",
-        "main_exists",
-        "fib_recursive_not_placeholder",
-        "fib_iterative_not_placeholder",
-        "time_function_not_placeholder",
-        "fib_recursive_base_cases_correct",
-        "fib_recursive_values_correct",
-        "fib_recursive_uses_recursion",
-        "fib_iterative_base_cases_correct",
-        "fib_iterative_values_correct",
-        "fib_iterative_uses_loop",
-        "time_function_returns_number",
-        "time_function_calls_argument_function",
-        "time_function_measures_elapsed_time",
-        "main_uses_required_values",
-        "main_calls_time_function",
-        "plot_code_present",
-        "plot_labels_present",
-        "log_y_axis_present",
-        "program_runs_from_terminal",
-        "program_output_readable",
-        "program_output",
-        "lab_path_checked",
-        "commits_touching_lab",
-        "meaningful_lab_commit_evidence",
-        "recent_lab_commits",
-        "working_tree_clean",
-        "recent_commits",
-        "branch_info",
-        f"auto_score_out_of_{TOTAL_POINTS}",
-        "manual_review_out_of_0",
-        f"total_score_out_of_{TOTAL_POINTS}",
+        "student",
+        "score",
+        "max_score",
+        "file_load_points",
+        "fib_recursive_points",
+        "fib_iterative_points",
+        "time_function_points",
+        "output_points",
+        "plot_points",
+        "file",
         "notes",
     ]
-
-    with path.open("w", newline="", encoding="utf-8") as f:
+    with output_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for row in rows:
@@ -664,35 +370,22 @@ def write_report(path: Path, rows: List[Dict[str, str]]) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Grade CPSC 250L Lab 10 student forks.")
-
-    parser.add_argument("--students", required=True, help="Path to students.csv")
-    parser.add_argument("--workdir", default="student_repos", help="Folder where repos are cloned")
-    parser.add_argument("--report", default="reports/lab10_report.csv", help="Output CSV report path")
-    parser.add_argument(
-        "--lab-path",
-        default="labs/lab10_recursion_and_timing",
-        help="Repo-relative path used for lab-specific Git commit checks",
-    )
-
+    parser = argparse.ArgumentParser(description="Grade CPSC 250L Lab 10 Fibonacci Timing submissions.")
+    parser.add_argument("--lab-path", help="Path to one lab folder or directly to fibonacci_timing.py")
+    parser.add_argument("--submissions-root", default=".", help="Directory containing student repositories")
+    parser.add_argument("--lab-relative-path", default=DEFAULT_LAB_RELATIVE_PATH,
+                        help=f"Path from each student repo to the lab folder; default {DEFAULT_LAB_RELATIVE_PATH}")
+    parser.add_argument("--output", default="lab10_report.csv", help="CSV report path")
     args = parser.parse_args()
 
-    students_path = Path(args.students)
-    workdir = Path(args.workdir)
-    report_path = Path(args.report)
+    pairs = find_submission_files(args)
+    rows = [grade_one(student, path) for student, path in pairs]
+    output_path = Path(args.output).expanduser().resolve()
+    write_report(rows, output_path)
 
-    workdir.mkdir(parents=True, exist_ok=True)
-
-    students = read_students(students_path)
-    results = []
-
-    for student in students:
-        print(f"Grading {student['name']}...")
-        results.append(grade_student(student, workdir, args.lab_path))
-
-    write_report(report_path, results)
-    print(f"\nWrote report: {report_path}")
-
+    for row in rows:
+        print(f"{row['student']}: {row['score']}/{row['max_score']}")
+    print(f"\nWrote report to {output_path}")
     return 0
 
 
