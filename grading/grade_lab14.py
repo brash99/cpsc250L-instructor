@@ -37,6 +37,8 @@ EXPECTED_FILE = "regression_analysis.py"
 EXPECTED_DATA_FILE = "study_scores.csv"
 EXPECTED_FUNCTIONS = ["load_data", "fit_line", "predict", "main"]
 TOTAL_POINTS = 24
+SHOW_PLOTS = False
+PLOT_PAUSE_SECONDS = 1.5
 DEFAULT_LAB_PATH = "labs/lab14_regression_analysis"
 
 SAMPLE_CSV = """hours,score
@@ -345,7 +347,8 @@ def run_main_and_check(namespace: Dict[str, Any], py_path: Path, student_slug: s
     tempdir = Path(tempfile.mkdtemp(prefix=f"lab14_main_{student_slug}_"))
     try:
         import matplotlib
-        matplotlib.use("Agg", force=True)
+        if not SHOW_PLOTS:
+            matplotlib.use("Agg", force=True)
         import matplotlib.pyplot as plt
         plt.close("all")
         show_called = {"value": False}
@@ -404,6 +407,16 @@ def run_main_and_check(namespace: Dict[str, Any], py_path: Path, student_slug: s
             print(f"  plot generated for {student_slug}: {len(axes)} axes, {sum(len(ax.lines) for ax in axes)} line(s), {sum(len(ax.collections) for ax in axes)} scatter collection(s)")
 
         plt.show = original_show
+        if SHOW_PLOTS and plt.get_fignums():
+            try:
+                for fig_num in plt.get_fignums():
+                    fig = plt.figure(fig_num)
+                    fig.suptitle(f"{student_slug} — generated plot", fontsize=10)
+                print(f"  displaying plot for {student_slug} ({len(plt.get_fignums())} figure(s)); close or wait to continue")
+                plt.show(block=False)
+                plt.pause(PLOT_PAUSE_SECONDS)
+            except Exception as exc:
+                print(f"  could not display plot for {student_slug}: {exc}")
         plt.close("all")
     except Exception as exc:
         result["main_notes"] += f"main test raised: {type(exc).__name__}: {exc}. "
@@ -716,7 +729,24 @@ def main() -> int:
     parser.add_argument("--workdir", default="student_repos", help="Folder where repos are cloned")
     parser.add_argument("--report", default="reports/lab14_report.csv", help="Output CSV report path")
     parser.add_argument("--lab-path", default=DEFAULT_LAB_PATH, help="Repo-relative path used for lab-specific Git commit checks")
+    parser.add_argument(
+        "--show-plots",
+        action="store_true",
+        help="Display each student's generated plot during grading for visual inspection",
+    )
+    parser.add_argument(
+        "--plot-pause",
+        type=float,
+        default=1.5,
+        help="Seconds to pause for each displayed plot when --show-plots is used",
+    )
+
     args = parser.parse_args()
+
+    global SHOW_PLOTS, PLOT_PAUSE_SECONDS
+    SHOW_PLOTS = bool(args.show_plots)
+    PLOT_PAUSE_SECONDS = float(args.plot_pause)
+
 
     students_path = Path(args.students)
     workdir = Path(args.workdir)

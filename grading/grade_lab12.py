@@ -37,6 +37,8 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 EXPECTED_FILE = "motion_plot.py"
 EXPECTED_FUNCTIONS = ["position", "velocity", "main"]
 TOTAL_POINTS = 24
+SHOW_PLOTS = False
+PLOT_PAUSE_SECONDS = 1.5
 DEFAULT_LAB_PATH = "labs/lab12_motion_plot"
 
 
@@ -320,7 +322,8 @@ def run_main_and_check_plot(namespace: Dict[str, Any], py_path: Path, student_sl
 
     try:
         import matplotlib
-        matplotlib.use("Agg", force=True)
+        if not SHOW_PLOTS:
+            matplotlib.use("Agg", force=True)
         import matplotlib.pyplot as plt
         plt.close("all")
         original_show = plt.show
@@ -368,6 +371,16 @@ def run_main_and_check_plot(namespace: Dict[str, Any], py_path: Path, student_sl
             result["main_notes"] += "No saved plot file was found in the working directory after main() ran. "
 
         plt.show = original_show
+        if SHOW_PLOTS and plt.get_fignums():
+            try:
+                for fig_num in plt.get_fignums():
+                    fig = plt.figure(fig_num)
+                    fig.suptitle(f"{student_slug} — generated plot", fontsize=10)
+                print(f"  displaying plot for {student_slug} ({len(plt.get_fignums())} figure(s)); close or wait to continue")
+                plt.show(block=False)
+                plt.pause(PLOT_PAUSE_SECONDS)
+            except Exception as exc:
+                print(f"  could not display plot for {student_slug}: {exc}")
         plt.close("all")
     except Exception as exc:
         result["main_notes"] += f"main/plot test raised: {type(exc).__name__}: {exc}. "
@@ -788,7 +801,24 @@ def main() -> int:
         help="Repo-relative path used for lab-specific Git commit checks",
     )
 
+    parser.add_argument(
+        "--show-plots",
+        action="store_true",
+        help="Display each student's generated plot during grading for visual inspection",
+    )
+    parser.add_argument(
+        "--plot-pause",
+        type=float,
+        default=1.5,
+        help="Seconds to pause for each displayed plot when --show-plots is used",
+    )
+
     args = parser.parse_args()
+
+    global SHOW_PLOTS, PLOT_PAUSE_SECONDS
+    SHOW_PLOTS = bool(args.show_plots)
+    PLOT_PAUSE_SECONDS = float(args.plot_pause)
+
 
     students_path = Path(args.students)
     workdir = Path(args.workdir)
