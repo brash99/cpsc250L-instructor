@@ -47,7 +47,8 @@ Create a new branch for this lab:
 git checkout -b lab12-numpy-plotting
 ```
 
-After completing and testing the lab, merge back into `main`:
+After completing and testing the lab (while doing
+the usual commit/push along the way), merge back into `main`:
 
 ```bash
 git checkout main
