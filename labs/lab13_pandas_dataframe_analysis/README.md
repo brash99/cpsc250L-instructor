@@ -13,10 +13,14 @@ sync fork -> pull -> create branch -> develop -> commit -> test -> merge -> push
 Create a branch for this lab:
 
 ```bash
+git checkout main
+git fetch upstream
+git merge upstream/main
 git checkout -b lab13-pandas
 ```
 
-After completing and testing the lab, merge back into `main`:
+After completing and testing the lab (while doing
+the usual commit/push along the way), merge back into `main`:
 
 ```bash
 git checkout main
