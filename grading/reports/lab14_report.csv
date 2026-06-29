@@ -6,8 +6,8 @@ Edward Brash,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,test,yes,ye
 Dep. Variable:                  score   R-squared:                       0.998
 Model:                            OLS   Adj. R-squared:                  0.997
 Method:                 Least Squares   F-statistic:                     3895.
-Date:                Wed, 24 Jun 2026   Prob (F-statistic):           3.51e-13
-Time:                        15:17:29   Log-Likelihood:                -7.4595
+Date:                Mon, 29 Jun 2026   Prob (F-statistic):           3.51e-13
+Time:                        13:00:46   Log-Likelihood:                -7.4595
 No. Observations:                  11   AIC:                             18.92
 Df Residuals:                       9   BIC:                             19.71
 Df Model:                           1                                         
@@ -15,7 +15,7 @@ Covariance Type:            nonrobust
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         52.4091   ",labs/lab14_curve_fitting_regression,6,yes,"0e93e6a updates | 5d8760a Lab 11,12,13,14 updates | 46ea32a complete program | 7d8d451 updates | 49251a5 Lab 11,12,13,14 updates | 1d651b3 Add Week 9-14 labs",no,"f4e521a updates | 0e93e6a updates | 5d8760a Lab 11,12,13,14 updates | 0350951 Merge remote-tracking branch 'origin/main' | 3ff280f Lab 11,12,13,14 updates | 9851302 updates | 7f7e3d2 Add Goodbye. | bed4d1e Add World. | ba3625f Initial Commit | 46ea32a complete program",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/fix-one-file |   remotes/origin/lab12-numpy-fitting |   remotes/origin/lab14-regression |   remotes/origin/lab15-cli-workflow |   remotes/origin/main |   remotes/origin/student_fix,24,,,fit_line function not found. fit_line is not callable. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+const         52.4091   ",labs/lab14_regression_analysis,0,no,,no,"f4e521a updates | 0e93e6a updates | 5d8760a Lab 11,12,13,14 updates | 0350951 Merge remote-tracking branch 'origin/main' | 3ff280f Lab 11,12,13,14 updates | 9851302 updates | 7f7e3d2 Add Goodbye. | bed4d1e Add World. | ba3625f Initial Commit | 46ea32a complete program",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/fix-one-file |   remotes/origin/lab12-numpy-fitting |   remotes/origin/lab14-regression |   remotes/origin/lab15-cli-workflow |   remotes/origin/main |   remotes/origin/student_fix,24,,,"fit_line function not found. fit_line is not callable. Expected at least 2 commits touching labs/lab14_regression_analysis, got 0. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
 Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab14_curve_fitting_regression/starter_code/regression_analysis.py,yes,labs/lab14_curve_fitting_regression/data/study_scores.csv,yes,yes,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,yes,no,no,no,yes,yes,yes,no,no,no,yes,no,yes,yes,yes,yes,yes,"Best fit: y = 6.2727x + 52.4091
 -------------------------------------
                                  OLS Regression Results                                
@@ -23,15 +23,15 @@ Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cp
 Dep. Variable:                  score   R-squared (uncentered):                   0.917
 Model:                            OLS   Adj. R-squared (uncentered):              0.909
 Method:                 Least Squares   F-statistic:                              110.8
-Date:                Wed, 24 Jun 2026   Prob (F-statistic):                    9.90e-07
-Time:                        15:17:32   Log-Likelihood:                         -49.399
+Date:                Mon, 29 Jun 2026   Prob (F-statistic):                    9.90e-07
+Time:                        13:00:48   Log-Likelihood:                         -49.399
 No. Observations:                  11   AIC:                                      100.8
 Df Residuals:                      10   BIC:                                      101.2
 Df Model:                           1                                                  
 Covariance Type:            nonrobust                                                  
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
-----",labs/lab14_curve_fitting_regression,3,yes,"d316366 finished all calculations | a3ccaff Finished load_data, fit_polyfit, and fit_statsmodel | 6888338 Update Lab14",no,"d316366 finished all calculations | a3ccaff Finished load_data, fit_polyfit, and fit_statsmodel | 8f3d55f Merge branch 'brash99:main' into main | 6888338 Update Lab14 | cbd1b19 All calculations finished | 85beafa Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 6bdd1d6 Plot and calculations finished | 376910c Plot and calculations finished",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,24,,,fit_line function not found. fit_line is not callable. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+----",labs/lab14_regression_analysis,0,no,,no,"d316366 finished all calculations | a3ccaff Finished load_data, fit_polyfit, and fit_statsmodel | 8f3d55f Merge branch 'brash99:main' into main | 6888338 Update Lab14 | cbd1b19 All calculations finished | 85beafa Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 6bdd1d6 Plot and calculations finished | 376910c Plot and calculations finished",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,24,,,"fit_line function not found. fit_line is not callable. Expected at least 2 commits touching labs/lab14_regression_analysis, got 0. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
 Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab14_curve_fitting_regression/starter_code/regression_analysis.py,yes,labs/lab14_curve_fitting_regression/data/study_scores.csv,yes,yes,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,yes,no,no,no,yes,yes,yes,no,no,no,yes,no,yes,yes,yes,yes,yes,"Best fit: y = 6.2727x + 52.4091
 -------------------------------------
                             OLS Regression Results                            
@@ -39,8 +39,8 @@ Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes
 Dep. Variable:                  score   R-squared:                       0.998
 Model:                            OLS   Adj. R-squared:                  0.997
 Method:                 Least Squares   F-statistic:                     3895.
-Date:                Wed, 24 Jun 2026   Prob (F-statistic):           3.51e-13
-Time:                        15:17:35   Log-Likelihood:                -7.4595
+Date:                Mon, 29 Jun 2026   Prob (F-statistic):           3.51e-13
+Time:                        13:00:50   Log-Likelihood:                -7.4595
 No. Observations:                  11   AIC:                             18.92
 Df Residuals:                       9   BIC:                             19.71
 Df Model:                           1                                         
@@ -48,6 +48,38 @@ Covariance Type:            nonrobust
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         52.4091   ",labs/lab14_curve_fitting_regression,5,yes,448cbcb Finished. | 08384d2 Finished the fit_curve function. | 70e8281 Finished the polyfit and predict functions. | e692684 Finished the load_data function. | 6888338 Update Lab14,no,448cbcb Finished. | 08384d2 Finished the fit_curve function. | 70e8281 Finished the polyfit and predict functions. | e692684 Finished the load_data function. | c944fcb Merge remote-tracking branch 'upstream/main' | 6888338 Update Lab14 | 0f01ce0 Finished the program. | 134a721 Completed the print_summary function. | cd1574e Completed the clean_temperature_range function. | 864ad1d Completed the add_celsius function.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,24,,,fit_line function not found. fit_line is not callable. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
-Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,no,,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab14_curve_fitting_regression,,no,,no,b0abe34 progress so far | e995359 Merge branch 'brash99:main' into main | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 7de6d48 progress so far | 423f214 progress so far | 867f7ee Merge branch 'brash99:main' into main | be40937 updates | 6b76c57 update lab 12 README.md | efcb730 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,0,,,study_scores.csv not found in repo; grader used built-in sample data for runtime tests. regression_analysis.py not found; awarded zero for Lab 14 file/function/plot work. 
-Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,no,,no,,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,,labs/lab14_curve_fitting_regression,,no,,no,b7ad9c4 Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 8401d03 Completed Assignment | b2d0dcf Merge remote-tracking branch 'upstream/main' | ef9cc41 Merge pull request #2 from edwardbrash/fix-one-file | be40937 updates | 8877af8 Fix Lab 11 | 6b76c57 update lab 12 README.md | efcb730 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,0,,,study_scores.csv not found in repo; grader used built-in sample data for runtime tests. regression_analysis.py not found; awarded zero for Lab 14 file/function/plot work. 
+const         52.4091   ",labs/lab14_regression_analysis,0,no,,no,448cbcb Finished. | 08384d2 Finished the fit_curve function. | 70e8281 Finished the polyfit and predict functions. | e692684 Finished the load_data function. | c944fcb Merge remote-tracking branch 'upstream/main' | 6888338 Update Lab14 | 0f01ce0 Finished the program. | 134a721 Completed the print_summary function. | cd1574e Completed the clean_temperature_range function. | 864ad1d Completed the add_celsius function.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,24,,,"fit_line function not found. fit_line is not callable. Expected at least 2 commits touching labs/lab14_regression_analysis, got 0. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
+Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab14_curve_fitting_regression/starter_code/regression_analysis.py,yes,labs/lab14_curve_fitting_regression/data/study_scores.csv,yes,yes,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,yes,no,no,no,yes,yes,no,no,no,no,no,no,no,no,no,no,no,"Best fit: y = 6.2727x + 52.4091
+-------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  score   R-squared:                       0.998
+Model:                            OLS   Adj. R-squared:                  0.997
+Method:                 Least Squares   F-statistic:                     3895.
+Date:                Mon, 29 Jun 2026   Prob (F-statistic):           3.51e-13
+Time:                        13:00:53   Log-Likelihood:                -7.4595
+No. Observations:                  11   AIC:                             18.92
+Df Residuals:                       9   BIC:                             19.71
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         52.4091   ",labs/lab14_regression_analysis,0,no,,no,be09bbe progress so far | db78a92 Merge branch 'brash99:main' into main | 6888338 Update Lab14 | b0abe34 progress so far | e995359 Merge branch 'brash99:main' into main | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 7de6d48 progress so far | 423f214 progress so far | 867f7ee Merge branch 'brash99:main' into main,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,20,,,"fit_line function not found. fit_line is not callable. main test raised: ValueError: Unable to determine number of fit parameters.. regression_analysis.py did not run successfully from terminal. Expected at least 2 commits touching labs/lab14_regression_analysis, got 0. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
+Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab14_curve_fitting_regression/starter_code/regression_analysis.py,yes,labs/lab14_curve_fitting_regression/data/study_scores.csv,yes,yes,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,no,yes,yes,yes,yes,no,no,no,yes,yes,yes,no,no,no,yes,no,yes,yes,yes,yes,yes,"Best fit: y = 6.2727x + 52.4091
+-------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  score   R-squared:                       0.998
+Model:                            OLS   Adj. R-squared:                  0.997
+Method:                 Least Squares   F-statistic:                     3895.
+Date:                Mon, 29 Jun 2026   Prob (F-statistic):           3.51e-13
+Time:                        13:00:55   Log-Likelihood:                -7.4595
+No. Observations:                  11   AIC:                             18.92
+Df Residuals:                       9   BIC:                             19.71
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         52.4091   ",labs/lab14_regression_analysis,0,no,,no,2df4b3d Completed Assignment | 6888338 Update Lab14 | b7ad9c4 Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 8401d03 Completed Assignment | b2d0dcf Merge remote-tracking branch 'upstream/main' | ef9cc41 Merge pull request #2 from edwardbrash/fix-one-file | be40937 updates | 8877af8 Fix Lab 11,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,24,,,"fit_line function not found. fit_line is not callable. Expected at least 2 commits touching labs/lab14_regression_analysis, got 0. Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. "
