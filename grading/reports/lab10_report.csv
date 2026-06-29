@@ -2,50 +2,50 @@ name,github_username,repo_url,type,clone_or_update,fibonacci_timing_exists,fibon
 Edward Brash,edwardbrash,https://github.com/edwardbrash/cpsc250L.git,test,yes,yes,labs/lab10_recursion_and_timing/starter_code/fibonacci_timing.py,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Fibonacci Timing
 ----------------
 n    recursive_time    iterative_time        speed factor
-5     0.00000095 seconds    0.00000119 seconds     0.8
-10    0.00000429 seconds    0.00000000 seconds     0.8
-20    0.00052309 seconds    0.00000000 seconds     0.8
-25    0.00556612 seconds    0.00000000 seconds     0.8
-30    0.05780625 seconds    0.00000095 seconds     60614.2
-35    0.64230895 seconds    0.00000405 seconds     158472.9
-40    7.01479411 seconds    0.00001001 seconds     700528.1",labs/lab10_recursion_and_timing,3,yes,af09b04 complete program | 7d0cde5 complete program | 1d651b3 Add Week 9-14 labs,no,"7d8d451 updates | 49251a5 Lab 11,12,13,14 updates | eea6e8a Lab 11 updates | af09b04 complete program | 29975a8 complete program | 551d919 Lab 9 updates | 79298b0 Lab 2 fixes | ece9334 Lab 8 updates | aba2352 Lab 8 updates | 6e08479 Lab 8 updates",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab15-cli-workflow |   remotes/origin/main |   remotes/origin/student_fix,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+5     0.00000191 seconds    0.00000095 seconds     2.0
+10    0.00000429 seconds    0.00000000 seconds     2.0
+20    0.00052023 seconds    0.00000072 seconds     727.3
+25    0.00550389 seconds    0.00000095 seconds     5771.2
+30    0.05746698 seconds    0.00000095 seconds     60258.5
+35    0.62880707 seconds    0.00000215 seconds     293045.3
+40    7.02810788 seconds    0.00000191 seconds     3684752.6",labs/lab10_recursion_and_timing,3,yes,af09b04 complete program | 7d0cde5 complete program | 1d651b3 Add Week 9-14 labs,no,"f4e521a updates | 0e93e6a updates | 5d8760a Lab 11,12,13,14 updates | 0350951 Merge remote-tracking branch 'origin/main' | 3ff280f Lab 11,12,13,14 updates | 9851302 updates | 7f7e3d2 Add Goodbye. | bed4d1e Add World. | ba3625f Initial Commit | 46ea32a complete program",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/fix-one-file |   remotes/origin/lab12-numpy-fitting |   remotes/origin/lab14-regression |   remotes/origin/lab15-cli-workflow |   remotes/origin/main |   remotes/origin/student_fix,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Justin Shackleford,JustinShackelford23,https://github.com/JustinShackelford23/cpsc250L.git,student,yes,yes,labs/lab10_recursion_and_timing/starter_code/fibonacci_timing.py,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Fibonacci Timing
 ----------------
 n    recursive_time    iterative_time
-5     0.00000137 seconds    0.00000092 seconds     1.5
-10    0.00000512 seconds    0.00000054 seconds     9.5
-20    0.00053446 seconds    0.00000083 seconds     640.8
-25    0.00583479 seconds    0.00000067 seconds     8761.0
-30    0.06476313 seconds    0.00000067 seconds     97095.9
-35    0.72000658 seconds    0.00000133 seconds     539733.8
-40    7.93532521 seconds    0.00001204 seconds     658970.7",labs/lab10_recursion_and_timing,8,yes,36142aa Output table and finished | 36eabc6 Added timing code | 26c77c1 Added iterative Fibonacci | 2597633 Added recursive Fibonacci | ed22368 Added recursive Fibonacci | 6effa43 updates | 4286cac updates | 06befd7 updates,no,8de026c Calculations finished | 81d4206 Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | 36142aa Output table and finished | 36eabc6 Added timing code | 26c77c1 Added iterative Fibonacci | 2597633 Added recursive Fibonacci | 424d40c Added recursive Fibonacci | ed22368 Added recursive Fibonacci,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+5     0.00000158 seconds    0.00000087 seconds     1.8
+10    0.00000500 seconds    0.00000058 seconds     8.6
+20    0.00056396 seconds    0.00000092 seconds     615.7
+25    0.00619579 seconds    0.00000071 seconds     8751.0
+30    0.06585175 seconds    0.00000071 seconds     92880.0
+35    0.71606246 seconds    0.00000088 seconds     818350.9
+40    7.95098542 seconds    0.00000229 seconds     3470537.6",labs/lab10_recursion_and_timing,8,yes,36142aa Output table and finished | 36eabc6 Added timing code | 26c77c1 Added iterative Fibonacci | 2597633 Added recursive Fibonacci | ed22368 Added recursive Fibonacci | 6effa43 updates | 4286cac updates | 06befd7 updates,no,"d316366 finished all calculations | a3ccaff Finished load_data, fit_polyfit, and fit_statsmodel | 8f3d55f Merge branch 'brash99:main' into main | 6888338 Update Lab14 | cbd1b19 All calculations finished | 85beafa Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 6bdd1d6 Plot and calculations finished | 376910c Plot and calculations finished",* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Caleb Thompson,Giratinate,https://github.com/Giratinate/cpsc250L.git,student,yes,yes,labs/lab10_recursion_and_timing/starter_code/fibonacci_timing.py,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Fibonacci Timing
 ----------------
 n    recursive_time    iterative_time
-5     0.00000146 seconds    0.00000088 seconds     1.7
-10    0.00000513 seconds    0.00000058 seconds     8.8
-20    0.00057000 seconds    0.00000079 seconds     719.7
-25    0.00622279 seconds    0.00000063 seconds     9956.4
-30    0.06849433 seconds    0.00000067 seconds     102689.9
-35    0.73442096 seconds    0.00000154 seconds     476275.6
-40    8.02884142 seconds    0.00000704 seconds     1140135.5",labs/lab10_recursion_and_timing,6,yes,a3417b8 Made the plot. | 1f27add Made the time_function. | 1be3e51 Added the recursive and iterative fibonacci functions. | 6effa43 updates | 4286cac updates | 06befd7 updates,no,4e2ccc9 Completed the bisection_root function. | 3600ae7 Completed the bisection_root function. | a1ded3b Completed the binary_search function. | 1a8f616 Completed the linear_search function. | 40a8c2d Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | a3417b8 Made the plot. | 1f27add Made the time_function. | 1be3e51 Added the recursive and iterative fibonacci functions.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+5     0.00000163 seconds    0.00000092 seconds     1.8
+10    0.00000533 seconds    0.00000058 seconds     9.1
+20    0.00056508 seconds    0.00000733 seconds     77.0
+25    0.00621696 seconds    0.00000058 seconds     10664.1
+30    0.06696254 seconds    0.00000062 seconds     107144.2
+35    0.74333129 seconds    0.00000192 seconds     387961.5
+40    8.27825758 seconds    0.00001096 seconds     755453.4",labs/lab10_recursion_and_timing,6,yes,a3417b8 Made the plot. | 1f27add Made the time_function. | 1be3e51 Added the recursive and iterative fibonacci functions. | 6effa43 updates | 4286cac updates | 06befd7 updates,no,448cbcb Finished. | 08384d2 Finished the fit_curve function. | 70e8281 Finished the polyfit and predict functions. | e692684 Finished the load_data function. | c944fcb Merge remote-tracking branch 'upstream/main' | 6888338 Update Lab14 | 0f01ce0 Finished the program. | 134a721 Completed the print_summary function. | cd1574e Completed the clean_temperature_range function. | 864ad1d Completed the add_celsius function.,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Alexis Barraza,mercyed,https://github.com/mercyed/cpsc250L.git,student,yes,yes,labs/lab10_recursion_and_timing/starter_code/fibonacci_timing.py,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Fibonacci Timing
 ----------------
 n    recursive_time    iterative_time         speed_factor
-5     0.00000175 seconds    0.00000100 seconds     1.7
-10    0.00000471 seconds    0.00000050 seconds     9.4
-20    0.00050546 seconds    0.00000117 seconds     433.1
-25    0.00540125 seconds    0.00000054 seconds     9965.4
-30    0.06040354 seconds    0.00000058 seconds     103431.2
-35    0.64890375 seconds    0.00000079 seconds     819320.3
-40    7.04687138 seconds    0.00001142 seconds     617280.7",labs/lab10_recursion_and_timing,6,yes,f6f9576 progress so far | d83b0e6 progress so far | 4f3f961 progress so far | 6effa43 updates | 4286cac updates | 06befd7 updates,no,da3d058 progress so far | 5067a26 progress so far | 22ebc34 progress so far | f6f9576 progress so far | 3990fd5 Merge branch 'brash99:main' into main | 6f3d8cf updates | 7467b90 updates | d83b0e6 progress so far | 4f3f961 progress so far | a77eaee Merge branch 'brash99:main' into main,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+5     0.00000142 seconds    0.00000088 seconds     1.6
+10    0.00000463 seconds    0.00000054 seconds     8.5
+20    0.00049617 seconds    0.00000075 seconds     661.6
+25    0.00543996 seconds    0.00000058 seconds     9330.8
+30    0.05776754 seconds    0.00000063 seconds     92427.4
+35    0.63784696 seconds    0.00000079 seconds     805359.7
+40    7.15603646 seconds    0.00000312 seconds     2289935.6",labs/lab10_recursion_and_timing,6,yes,f6f9576 progress so far | d83b0e6 progress so far | 4f3f961 progress so far | 6effa43 updates | 4286cac updates | 06befd7 updates,no,b0abe34 progress so far | e995359 Merge branch 'brash99:main' into main | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 7de6d48 progress so far | 423f214 progress so far | 867f7ee Merge branch 'brash99:main' into main | be40937 updates | 6b76c57 update lab 12 README.md | efcb730 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
 Jayden Poe,poejayden60,https://github.com/poejayden60/poejayden60.git,student,yes,yes,labs/lab10_recursion_and_timing/starter_code/fibonacci_timing.py,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,"Fibonacci Timing
 ----------------
 n    recursive_time    iterative_time
-5     0.00000133 seconds    0.00000092 seconds     1.5
-10    0.00000450 seconds    0.00000046 seconds     9.8
-20    0.00048792 seconds    0.00000075 seconds     650.6
-25    0.00530737 seconds    0.00000062 seconds     8491.9
-30    0.05965412 seconds    0.00000058 seconds     102323.8
-35    0.62940704 seconds    0.00000079 seconds     794703.3
-40    6.91677325 seconds    0.00001437 seconds     481167.1",labs/lab10_recursion_and_timing,4,yes,bbb4243 Completed Assignment | 6effa43 updates | 4286cac updates | 06befd7 updates,no,7a1a47e Merge remote-tracking branch 'upstream/main' | 511e47d Further lab8 updates | 03a83a9 Recover Jayden's submitted Lab 8 work | cf62679 Recover Jayden's submitted Lab 7 work | b89c194 Recover Jayden's submitted Lab 3 work | 6f3d8cf updates | 7467b90 updates | f9ea23d updates | 820ad37 Merge remote-tracking branch 'origin/main' | bbb4243 Completed Assignment,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
+5     0.00000142 seconds    0.00000088 seconds     1.6
+10    0.00000475 seconds    0.00000050 seconds     9.5
+20    0.00050829 seconds    0.00000079 seconds     642.6
+25    0.00537125 seconds    0.00000063 seconds     8593.9
+30    0.05811358 seconds    0.00000063 seconds     92981.0
+35    0.64947712 seconds    0.00000167 seconds     389613.0
+40    7.04721142 seconds    0.00001188 seconds     593449.2",labs/lab10_recursion_and_timing,4,yes,bbb4243 Completed Assignment | 6effa43 updates | 4286cac updates | 06befd7 updates,no,b7ad9c4 Merge remote-tracking branch 'upstream/main' | 3ce3b66 Merge branch 'main' of github.com:brash99/cpsc250L | ca9237b Add Lab 13 | 8401d03 Completed Assignment | b2d0dcf Merge remote-tracking branch 'upstream/main' | ef9cc41 Merge pull request #2 from edwardbrash/fix-one-file | be40937 updates | 8877af8 Fix Lab 11 | 6b76c57 update lab 12 README.md | efcb730 updates,* main |   remotes/origin/HEAD -> origin/main |   remotes/origin/lab12-numpy-plotting |   remotes/origin/main,23,,,Working tree: ?? labs/lab08_oop_review_challenge/starter_code/booklist.csv. 
